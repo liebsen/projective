@@ -7,11 +7,7 @@
     <div class="menu hidden-loading slideDown">
       <div class="menu-container columns is-vcentered is-mobile">
 
-        <router-link v-if="$root.isLoggedIn" class="header-logo" to="/panel">
-          <img src="/static/img/p.png" >
-        </router-link>
-
-        <router-link class="header-logo" to="/" v-else>
+        <router-link class="header-logo" to="/">
           <img src="/static/img/p.png" >
         </router-link>
 
@@ -42,11 +38,7 @@
 
       <div class="menu-items">
         <div>
-          <router-link class="has-text-centered" to="/panel" v-if="$root.isLoggedIn">
-            <img src="/static/img/p.png">
-          </router-link>
-
-          <router-link class="has-text-centered" to="/" v-else>
+          <router-link class="has-text-centered" to="/">
             <img src="/static/img/p.png">
           </router-link>
 
@@ -103,7 +95,7 @@
             <hr v-if="$root.isLoggedIn">
     
             <div class="has-text-centered" v-if="$root.isLoggedIn">
-              <router-link class="button is-white is-medium is-outlined" to="/panel">
+              <router-link class="button is-white is-medium is-outlined" to="/projects">
                 <span class="icon">
                   <span class="fas fa-chart-bar"></span>
                 </span> 
@@ -115,7 +107,7 @@
       </div>    
     </div>
     
-    <keep-alive v-show="!$root.loading" exclude="preference,panel-list">
+    <keep-alive v-show="!$root.loading" include="contacto">
       <router-view/>
     </keep-alive>
 

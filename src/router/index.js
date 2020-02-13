@@ -7,8 +7,10 @@ import Register from '../components/Register'
 import RegisterSuccess from '../components/RegisterSuccess'
 import Login from '../components/Login'
 import Validate from '../components/Validate'
-import Panel from '../components/Panel'
-import PanelList from '../components/PanelList'
+import Projects from '../components/Projects'
+import Project from '../components/Project'
+import ProjectCreate from '../components/ProjectCreate'
+import MilestoneCreate from '../components/MilestoneCreate'
 import Cotizacion from '../components/Cotizacion'
 import Terminos from '../components/Terminos'
 import Dash from '../components/Dash'
@@ -16,7 +18,6 @@ import Configuracion from '../components/Configuracion'
 import ConfiguracionDatos from '../components/ConfiguracionDatos'
 import ConfiguracionCostos from '../components/ConfiguracionCostos'
 import ConfiguracionUbicacion from '../components/ConfiguracionUbicacion'
-import Preference from '../components/Preference'
 import Contacto from '../components/Contacto'
 import About from '../components/About'
 import NotFound from '../components/NotFound'
@@ -69,25 +70,33 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/panel',
-      name: 'panel',
-      component: Panel,
+      path: '/projects',
+      name: 'projects',
+      component: Projects,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/panel/:type/:view/:period?',
-      name: 'panel-list',
-      component: PanelList,
+      path: '/projects/create',
+      name: 'projects_create',
+      component: ProjectCreate,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/preference/:preference',
-      name: 'preference',
-      component: Preference,
+      path: '/projects/:_id',
+      name: 'project',
+      component: Project,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/milestones/:project_id/create',
+      name: 'milestones_create',
+      component: MilestoneCreate,
       meta: {
         requiresAuth: true
       }

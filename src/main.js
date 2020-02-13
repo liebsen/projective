@@ -17,6 +17,7 @@ require('../assets/css/main.scss')
 Vue.prototype.$http = axios
 const token = localStorage.getItem('token')
 const endpoint = 'https://projectiveapi.herokuapp.com'
+//const endpoint = 'http://localhost:3000'
 
 
 Vue.use(VuejsDialog);
@@ -34,6 +35,11 @@ new Vue({
   el: '#app',
   router,
   store,
+  watch: {
+    '$route' (to, from) {
+      this.processing = false
+    }
+  },
   computed: {
     isLoggedIn: function() {
       return this.$store.getters.isLoggedIn;

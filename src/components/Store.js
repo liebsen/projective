@@ -9,7 +9,7 @@ export default new Vuex.Store({
     status: '',
     token: localStorage.getItem('token') || '',
     endpoint: 'https://projectiveapi.herokuapp.com',
-    //endpoint: 'http://localhost:4000',
+    //endpoint: 'http://localhost:3000',
     user : {}
   },
   mutations: {
