@@ -9,9 +9,9 @@
         <router-link class="button is-info is-large is-success" to="/login" v-if="!$root.isLoggedIn">
           <span>Iniciar sesión</span>  
         </router-link>
-        <router-link class="button is-info is-large is-info" to="/register" v-if="!$root.isLoggedIn">
-          <span>Registrarme</span>  
-        </router-link>
+        <!--router-link class="button is-info is-large is-info" to="/register" v-if="!$root.isLoggedIn">
+          <span>Crear cuenta</span>  
+        </router-link-->
         <router-link class="button is-success is-large" to="/panel" v-if="$root.isLoggedIn">
           <span>Mi Panel</span>  
         </router-link>

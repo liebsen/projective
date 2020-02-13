@@ -2,7 +2,7 @@
   <div class="columns is-centered has-text-centered photo photo2">
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
-        <form class="form has-text-left fadeIn" @submit.prevent="submit">
+        <form class="form" @submit.prevent="submit">
           <h1>Iniciar Sesión</h1>
           <p>Ingresá tus datos para iniciar sesión</p>
           <div class="field">
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="field">
-            <div class="control">
+            <div class="control has-text-centered">
               <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Iniciar sesión</button>
             </div>
           </div>  

@@ -2,7 +2,7 @@
   <div class="columns is-centered has-text-centered photo photo2">
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white">
-        <form v-show="!codeChecked" class="form has-text-left slideIn" @submit.prevent="validate">
+        <form v-show="!codeChecked" class="form has-text-centered slideIn" @submit.prevent="validate">
           <h1>Empezá hoy con Projective</h1>
           <p>Ingresá tu cupón de invitación</p>
           <div class="field">
@@ -11,13 +11,13 @@
             </div>
           </div>
           <div class="field">
-            <div class="control has-text-right">
+            <div class="control has-text-centered">
               <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Validar cupón</button>
             </div>
           </div>  
         </form>
 
-        <form v-show="codeChecked" class="form has-text-left slideIn" @submit.prevent="submit">
+        <form v-show="codeChecked" class="form has-text-centered slideIn" @submit.prevent="submit">
           <h1>Ingresá tus datos</h1>
           <p>Te enviaremos un correo para que valides tu cuenta.</p>
           <div class="field">
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="field">
-            <div class="control has-text-right">
+            <div class="control has-text-centered">
               <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Empezar a usar Projective</button>
             </div>
           </div>  
