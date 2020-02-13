@@ -78,10 +78,6 @@ export default {
         t.$root.processing = false
         t.codeChecked = t.data
         t.$root.snackbar('success',"Código verificado exitosamente. Ahora podés registrarte.",15000)
-        document.querySelectorAll('.is-step').forEach(e => {
-          e.style.display = 'none'
-        })
-        document.querySelector('.is-step-data').style.display = 'block'
       }).catch(err => {
         t.$root.processing = false
         if(err){
@@ -102,8 +98,9 @@ export default {
         return t.$root.snackbar('error',"El email y su confirmación deben coincidir.")
       if(!t.acceptTerms)
         return t.$root.snackbar('error',"Debes aceptar nuestros términos y condiciones para crear una cuenta") 
-      t.$root.processing = false
+      t.$root.processing = true
       delete t.data.email2 
+      console.log(t.data)
       this.$store
         .dispatch("register", t.data)
         .then(() => this.$router.push("/register-success"))
@@ -112,15 +109,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  
-  .is-step {
-    display: none;
-  }
-
-  .is-step:nth-child(1){
-    display: block;
-  }
-
-</style>
