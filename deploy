@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp -R /var/www/fletspanel/dist/ /var/www/fletspanel_build/ && 
+cp /var/www/fletspanel/index.html /var/www/fletspanel_build/index.html

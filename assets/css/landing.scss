@@ -1,0 +1,52 @@
+.photo {
+  display: inline-flex;
+  position: fixed;
+  left: 0;
+  right:0;
+  top: 60px;
+  bottom: 0;
+  background-position: center 90%;
+  background-repeat: no-repeat;
+}
+
+.photo1 {
+  background-size: 40%;
+  background-image: url('/static/img/pngguru.com.png');
+}
+
+.photo2 {
+  background-size: 7%;
+  background-image: url('/static/img/pngguru.com(2).png');
+}
+
+.photo3 {
+  background-size: 20%;
+  background-image: url('/static/img/pngguru.com(2).png');
+}
+
+
+.main-box {
+  background-color: transparent;
+  padding: 1.75rem;
+}
+
+@media screen and (min-width: 799px) {
+  .main-box {
+    margin-top: 3rem;
+  }
+}  
+
+@media screen and (min-width: 1440px) {
+  .main-box {
+    margin-top: 8rem;
+  }
+}  
+
+@media screen and (max-width: 799px) {
+ .photo1 {
+  background-size: 95%;
+ }
+ .photo2 {
+  background-size: 30%;
+ }
+}  
