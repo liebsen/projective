@@ -14,6 +14,12 @@ body > div {
   min-height: 100%;
 }
 
+.box {
+  border: 3px solid $menubg;
+  h2 {
+    margin-bottom: 0.111rem;
+  }
+}
 
 .input {
   padding-top: calc(0.375em - 6px);

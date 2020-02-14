@@ -19,7 +19,6 @@ const token = localStorage.getItem('token')
 const endpoint = 'https://projectiveapi.herokuapp.com'
 //const endpoint = 'http://localhost:3000'
 
-
 Vue.use(VuejsDialog);
 
 if (token) {

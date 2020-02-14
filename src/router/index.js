@@ -11,6 +11,7 @@ import Projects from '../components/Projects'
 import Project from '../components/Project'
 import ProjectCreate from '../components/ProjectCreate'
 import MilestoneCreate from '../components/MilestoneCreate'
+import Milestone from '../components/Milestone'
 import Cotizacion from '../components/Cotizacion'
 import Terminos from '../components/Terminos'
 import Dash from '../components/Dash'
@@ -102,33 +103,17 @@ const router = new Router({
       }
     },
     {
+      path: '/milestones/:project_id/:_id',
+      name: 'milestone',
+      component: Milestone,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: '/configuracion',
       name: 'configuracion',
       component: Configuracion,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/configuracion/costos',
-      name: 'configuracion-costos',
-      component: ConfiguracionCostos,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/configuracion/datos',
-      name: 'configuracion-datos',
-      component: ConfiguracionDatos,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/configuracion/ubicacion',
-      name: 'configuracion-ubicacion',
-      component: ConfiguracionUbicacion,
       meta: {
         requiresAuth: true
       }

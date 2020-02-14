@@ -17,19 +17,19 @@
             <span class="icon is-size-7">
               <span class="fas fa-chevron-right"></span>
             </span>
-            <span>Objetivos</span>
+            <span v-html="data.milestones[0][$route.params._id].title"></span>
           </span>
         </h4>
         <div v-show="empty" class="column">
           <div class="notification">
-            <p>Todavía no estableciste ningún objetivo.</p>
+            <p>Todavía no hay cuestiones.</p>
           </div>
         </div>
         <div class="columns is-multiline">
-          <div class="column is-4" v-for="item in data.milestones">
-            <router-link :to="'/milestones/' + data._id + '/' + Object.keys(item)[0]">
+          <div class="column is-4" v-for="item in data.milestones[0][$route.params._id].issues">
+            <router-link :to="'/milestones/' + item.id">
               <div class="box">
-                <h2><span v-html="item[Object.keys(item)[0]].title"></span></h2>
+                <h2><span v-html="item.title"></span></h2>
               </div>
             </router-link>
           </div>
@@ -37,10 +37,10 @@
         <div class="columns">
           <div class="column has-text-centered slideIn">
             <router-link :to="'/milestones/' + data._id + '/create'" class="button is-success">
-              <span>Establecer objetivos</span>
+              <span>Agregar cuestión</span>
             </router-link>
             <a @click="remove(data._id)" class="button is-danger">
-              <span>Eliminar proyecto</span>
+              <span>Eliminar objetivo</span>
             </a>
           </div>
         </div>
@@ -53,7 +53,7 @@
 import axios from 'axios'
 import swal from 'sweetalert'
 export default {
-  name: 'project',
+  name: 'milestone',
   mounted: function(){
     var t = this
     t.$root.loading = true
@@ -61,10 +61,10 @@ export default {
       t.$root.false = true
       return t.$root.snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/project/' + t.$route.params._id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/project/' + t.$route.params.project_id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.empty = res.data.milestones == undefined
+      t.empty = res.data.issues == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
@@ -75,19 +75,19 @@ export default {
   },
   methods: {
     remove: function(id){
-      var t = this
+      let t = this
       swal({
-        title: `Eliminar proyecto ${t.data.title}`,
-        text: '¿Querés borrar este proyecto?',
+        title: `Eliminar objetivo ${t.data.milestones[0][t.$route.params._id].title}`,
+        text: '¿Querés borrar este objetivo?',
         buttons: ["No", "Sí"]
       })
       .then(accept => {
         if (accept) {
           t.$root.loading = true
-          axios.delete( t.$root.endpoint + '/project/' + t.data._id, {}).then((res) => {
+          axios.delete( t.$root.endpoint + '/milestone/' + t.$route.params.id, {}).then((res) => {
             t.$root.loading = false
-            t.$root.snackbar('success',"Se eliminó proyecto " + t.data.title)
-            t.$router.push('/projects')
+            t.$root.snackbar('success',"Se eliminó objetivo " + t.data.milestones[0][t.$route.params._id].title)
+            t.$router.push('/projects/' + t.$route.params.project_id)
           }).catch(err => {
             t.$root.loading = false
             if(err){
