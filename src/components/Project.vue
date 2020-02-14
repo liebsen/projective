@@ -1,47 +1,48 @@
 <template>
   <section class="hero">
     <div v-show="!$root.loading" class="hero-body">
-      <div class="container content">
-        <h4>
-          <span class="icon is-size-7">
-            <span class="fas fa-project-diagram"></span>
-          </span> 
-          <span>
-            <router-link to="/projects">
-              <span>Proyectos</span>
-            </router-link>
-            <span class="icon is-size-7">
-              <span class="fas fa-chevron-right"></span>
-            </span>
-            <span v-html="data.title"></span>
-            <span class="icon is-size-7">
-              <span class="fas fa-chevron-right"></span>
-            </span>
-            <span>Objetivos</span>
-          </span>
-        </h4>
-        <div v-show="empty" class="column">
-          <div class="notification">
-            <p>Todavía no estableciste ningún objetivo.</p>
+      <div class="container">
+        <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+          <ul>
+            <li>
+              <router-link to="/projects">
+                <span>Proyectos</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="'/projects/' + data._id">
+                <span v-html="data.title"></span>
+              </router-link>
+            </li>
+            <li class="is-active">
+              <a href="#" aria-current="page">Objetivos</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="content">
+          <div v-show="empty" class="column">
+            <div class="notification">
+              <p>Todavía no estableciste ningún objetivo.</p>
+            </div>
           </div>
-        </div>
-        <div v-if="!empty" class="columns is-multiline">
-          <div class="column is-4" v-for="item in data.milestones">
-            <router-link :to="'/milestones/' + item.id">
-              <div class="box">
-                <h2><span v-html="item.title"></span></h2>
-              </div>
-            </router-link>
+          <div v-if="!empty" class="columns is-multiline">
+            <div class="column is-4" v-for="item in data.milestones">
+              <router-link :to="'/milestones/' + item.id">
+                <div class="box">
+                  <h2><span v-html="item.title"></span></h2>
+                </div>
+              </router-link>
+            </div>
           </div>
-        </div>
-        <div class="columns">
-          <div class="column has-text-centered slideIn">
-            <router-link :to="'/milestones/' + $route.params.id + '/create'" class="button is-success">
-              <span>Establecer objetivos</span>
-            </router-link>
-            <a @click="remove(data._id)" class="button is-danger">
-              <span>Eliminar proyecto</span>
-            </a>
+          <div class="columns">
+            <div class="column has-text-centered slideIn">
+              <router-link :to="'/milestones/' + $route.params.id + '/create'" class="button is-success">
+                <span>Establecer objetivos</span>
+              </router-link>
+              <a @click="remove(data._id)" class="button is-danger">
+                <span>Eliminar proyecto</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

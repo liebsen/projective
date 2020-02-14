@@ -1,45 +1,53 @@
 <template>
   <section class="hero">
     <div v-show="!$root.loading" class="hero-body">
-      <div class="container content">
-        <h4>
-          <span class="icon is-size-7">
-            <span class="fas fa-project-diagram"></span>
-          </span> 
-          <span>
-            <router-link to="/projects">
-              <span>Proyectos</span>
-            </router-link>
-            <span class="icon is-size-7">
-              <span class="fas fa-chevron-right"></span>
-            </span>
-            <span v-html="data.title"></span>
-            <span class="icon is-size-7">
-              <span class="fas fa-chevron-right"></span>
-            </span>
-            <!--span v-html="data.milestones[0][$route.params._id].title"></span-->
-          </span>
-        </h4>
-        <div v-show="empty" class="column">
-          <div class="notification">
-            <p>Todavía no hay cuestiones.</p>
-          </div>
-        </div>
-        <div class="columns is-multiline">
-          <div class="column is-4">
-            <div class="box">
-              <h2><span v-html="data.milestones.issues.text"></span></h2>
+      <div class="container">
+        <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+          <ul>
+            <li>
+              <router-link to="/projects">
+                <span>Proyectos</span>
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="'/projects/' + data._id">
+                <span v-html="data.title"></span>
+              </router-link>
+            </li>
+            <li>
+              <router-link :to="'/milestones/' + data.milestones._id">
+                <span v-html="data.milestones.title"></span>
+              </router-link>
+            </li>
+            <li class="is-active">
+              <a href="#" aria-current="page">
+                <span v-html="data.milestones.issues.title"></span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="content">
+          <div v-show="empty" class="column">
+            <div class="notification">
+              <p>Todavía no hay cuestiones.</p>
             </div>
           </div>
-        </div>
-        <div class="columns">
-          <div class="column has-text-centered slideIn">
-            <router-link :to="'/issues/' + data.milestones.id + '/create'" class="button is-success">
-              <span>Agregar cuestión</span>
-            </router-link>
-            <a @click="remove(data._id)" class="button is-danger">
-              <span>Eliminar cuestión</span>
-            </a>
+          <div class="columns is-multiline">
+            <div class="column is-4">
+              <div class="box">
+                <h2><span v-html="data.milestones.issues.title"></span></h2>
+              </div>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column has-text-centered slideIn">
+              <router-link :to="'/issues/' + data.milestones.id + '/create'" class="button is-success">
+                <span>Agregar cuestión</span>
+              </router-link>
+              <a @click="remove(data._id)" class="button is-danger">
+                <span>Eliminar cuestión</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

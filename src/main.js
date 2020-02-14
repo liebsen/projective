@@ -16,8 +16,8 @@ require('../assets/css/main.scss')
 
 Vue.prototype.$http = axios
 const token = localStorage.getItem('token')
-//const endpoint = 'https://projectiveapi.herokuapp.com'
-const endpoint = 'http://localhost:3000'
+const endpoint = 'https://projectiveapi.herokuapp.com'
+//const endpoint = 'http://localhost:3000'
 
 Vue.use(VuejsDialog);
 

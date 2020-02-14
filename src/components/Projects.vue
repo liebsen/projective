@@ -1,32 +1,33 @@
 <template>
   <section class="hero">
     <div v-show="!$root.loading" class="hero-body">
-      <div class="container content is-flex-column is-vertical">
-        <h4>
-          <span class="icon is-size-7">
-            <span class="fas fa-project-diagram"></span>
-          </span> 
-          <span>Proyectos</span>
-        </h4>
-        <div v-show="empty" class="column">
-          <div class="notification">
-            <p>Todavía no creaste ningún proyecto.</p>
+      <div class="container">
+        <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+          <ul>
+            <li><a href="/projects">Proyectos</a></li>
+          </ul>
+        </nav>
+        <div class="content is-flex-column is-vertical">
+          <div v-show="empty" class="column">
+            <div class="notification">
+              <p>Todavía no creaste ningún proyecto.</p>
+            </div>
           </div>
-        </div>
-        <div class="columns is-multiline">
-          <div class="column is-4" v-for="item in data">
-            <router-link :to="'/projects/' + item._id">
-              <div class="box">
-                <h2><span v-html="item.title"></span></h2>
-              </div>
-            </router-link>
+          <div class="columns is-multiline">
+            <div class="column is-4" v-for="item in data">
+              <router-link :to="'/projects/' + item._id">
+                <div class="box">
+                  <h2><span v-html="item.title"></span></h2>
+                </div>
+              </router-link>
+            </div>
           </div>
-        </div>
-        <div class="columns">
-          <div class="column has-text-centered slideIn">
-            <router-link to="/projects/create" class="button is-success">
-              <span>Crear nuevo proyecto</span>
-            </router-link>
+          <div class="columns">
+            <div class="column has-text-centered slideIn">
+              <router-link to="/projects/create" class="button is-success">
+                <span>Crear nuevo proyecto</span>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>

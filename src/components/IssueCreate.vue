@@ -7,7 +7,12 @@
           <p>Ingresá la cuestión para este objetivo</p>
           <div class="field">
             <div class="control">
-              <textarea v-model="data.issue" class="textarea" placeholder="Hay una cuestión con este objetivo..." required></textarea>
+              <input v-model="data.title" class="input" type="text" placeholder="Nombre del proyecto" required>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <textarea v-model="data.text" class="textarea" placeholder="Hay una cuestión con este objetivo..." required></textarea>
             </div>
           </div>
           <div class="field">
