@@ -42,7 +42,7 @@
                 <span>Agregar cuestión</span>
               </router-link>
               <a @click="remove(data._id)" class="button is-danger">
-                <span>Eliminar objetivo</span>
+                <span>Eliminar tarea <span v-html="data.milestones.title"></span></span>
               </a>
             </div>
           </div>

@@ -48,8 +48,15 @@ new Vue({
     this.loading = false
   },
   methods: {
+    token : function(){
+      return JSON.parse(localStorage.getItem('token')) || {}
+    },
+    account : function(){
+      return JSON.parse(localStorage.getItem('account')) || {}
+    },
     logout: function() {
       this.$store.dispatch("logout").then(() => {
+        localStorage.removeItem('account')
         this.$router.push("/login");
       });
     },

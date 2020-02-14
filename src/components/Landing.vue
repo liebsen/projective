@@ -2,7 +2,7 @@
   <div class="columns has-text-centered photo photo1">
     <div class="column">
       <div class="main-box content slideIn">
-        <h1>Projective</h1>
+        <h1>Hola, somos Projective</h1>
         <p>
           <span>Creá proyectos y seguilos junto a tu equipo</span>
         </p>

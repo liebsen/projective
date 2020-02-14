@@ -36,9 +36,11 @@ export default {
       this.$root.processing = true
       this.$store
         .dispatch("login", { email, password })
-        .then(() => {
+        .then(res => {
+          console.log(res.data)
           this.$root.snackbar('success',"Sesión iniciada correctamente. Redirigiendo...")
           this.$root.processing = false
+          localStorage.setItem('account', JSON.stringify(res.data.user))
           setTimeout(() => {
             this.$router.push("/projects")
           },3000)

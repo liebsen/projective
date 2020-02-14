@@ -3,19 +3,16 @@
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
         <form class="form" @submit.prevent="submit">
-          <h1>Nuevas tareas para <span v-html="data.title"></span></h1>
-          <p>Ingresá las tareas separadas por salto de línea</p>
+          <h1>Nuevo integrante para <span v-html="data.title"></span></h1>
+          <p>Ingresá el email del nuevo integrante</p>
           <div class="field">
             <div class="control">
-              <textarea v-model="data.milestones" class="textarea" placeholder="Análisis de base de datos
-Diseño
-Desarrollo web
-etc..." required></textarea>
+              <input v-model="data.email" class="input" type="email" placeholder="mariano@projective.app" required>
             </div>
           </div>
           <div class="field">
             <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Establecer tareas</button>
+              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Agregar</button>
             </div>
           </div>  
         </form>
@@ -27,7 +24,7 @@ etc..." required></textarea>
 <script>
 import axios from 'axios'
 export default {
-  name: 'milestones_create',
+  name: 'persons_create',
   mounted: function(){
     var t = this
     t.$root.loading = true
@@ -51,11 +48,11 @@ export default {
     submit : function(){
       let t = this
       t.$root.processing = true
-      axios.put( t.$root.endpoint + '/milestones/' + t.$route.params.project_id, t.data).then((res) => {
+      axios.put( t.$root.endpoint + '/project', t.data).then((res) => {
         t.data = res.data
         t.$root.processing = false
-        t.$root.snackbar('success','Estableciste nuevos objetivos para ' + t.data.title)
-        t.$router.push('/projects/' + t.$route.params.project_id)
+        t.$root.snackbar('success','Agregaste un nuevo integrante a un proyecto')
+        t.$router.push('/projects')
       }).catch(err => {
         t.$root.processing = false
         if(err){

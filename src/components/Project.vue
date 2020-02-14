@@ -15,14 +15,14 @@
               </router-link>
             </li>
             <li class="is-active">
-              <a href="#" aria-current="page">Objetivos</a>
+              <a href="#" aria-current="page">Tareas</a>
             </li>
           </ul>
         </nav>
         <div class="content">
           <div v-show="empty" class="column">
             <div class="notification">
-              <p>Todavía no estableciste ningún objetivo.</p>
+              <p>Todavía no estableciste ninguna tarea</p>
             </div>
           </div>
           <div v-if="!empty" class="columns is-multiline">
@@ -36,11 +36,14 @@
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
+              <router-link :to="'/persons/' + $route.params.id + '/create'" class="button is-info">
+                <span>Personas</span>
+              </router-link>
               <router-link :to="'/milestones/' + $route.params.id + '/create'" class="button is-success">
-                <span>Establecer objetivos</span>
+                <span>Tareas</span>
               </router-link>
               <a @click="remove(data._id)" class="button is-danger">
-                <span>Eliminar proyecto</span>
+                <span>Eliminar proyecto <span v-html="data.title"></span></span>
               </a>
             </div>
           </div>
@@ -80,6 +83,7 @@ export default {
       swal({
         title: `Eliminar proyecto ${t.data.title}`,
         text: '¿Querés borrar este proyecto?',
+        dangerMode: true,
         buttons: ["No", "Sí"]
       })
       .then(accept => {
