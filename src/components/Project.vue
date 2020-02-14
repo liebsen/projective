@@ -25,18 +25,18 @@
             <p>Todavía no estableciste ningún objetivo.</p>
           </div>
         </div>
-        <div class="columns is-multiline">
+        <div v-if="!empty" class="columns is-multiline">
           <div class="column is-4" v-for="item in data.milestones">
-            <router-link :to="'/milestones/' + data._id + '/' + Object.keys(item)[0]">
+            <router-link :to="'/milestones/' + item.id">
               <div class="box">
-                <h2><span v-html="item[Object.keys(item)[0]].title"></span></h2>
+                <h2><span v-html="item.title"></span></h2>
               </div>
             </router-link>
           </div>
         </div>
         <div class="columns">
           <div class="column has-text-centered slideIn">
-            <router-link :to="'/milestones/' + data._id + '/create'" class="button is-success">
+            <router-link :to="'/milestones/' + $route.params.id + '/create'" class="button is-success">
               <span>Establecer objetivos</span>
             </router-link>
             <a @click="remove(data._id)" class="button is-danger">
@@ -57,11 +57,11 @@ export default {
   mounted: function(){
     var t = this
     t.$root.loading = true
-    if(!t.$route.params._id){
+    if(!t.$route.params.id){
       t.$root.false = true
       return t.$root.snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/project/' + t.$route.params._id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/project/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.milestones == undefined

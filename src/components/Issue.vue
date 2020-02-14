@@ -26,21 +26,19 @@
           </div>
         </div>
         <div class="columns is-multiline">
-          <div class="column is-4" v-for="item in data.milestones.issues">
-            <router-link :to="'/issues/' + item.id">
-              <div class="box">
-                <h2><span v-html="item.text"></span></h2>
-              </div>
-            </router-link>
+          <div class="column is-4">
+            <div class="box">
+              <h2><span v-html="data.milestones.issues.text"></span></h2>
+            </div>
           </div>
         </div>
         <div class="columns">
           <div class="column has-text-centered slideIn">
-            <router-link :to="'/issues/' + $route.params.id + '/create'" class="button is-success">
+            <router-link :to="'/issues/' + data.milestones.id + '/create'" class="button is-success">
               <span>Agregar cuestión</span>
             </router-link>
             <a @click="remove(data._id)" class="button is-danger">
-              <span>Eliminar objetivo</span>
+              <span>Eliminar cuestión</span>
             </a>
           </div>
         </div>
@@ -53,7 +51,7 @@
 import axios from 'axios'
 import swal from 'sweetalert'
 export default {
-  name: 'milestone',
+  name: 'issue',
   mounted: function(){
     var t = this
     t.$root.loading = true
@@ -61,10 +59,10 @@ export default {
       t.$root.false = true
       return t.$root.snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/milestone/' + t.$route.params.id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/issues/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.empty = res.data.milestones.issues == undefined
+      //t.empty = res.data.milestones.issues == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
