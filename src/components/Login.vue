@@ -40,7 +40,7 @@ export default {
           this.$root.snackbar('success',"Sesión iniciada correctamente. Redirigiendo...")
           this.$root.processing = false
           setTimeout(() => {
-            this.$router.push("/panel")
+            this.$router.push("/projects")
           },3000)
         })
         .catch(err => {

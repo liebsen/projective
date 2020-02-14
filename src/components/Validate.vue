@@ -30,7 +30,7 @@ export default {
     t.$root.loading = true
     this.$store
       .dispatch("validate", t.$route.params.code)
-      .then(() => this.$router.push("/panel"))
+      .then(() => this.$router.push("/projects"))
       .catch(err => console.log(err));
   },
   data () {
