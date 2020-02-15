@@ -15,8 +15,6 @@ require('../assets/css/main.scss')
 
 moment.locale('es')
 
-
-
 Vue.prototype.$http = axios
 
 const token = localStorage.getItem('token')

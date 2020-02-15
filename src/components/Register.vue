@@ -63,13 +63,6 @@
 import axios from 'axios'
 export default {
   name: 'register',
-  data() {
-    return {
-      acceptTerms: false,
-      codeChecked: false,
-      data: {}
-    };
-  },
   methods: {
     validate: function(){
       var t = this
@@ -106,6 +99,15 @@ export default {
         .then(() => this.$router.push("/register-success"))
         .catch(err => console.log(err));
     }
-  }
+  },
+  data() {
+    return {
+      acceptTerms: false,
+      codeChecked: false,
+      data: {
+        code: this.$route.params.code
+      }
+    };
+  },
 }
 </script>

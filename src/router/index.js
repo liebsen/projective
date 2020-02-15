@@ -55,7 +55,7 @@ const router = new Router({
       component: Dash
     },    
     {
-      path: '/register',
+      path: '/register/:code?',
       name: 'register',
       component: Register
     },
