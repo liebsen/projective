@@ -15,13 +15,13 @@
               </router-link>
             </li>
             <li>
-              <router-link :to="'/milestones/' + data.milestones._id">
-                <span v-html="data.milestones.title"></span>
+              <router-link :to="'/tasks/' + data.tasks._id">
+                <span v-html="data.tasks.title"></span>
               </router-link>
             </li>
             <li class="is-active">
               <a href="#" aria-current="page">
-                <span v-html="data.milestones.issues.title"></span>
+                <span v-html="data.tasks.issues.title"></span>
               </a>
             </li>
           </ul>
@@ -35,13 +35,13 @@
           <div class="columns is-multiline">
             <div class="column is-4">
               <div class="box">
-                <h2><span v-html="data.milestones.issues.title"></span></h2>
+                <h2><span v-html="data.tasks.issues.title"></span></h2>
               </div>
             </div>
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
-              <router-link :to="'/issues/' + data.milestones.id + '/create'" class="button is-success">
+              <router-link :to="'/issues/' + data.tasks.id + '/create'" class="button is-success">
                 <span>Agregar cuestión</span>
               </router-link>
               <a @click="remove(data._id)" class="button is-danger">
@@ -70,7 +70,7 @@ export default {
     axios.get( t.$root.endpoint + '/issues/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      //t.empty = res.data.milestones.issues == undefined
+      //t.empty = res.data.tasks.issues == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
@@ -90,7 +90,7 @@ export default {
       .then(accept => {
         if (accept) {
           t.$root.loading = true
-          axios.delete( t.$root.endpoint + '/milestone/' + t.$route.params.id, {}).then((res) => {
+          axios.delete( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
             t.$root.loading = false
             t.$root.snackbar('success',"Se eliminó objetivo "  )
             t.$router.push('/projects/' + t.data._id)

@@ -7,7 +7,7 @@
           <p>Ingresá las tareas separadas por salto de línea</p>
           <div class="field">
             <div class="control">
-              <textarea v-model="data.milestones" class="textarea" placeholder="Análisis de base de datos
+              <textarea v-model="data.tasks" class="textarea" placeholder="Análisis de base de datos
 Diseño
 Desarrollo web
 etc..." required></textarea>
@@ -27,7 +27,7 @@ etc..." required></textarea>
 <script>
 import axios from 'axios'
 export default {
-  name: 'milestones_create',
+  name: 'tasks_create',
   mounted: function(){
     var t = this
     t.$root.loading = true
@@ -38,7 +38,7 @@ export default {
     axios.get( t.$root.endpoint + '/project/' + t.$route.params.project_id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.empty = res.data.milestones == undefined
+      t.empty = res.data.tasks == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
@@ -51,7 +51,7 @@ export default {
     submit : function(){
       let t = this
       t.$root.processing = true
-      axios.put( t.$root.endpoint + '/milestones/' + t.$route.params.project_id, t.data).then((res) => {
+      axios.put( t.$root.endpoint + '/task/' + t.$route.params.project_id, t.data).then((res) => {
         t.data = res.data
         t.$root.processing = false
         t.$root.snackbar('success','Estableciste nuevos objetivos para ' + t.data.title)

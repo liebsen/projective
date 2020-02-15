@@ -10,12 +10,12 @@ import Validate from '../components/Validate'
 import Projects from '../components/Projects'
 import Project from '../components/Project'
 import ProjectCreate from '../components/ProjectCreate'
-import MilestoneCreate from '../components/MilestoneCreate'
-import MilestoneEdit from '../components/MilestoneEdit'
+import TaskCreate from '../components/TaskCreate'
+import TaskEdit from '../components/TaskEdit'
 import IssueCreate from '../components/IssueCreate'
 import PersonCreate from '../components/PersonCreate'
 import Issue from '../components/Issue'
-import Milestone from '../components/Milestone'
+import Task from '../components/Task'
 import Cotizacion from '../components/Cotizacion'
 import Terminos from '../components/Terminos'
 import Dash from '../components/Dash'
@@ -99,31 +99,31 @@ const router = new Router({
       }
     },
     {
-      path: '/milestones/:project_id/create',
-      name: 'milestones_create',
-      component: MilestoneCreate,
+      path: '/tasks/:project_id/create',
+      name: 'tasks_create',
+      component: TaskCreate,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/milestones/:id/edit',
-      name: 'milestones_edit',
-      component: MilestoneEdit,
+      path: '/tasks/:id/edit',
+      name: 'tasks_edit',
+      component: TaskEdit,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/milestones/:id',
-      name: 'milestone',
-      component: Milestone,
+      path: '/tasks/:id',
+      name: 'task',
+      component: Task,
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/issues/:milestone_id/create',
+      path: '/issues/:task_id/create',
       name: 'issues_create',
       component: IssueCreate,
       meta: {

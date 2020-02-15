@@ -3,8 +3,8 @@
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
         <form class="form" @submit.prevent="submit">
-          <h1>Editar tarea <span v-html="data.title"></span></h1>
-          <p>Ingresá los datos de esta tarea</p>
+          <h1>Editar proyecto <span v-html="data.title"></span></h1>
+          <p>Ingresá los datos de este proyecto</p>
           <div class="field">
             <div class="control">
               <datepicker input-class="input" v-model="update.due_date" name="due_date"></datepicker>
@@ -22,7 +22,7 @@
           </div>
           <div class="field">
             <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Actualizar tarea</button>
+              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Actualizar proyecto</button>
             </div>
           </div>  
         </form>
@@ -35,7 +35,7 @@
 import axios from 'axios'
 import Datepicker from 'vuejs-datepicker';
 export default {
-  name: 'milestones_edit',
+  name: 'tasks_edit',
   components: {
     Datepicker
   },
@@ -46,11 +46,11 @@ export default {
       t.$root.false = true
       return t.$root.snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/milestone/' + t.$route.params.id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/project/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.update = res.data.milestones.extra
-      t.empty = res.data.milestones == undefined
+      t.update = res.data.tasks.extra
+      t.empty = res.data.tasks == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
@@ -63,11 +63,11 @@ export default {
     submit : function(){
       let t = this
       t.$root.processing = true
-      axios.post( t.$root.endpoint + '/milestones/' + t.$route.params.id, t.update).then((res) => {
+      axios.post( t.$root.endpoint + '/project/' + t.$route.params.id, t.update).then((res) => {
         t.data = res.data
         t.$root.processing = false
         t.$root.snackbar('success','Editaste tarea ' + t.data.title)
-        t.$router.push('/milestones/' + t.$route.params.id)
+        t.$router.push('/tasks/' + t.$route.params.id)
       }).catch(err => {
         t.$root.processing = false
         if(err){

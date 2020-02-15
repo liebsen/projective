@@ -16,7 +16,7 @@
             </li>
             <li class="is-active">
               <a href="#" aria-current="page">
-                <span v-html="data.milestones.title"></span>
+                <span v-html="data.tasks.title"></span>
               </a>
             </li>
           </ul>
@@ -24,7 +24,7 @@
         <div class="content">
           <div v-show="empty" class="column">
             <div class="notification">
-              <pre v-html="data.milestones.extra"></pre>
+              <pre v-html="data.tasks.extra"></pre>
             </div>
           </div>
 
@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="columns is-multiline">
-            <div class="column is-4" v-for="item in data.milestones.issues">
+            <div class="column is-4" v-for="item in data.tasks.issues">
               <router-link :to="'/issues/' + item.id">
                 <div class="box">
                   <h2><span v-html="item.title"></span></h2>
@@ -44,14 +44,14 @@
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
-              <router-link :to="'/milestones/' + $route.params.id + '/edit'" class="button is-success">
+              <router-link :to="'/tasks/' + $route.params.id + '/edit'" class="button is-success">
                 <span>Editar</span>
               </router-link>
               <router-link :to="'/issues/' + $route.params.id + '/create'" class="button is-success">
                 <span>Agregar cuestión</span>
               </router-link>
               <a @click="remove" class="button is-danger">
-                <span>Eliminar tarea <span v-html="data.milestones.title"></span></span>
+                <span>Eliminar tarea <span v-html="data.tasks.title"></span></span>
               </a>
             </div>
           </div>
@@ -66,7 +66,7 @@
 import axios from 'axios'
 import swal from 'sweetalert'
 export default {
-  name: 'milestone',
+  name: 'task',
   mounted: function(){
     var t = this
     t.$root.loading = true
@@ -74,10 +74,10 @@ export default {
       t.$root.false = true
       return t.$root.snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/milestone/' + t.$route.params.id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.empty = res.data.milestones.issues == undefined
+      t.empty = res.data.tasks.issues == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
@@ -98,7 +98,7 @@ export default {
       .then(accept => {
         if (accept) {
           t.$root.loading = true
-          axios.delete( t.$root.endpoint + '/milestone/' + t.$route.params.id, {}).then((res) => {
+          axios.delete( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
             t.$root.loading = false
             t.$root.snackbar('success',"Se eliminó objetivo "  )
             t.$router.push('/projects/' + t.data._id)

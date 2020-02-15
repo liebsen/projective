@@ -26,8 +26,8 @@
             </div>
           </div>
           <div v-if="!empty" class="columns is-multiline">
-            <div class="column is-4" v-for="item in data.milestones">
-              <router-link :to="'/milestones/' + item.id">
+            <div class="column is-4" v-for="item in data.tasks">
+              <router-link :to="'/tasks/' + item.id">
                 <div class="box">
                   <h2><span v-html="item.title"></span></h2>
                 </div>
@@ -39,7 +39,7 @@
               <router-link :to="'/persons/' + $route.params.id + '/create'" class="button is-info">
                 <span>Personas</span>
               </router-link>
-              <router-link :to="'/milestones/' + $route.params.id + '/create'" class="button is-success">
+              <router-link :to="'/tasks/' + $route.params.id + '/create'" class="button is-success">
                 <span>Tareas</span>
               </router-link>
               <a @click="remove(data._id)" class="button is-danger">
@@ -69,7 +69,7 @@ export default {
     axios.get( t.$root.endpoint + '/project/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.empty = res.data.milestones == undefined
+      t.empty = res.data.tasks == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
