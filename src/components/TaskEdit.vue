@@ -3,7 +3,7 @@
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
         <form class="form" @submit.prevent="submit">
-          <h1>Editar tarea <span v-html="data.title"></span></h1>
+          <h1>Editar tarea <span v-html="data.tasks.title"></span></h1>
           <p>Ingresá los datos de esta tarea</p>
           <div class="field">
             <div class="control">
@@ -49,7 +49,7 @@ export default {
     axios.get( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.update = res.data.tasks.extra
+      t.update = res.data.tasks.extra||{}
       t.empty = res.data.tasks == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
@@ -63,7 +63,7 @@ export default {
     submit : function(){
       let t = this
       t.$root.processing = true
-      axios.post( t.$root.endpoint + '/tasks/' + t.$route.params.id, t.update).then((res) => {
+      axios.post( t.$root.endpoint + '/task/' + t.$route.params.id, t.update).then((res) => {
         t.data = res.data
         t.$root.processing = false
         t.$root.snackbar('success','Editaste tarea ' + t.data.title)

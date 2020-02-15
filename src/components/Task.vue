@@ -22,15 +22,21 @@
           </ul>
         </nav>
         <div class="content">
-          <div v-show="empty" class="column">
+          <div v-show="data.tasks.extra" class="column">
             <div class="notification">
               <pre v-html="data.tasks.extra"></pre>
             </div>
           </div>
 
+          <div v-show="!data.tasks.extra" class="column">
+            <div class="notification">
+              <p>Todavía no hay detalles</p>
+            </div>
+          </div>
+
           <div v-show="empty" class="column">
             <div class="notification">
-              <p>Todavía no hay cuestiones.</p>
+              <p>Todavía no hay cuestiones sobre <span v-html="data.tasks.title"></span></p>
             </div>
           </div>
           <div class="columns is-multiline">
@@ -116,7 +122,7 @@ export default {
   },
   data () {
     return {
-      data:{},
+      data:{ tasks: { extra: {}, issues: {}}},
       empty:false
     }
   }

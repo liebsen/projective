@@ -1,8 +1,8 @@
-# FletsApp
+# Projective
 
-> Llevalo y traelo al toque
+> Planning & tracking collaborative online platform
 
-[Demo](https://fletsapp.herokuapp.com).
+[Demo](https://projective.herokuapp.com).
 
 ## Build Setup
 

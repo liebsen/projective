@@ -2,20 +2,27 @@
   <div class="columns is-centered has-text-centered photo photo2">
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
-        <form class="form" @submit.prevent="submit">
-          <h1>Nuevo integrante para <span v-html="data.title"></span></h1>
-          <p>Ingresá el email del nuevo integrante</p>
-          <div class="field">
-            <div class="control">
-              <input v-model="data.email" class="input" type="email" placeholder="mariano@projective.app" required>
-            </div>
+        <h1>Nuevo integrante para <span v-html="data.title"></span></h1>
+        <div v-show="showExisting" class="field">
+          <p>Elegí la persona de la lista o <a @click="showExisting = false">agregalo si no existe.</a></p>
+          <label class="label">Seleccioná el nuevo integrante</label>
+          <div class="control">
+            <v-autocomplete input-class="input" :items="items" v-model="item" :get-label="getLabel" :component-item='template' @update-items="updateItems"></v-autocomplete>
           </div>
-          <div class="field">
-            <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Agregar</button>
-            </div>
-          </div>  
-        </form>
+        </div>
+        <div v-show="!showExisting" class="field">
+          <p>Ingresá el email de la persona o <a @click="showExisting = true">selecioná uno existente.</a></p>
+
+          <label class="label">Agregar email del nuevo integrante</label>
+          <div class="control">
+            <input v-model="data.email" class="input" type="email" placeholder="mariano@projective.app" required>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control has-text-centered">
+            <button type="button" @click="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Agregar</button>
+          </div>
+        </div>  
       </div>
     </div>
   </div>
@@ -23,6 +30,7 @@
 
 <script>
 import axios from 'axios'
+import ItemTemplate from './ItemTemplate.vue'
 export default {
   name: 'persons_create',
   mounted: function(){
@@ -45,10 +53,25 @@ export default {
     })
   },
   methods: {
-    submit : function(){
+    getLabel (item) {
+      if(item)
+      return item.name
+    },
+    updateItems (text) {
       let t = this
       t.$root.processing = true
-      axios.put( t.$root.endpoint + '/project', t.data).then((res) => {
+      axios.post( t.$root.endpoint + '/person/search', {text: text}).then( (res) => {
+        this.items = res.data
+        t.$root.processing = false
+      })
+    },
+    submit : function(){
+      let t = this
+      console.log("submm")
+      t.$root.processing = true
+      let action = t.showExisting ? 'assign' : 'create'
+      let data = t.showExisting ? t.item : t.data
+      axios.post( t.$root.endpoint + '/person/' + action, data).then((res) => {
         t.data = res.data
         t.$root.processing = false
         t.$root.snackbar('success','Agregaste un nuevo integrante a un proyecto')
@@ -63,7 +86,11 @@ export default {
   },
   data () {
     return {
-      data:{}
+      data:{},
+      showExisting: true,
+      item: {_id: 0, name: '', registration_date: ''},
+      items: [],
+      template: ItemTemplate
     }
   }
 }

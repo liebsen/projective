@@ -5,21 +5,25 @@ import moment from 'moment'
 import axios from 'axios'
 import store from './components/Store'
 import snackbar from './components/Snackbar';
-import VuejsDialog from 'vuejs-dialog';
 import VueSlider from 'vue-slider-component'
 import VueSocketIO from 'vue-socket.io'
+import Autocomplete from 'v-autocomplete'
+
 import 'vue-slider-component/theme/antd.css'
+import 'v-autocomplete/dist/v-autocomplete.css'
+require('../assets/css/main.scss')
 
 moment.locale('es')
 
-require('../assets/css/main.scss')
+
 
 Vue.prototype.$http = axios
+
 const token = localStorage.getItem('token')
 const endpoint = 'https://projectiveapi.herokuapp.com'
 //const endpoint = 'http://localhost:3000'
 
-Vue.use(VuejsDialog);
+Vue.use(Autocomplete)
 
 if (token) {
   axios.defaults.headers.common['Authorization'] = token
