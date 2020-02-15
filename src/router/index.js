@@ -11,6 +11,7 @@ import Projects from '../components/Projects'
 import Project from '../components/Project'
 import ProjectCreate from '../components/ProjectCreate'
 import MilestoneCreate from '../components/MilestoneCreate'
+import MilestoneEdit from '../components/MilestoneEdit'
 import IssueCreate from '../components/IssueCreate'
 import PersonCreate from '../components/PersonCreate'
 import Issue from '../components/Issue'
@@ -101,6 +102,14 @@ const router = new Router({
       path: '/milestones/:project_id/create',
       name: 'milestones_create',
       component: MilestoneCreate,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/milestones/:id/edit',
+      name: 'milestones_edit',
+      component: MilestoneEdit,
       meta: {
         requiresAuth: true
       }

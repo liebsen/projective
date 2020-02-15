@@ -108,7 +108,7 @@
     </div>
     
     <keep-alive v-show="!$root.loading" include="contacto">
-      <router-view/>
+      <router-view :key="$route.fullPath" />
     </keep-alive>
 
     <div class="tosprompt">

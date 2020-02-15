@@ -24,6 +24,12 @@
         <div class="content">
           <div v-show="empty" class="column">
             <div class="notification">
+              <pre v-html="data.milestones.extra"></pre>
+            </div>
+          </div>
+
+          <div v-show="empty" class="column">
+            <div class="notification">
               <p>Todavía no hay cuestiones.</p>
             </div>
           </div>
@@ -38,14 +44,18 @@
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
+              <router-link :to="'/milestones/' + $route.params.id + '/edit'" class="button is-success">
+                <span>Editar</span>
+              </router-link>
               <router-link :to="'/issues/' + $route.params.id + '/create'" class="button is-success">
                 <span>Agregar cuestión</span>
               </router-link>
-              <a @click="remove(data._id)" class="button is-danger">
+              <a @click="remove" class="button is-danger">
                 <span>Eliminar tarea <span v-html="data.milestones.title"></span></span>
               </a>
             </div>
           </div>
+          <!--pre v-html="data"></pre-->
         </div>
       </div>
     </div>
@@ -77,11 +87,12 @@ export default {
     })
   },
   methods: {
-    remove: function(id){
+    remove: function(){
       let t = this
       swal({
-        title: `Eliminar objetivo `,
-        text: '¿Querés borrar este objetivo?',
+        title: `Eliminar tarea `,
+        text: '¿Querés borrar esta tarea?',
+        dangerMode: true,
         buttons: ["No", "Sí"]
       })
       .then(accept => {

@@ -30,6 +30,7 @@
               </router-link>
             </div>
           </div>
+          <!--pre v-html="data"></pre-->
         </div>
       </div>
     </div>
@@ -45,7 +46,7 @@ export default {
   mounted: function(){
     let t = this
     t.$root.loading = true
-    axios.post( t.$root.endpoint + '/projects', {}).then((res) => {
+    axios.get( t.$root.endpoint + '/projects', {}).then((res) => {
       t.data = res.data
       t.data.empty = Object.keys(res.data).length?false:true
       t.$root.loading = false
