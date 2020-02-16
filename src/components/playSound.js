@@ -1,9 +1,9 @@
 module.exports = function (audio,vol) {
   if(vol === undefined) vol = 1
-  if(audio === undefined) audio = "move.ogg"
+  if(audio === undefined) audio = "chat.ogg"
 
   const pref = JSON.parse(localStorage.getItem('player'))||{}
-  const sound = new Audio('/static/audio/' + audio)
+  const sound = new Audio('/static/sounds/' + audio)
   sound.vol = vol
 
   if(pref.sound){

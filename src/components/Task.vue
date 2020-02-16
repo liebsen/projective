@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="column">
-              <div class="column has-text-left box">
+              <div class="column has-text-left has-background-light chatbox-container">
                 <div class="columns">
                   <div class="column chatbox"></div>
                 </div>
@@ -109,7 +109,6 @@ export default {
   mounted: function(){
     var t = this
     t.$root.loading = true
-    t.$socket.emit('chat_join', t.$route.params)
     if(!t.$route.params.id){
       t.$root.false = true
       return t.$root.snackbar('error',"No preference param.")
@@ -118,6 +117,8 @@ export default {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks.issues == undefined
+      console.log(t.$root.account)
+      t.$socket.emit('chat_join', {id:t.$route.params.id, code: t.$root.account._id})
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
@@ -128,12 +129,15 @@ export default {
   },
   methods: {
     sendChat: function() {
-      if(this.chat.trim()==='') this.chat = '👋'
-      this.$socket.emit('chat_send', { 
-        sender: this.$root.account._id,
-        line: this.chat
+      let t = this
+      if(t.chat.trim()==='') t.chat = '👋'
+      console.log("send:" + t.chat)
+      t.$socket.emit('chat_send', { 
+        room: t.$route.params.id,
+        sender: t.$root.account._id,
+        line: t.chat
       })
-      this.chat = ''
+      t.chat = ''
     },
     remove: function(){
       let t = this

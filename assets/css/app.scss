@@ -21,6 +21,22 @@ body > div {
   }
 }
 
+.chatbox-container {
+  border-radius: 10px;
+  .chatbox {
+    min-height: 270px;
+    width: 100%;
+    overflow-y: auto;
+    .line {
+        border-radius: 10px;
+        clear: both;
+        padding: 0.25rem 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+  }
+}
+
+
 .input {
   padding-top: calc(0.375em - 6px);
 }

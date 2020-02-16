@@ -9,31 +9,24 @@ import VueSlider from 'vue-slider-component'
 import VueSocketIO from 'vue-socket.io'
 import Autocomplete from 'v-autocomplete'
 import playSound from './components/playSound'
-
 import 'vue-slider-component/theme/antd.css'
 import 'v-autocomplete/dist/v-autocomplete.css'
 require('../assets/css/main.scss')
 
-moment.locale('es')
-
-Vue.prototype.$http = axios
-
 const token = localStorage.getItem('token')
 const account = localStorage.getItem('account')
-const endpoint = 'https://projectiveapi.herokuapp.com'
-//const endpoint = 'http://localhost:3000'
 
-Vue.use(Autocomplete)
-
-document.cookie = 'X-Authorization=' + token + '; path=/'
+moment.locale('es')
 
 if (token) {
   axios.defaults.headers.common['Authorization'] = token
 }
 
+Vue.prototype.$http = axios
+Vue.use(Autocomplete)
 Vue.use(new VueSocketIO({
-  //debug: true,
-  connection: endpoint,
+  debug: process.env.NODE_ENV=='development',
+  connection: process.env.ENDPOINT,
   options: {query: '&token=' + token}
 }))
 
@@ -55,18 +48,20 @@ new Vue({
     this.loading = false
   },
   sockets: {
-    chat_send: function(data){
+    chat_line: function(data){
+      console.log("chat:")
+      console.log(data)
       const chatbox = document.querySelector(".chatbox")
       if(chatbox){
-        const owned = account.id === data.sender_id
+        const owned = this.$root.account._id === data.sender
         const cls = owned ? 'is-pulled-right has-text-right has-background-info has-text-white' : 'is-pulled-left has-text-left'
-        const sender = data.sender === this.$root.player.code ? '' : data.sender
+        const sender = data.sender === this.$root.account._id ? '' : data.sender
         const sender_color = data.sender === 'chatbot' ? 'primary' : 'info'
         const ts = moment().format('hh:mm a')
-        chatbox.innerHTML+= `<div class="box ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-light">${ts}</span></div>`
+        chatbox.innerHTML+= `<div class="line ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-light">${ts}</span></div>`
         chatbox.scrollTop = chatbox.scrollHeight
-        if(data.sender != this.$root.player.code){
-          playSound('pop.mp3')
+        if(data.sender != this.$root.account._id){
+          playSound('chat.ogg')
         }
       }
     },
@@ -116,14 +111,12 @@ new Vue({
   data : {
     ver: '1.0.1',
     port:0,
-    endpoint:endpoint,
-    account:account,
+    endpoint:process.env.ENDPOINT,
+    account:JSON.parse(account),
     token:token,
     loading:true,
     processing:false,
-    verification:false,
-    message:'',
-    typeMessage:''
+    verification:false
   },
   render: h => h(App)
 })
