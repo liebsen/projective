@@ -32,7 +32,7 @@ if (token) {
 }
 
 Vue.use(new VueSocketIO({
-  debug: true,
+  //debug: true,
   connection: endpoint,
   options: {query: '&token=' + token}
 }))
@@ -75,12 +75,6 @@ new Vue({
     }
   },
   methods: {
-    token : function(){
-      return JSON.parse(localStorage.getItem('token')) || {}
-    },
-    account : function(){
-      return JSON.parse(localStorage.getItem('account')) || {}
-    },
     logout: function() {
       this.$store.dispatch("logout").then(() => {
         localStorage.removeItem('account')
