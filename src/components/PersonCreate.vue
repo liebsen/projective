@@ -69,8 +69,10 @@ export default {
       let t = this
       console.log("submm")
       t.$root.processing = true
+      t.item.title = t.data.title
       let action = t.showExisting ? 'assign' : 'create'
       let data = t.showExisting ? t.item : t.data
+
       axios.post( t.$root.endpoint + '/person/' + action, data).then((res) => {
         t.data = res.data
         t.$root.processing = false
