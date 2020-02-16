@@ -8,6 +8,7 @@ import snackbar from './components/Snackbar';
 import VueSlider from 'vue-slider-component'
 import VueSocketIO from 'vue-socket.io'
 import Autocomplete from 'v-autocomplete'
+import playSound from './components/playSound'
 
 import 'vue-slider-component/theme/antd.css'
 import 'v-autocomplete/dist/v-autocomplete.css'
@@ -18,18 +19,22 @@ moment.locale('es')
 Vue.prototype.$http = axios
 
 const token = localStorage.getItem('token')
+const account = localStorage.getItem('account')
 const endpoint = 'https://projectiveapi.herokuapp.com'
 //const endpoint = 'http://localhost:3000'
 
 Vue.use(Autocomplete)
+
+document.cookie = 'X-Authorization=' + token + '; path=/'
 
 if (token) {
   axios.defaults.headers.common['Authorization'] = token
 }
 
 Vue.use(new VueSocketIO({
-    debug: true,
-    connection: endpoint
+  debug: true,
+  connection: endpoint,
+  options: {query: '&token=' + token}
 }))
 
 new Vue({
@@ -48,6 +53,26 @@ new Vue({
   },
   created: function() {
     this.loading = false
+  },
+  sockets: {
+    chat_send: function(data){
+      const chatbox = document.querySelector(".chatbox")
+      if(chatbox){
+        const owned = account.id === data.sender_id
+        const cls = owned ? 'is-pulled-right has-text-right has-background-info has-text-white' : 'is-pulled-left has-text-left'
+        const sender = data.sender === this.$root.player.code ? '' : data.sender
+        const sender_color = data.sender === 'chatbot' ? 'primary' : 'info'
+        const ts = moment().format('hh:mm a')
+        chatbox.innerHTML+= `<div class="box ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-light">${ts}</span></div>`
+        chatbox.scrollTop = chatbox.scrollHeight
+        if(data.sender != this.$root.player.code){
+          playSound('pop.mp3')
+        }
+      }
+    },
+    chat_users: function (data) {
+      this.chat_users = JSON.parse(JSON.stringify(data))
+    }
   },
   methods: {
     token : function(){
@@ -98,7 +123,8 @@ new Vue({
     ver: '1.0.1',
     port:0,
     endpoint:endpoint,
-    //endpoint:'http://localhost:4000',
+    account:account,
+    token:token,
     loading:true,
     processing:false,
     verification:false,

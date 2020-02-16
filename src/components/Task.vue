@@ -22,32 +22,65 @@
           </ul>
         </nav>
         <div class="content">
-          <div v-show="data.tasks.extra" class="column">
-            <div class="notification">
-              <pre v-html="data.tasks.extra"></pre>
-            </div>
-          </div>
-
-          <div v-show="!data.tasks.extra" class="column">
-            <div class="notification">
-              <p>Todavía no hay detalles</p>
-            </div>
-          </div>
-
-          <div v-show="empty" class="column">
-            <div class="notification">
-              <p>Todavía no hay cuestiones sobre <span v-html="data.tasks.title"></span></p>
-            </div>
-          </div>
-          <div class="columns is-multiline">
-            <div class="column is-4" v-for="item in data.tasks.issues">
-              <router-link :to="'/issues/' + item.id">
-                <div class="box">
-                  <h2><span v-html="item.title"></span></h2>
+          <div class="columns">
+            <div class="column">            
+              <div class="columns">
+                <div v-show="empty" class="column">
+                  <div class="notification">
+                    <p>Todavía no hay cuestiones sobre <span v-html="data.tasks.title"></span></p>
+                  </div>
                 </div>
-              </router-link>
+              </div>
+              <div class="columns">
+                <div class="columns is-multiline">
+                  <div class="column is-4" v-for="item in data.tasks.issues">
+                    <router-link :to="'/issues/' + item.id">
+                      <div class="box">
+                        <h2><span v-html="item.title"></span></h2>
+                      </div>
+                    </router-link>
+                  </div>
+                </div>
+              </div>
+              <div class="columns">
+                <div v-show="data.tasks.extra" class="column">
+                  <div class="notification">
+                    <pre v-html="data.tasks.extra"></pre>
+                  </div>
+                </div>
+              </div>
+              <div class="columns">
+                <div v-show="!data.tasks.extra" class="column">
+                  <div class="notification">
+                    <p>Todavía no hay detalles</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="column has-text-left box">
+                <div class="columns">
+                  <div class="column chatbox"></div>
+                </div>
+                <form @submit.prevent="sendChat">
+                  <div class="field has-addons">
+                    <div class="control">
+                      <input class="input is-rounded" v-model="chat" type="text" placeholder="Ingresa tu mensaje" />
+                    </div>
+                    <div class="control">
+                      <button type="submit" class="button is-info is-rounded">
+                        <span class="icon">
+                          <span class="fas fa-arrow-up"></span>
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>        
             </div>
           </div>
+
+
           <div class="columns">
             <div class="column has-text-centered slideIn">
               <router-link :to="'/tasks/' + $route.params.id + '/edit'" class="button is-success">
@@ -76,6 +109,7 @@ export default {
   mounted: function(){
     var t = this
     t.$root.loading = true
+    t.$socket.emit('chat_join', t.$route.params)
     if(!t.$route.params.id){
       t.$root.false = true
       return t.$root.snackbar('error',"No preference param.")
@@ -93,6 +127,14 @@ export default {
     })
   },
   methods: {
+    sendChat: function() {
+      if(this.chat.trim()==='') this.chat = '👋'
+      this.$socket.emit('chat_send', { 
+        sender: this.$root.account._id,
+        line: this.chat
+      })
+      this.chat = ''
+    },
     remove: function(){
       let t = this
       swal({
@@ -123,7 +165,8 @@ export default {
   data () {
     return {
       data:{ tasks: { extra: {}, issues: {}}},
-      empty:false
+      empty:false,
+      chat:''
     }
   }
 }

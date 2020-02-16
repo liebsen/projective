@@ -73,6 +73,8 @@ export default {
       let action = t.showExisting ? 'assign' : 'create'
       let data = t.showExisting ? t.item : t.data
 
+      data.project_id = t.$route.params.project_id
+
       axios.post( t.$root.endpoint + '/person/' + action, data).then((res) => {
         t.data = res.data
         t.$root.processing = false

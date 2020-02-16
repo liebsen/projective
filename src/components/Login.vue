@@ -43,7 +43,7 @@ export default {
           localStorage.setItem('account', JSON.stringify(res.data.user))
           setTimeout(() => {
             this.$router.push("/projects")
-          },3000)
+          },500)
         })
         .catch(err => {
           this.$root.processing = false
