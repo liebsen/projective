@@ -8,7 +8,7 @@
           </ul>
         </nav>
         <div class="content is-flex-column is-vertical">
-          <h1>Hola <span v-html="$root.account.name"></span></h1>
+          <h1>Hola, <span v-html="$root.account.name"></span></h1>
           <div v-show="empty" class="column">
             <div class="notification">
               <p>Todavía no creaste ningún proyecto.</p>

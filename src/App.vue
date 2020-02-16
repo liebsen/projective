@@ -54,10 +54,10 @@
               <span class="icon">
                 <span class="fas fa-info-circle"></span>
               </span> 
-              <span>Acerca de <em>Projective</em></span>
+              <span>Acerca de <strong>Projective</strong></span>
             </router-link>
 
-            <router-link to="/configuracion" v-if="$root.isLoggedIn">
+            <router-link to="/settings" v-if="$root.isLoggedIn">
               <span class="icon">
                 <span class="fas fa-cog"></span>
               </span> 
@@ -132,9 +132,9 @@
     </div>
 
     <div class="legal-footer has-text-centered">
-      <span>©️ 2020 Projective &mdash; <a href="https://projective.herokuapp.com/terminos" target="_blank">Términos y condiciones</a></span>
-      <span v-if="$root.isLoggedIn"> | <a @click="logout">Cerrar sesión</a></span>
-      <span v-else> | <router-link to="/login">Iniciar sesión</router-link></span>
+      <span>©️ 2020 Projective | </span>
+      <span v-if="$root.isLoggedIn"><a @click="logout">Cerrar sesión</a></span>
+      <span v-else><router-link to="/login">Iniciar sesión</router-link></span>
     </div>
 
     <div class="ui-snackbar ui-snackbar--is-inactive">
