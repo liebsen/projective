@@ -33,7 +33,7 @@
                     <span v-html="item.title"></span>
                     <!--pre v-html="item"></pre-->
                   </div>
-                  <div class="card__meta">
+                  <div class="card__meta" :style="'background: linear-gradient(to right,#40e0d0 ' + (item.extra ? item.extra.progress : 0 ) + '%,#fff ' + (item.extra ? item.extra.progress : 0 ) + '%);'">
                     <div class="card__meta__date">
                       <span>Creado</span> <span class="convert__dates" v-html="item.id"></span>
                     </div>

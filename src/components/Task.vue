@@ -51,6 +51,7 @@
               </div>
               <div class="columns">
                 <div v-show="data.tasks.extra" class="column">
+                  <progress class="progress is-success" :value="data.tasks.extra.progress" max="100"><span v-html="data.tasks.extra.progress"></span>%</progress>
                   <div class="notification has-background-white">
                     <pre v-html="data.tasks.extra"></pre>
                   </div>

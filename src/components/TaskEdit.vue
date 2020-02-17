@@ -12,6 +12,11 @@
           </div>
           <div class="field">
             <div class="control">
+              <vue-slider v-model="update.progress" /></vue-slider>
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
               <input class="input" v-model="update.link" type="text" placeholder="Link de la tarea">
             </div>
           </div>
@@ -33,11 +38,14 @@
 
 <script>
 import axios from 'axios'
-import Datepicker from 'vuejs-datepicker';
+import Datepicker from 'vuejs-datepicker'
+import VueSlider from 'vue-slider-component'
+import 'vue-slider-component/theme/antd.css'
 export default {
   name: 'tasks_edit',
   components: {
-    Datepicker
+    Datepicker,
+    VueSlider
   },
   mounted: function(){
     var t = this

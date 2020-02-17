@@ -20,8 +20,9 @@
                 <section class="card">
                   <div class="card__title">
                     <span v-html="item.title"></span>
+                    <!--pre v-html="item"></pre-->
                   </div>
-                  <div class="card__meta">
+                  <div class="card__meta" :style="'background: linear-gradient(to right,#40e0d0 ' + item.progress + '%,#fff ' + item.progress + '%);'">
                     <div class="card__meta__date">
                       <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
                     </div>
@@ -55,6 +56,14 @@ export default {
     t.$root.loading = true
     axios.get( t.$root.endpoint + '/projects', {}).then((res) => {
       t.data = res.data
+      t.data.forEach(item => {
+        let progress = 0
+        let tasks = item.tasks||[]
+        tasks.forEach(task => {
+          progress+= task.extra && task.extra.progress ? task.extra.progress: 0
+        })
+        item.progress = progress / tasks.length
+      })
       t.data.empty = Object.keys(res.data).length?false:true
       t.$root.loading = false
       setTimeout(() => t.$root.convertDates(),250) 
