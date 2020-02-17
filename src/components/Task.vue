@@ -33,11 +33,18 @@
               </div>
               <div class="columns">
                 <div class="columns is-multiline">
-                  <div class="column is-4" v-for="item in data.tasks.issues">
+                  <div class="column is-6" v-for="item in data.tasks.issues">
                     <router-link :to="'/issues/' + item.id">
-                      <div class="box">
-                        <h2><span v-html="item.title"></span></h2>
-                      </div>
+                      <section class="card task">
+                        <div class="card__title">
+                          <span v-html="item.title"></span>
+                        </div>
+                        <div class="card__meta">
+                          <div class="card__meta__date">
+                            <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
+                          </div>
+                        </div>
+                      </section>
                     </router-link>
                   </div>
                 </div>
@@ -117,9 +124,11 @@ export default {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks.issues == undefined
-      console.log(t.$root.account)
-      t.$socket.emit('chat_join', {id:t.$route.params.id, code: t.$root.account._id})
-      //setTimeout(function(){ t.$root.convertDates() },100)      
+      t.$socket.emit('chat_join', {
+        id:t.$route.params.id, 
+        code: t.$root.account._id
+      })
+      setTimeout(() => t.$root.convertDates(),250) 
     }).catch(err => {
       t.$root.loading = false
       if(err){
@@ -135,6 +144,7 @@ export default {
       t.$socket.emit('chat_send', { 
         room: t.$route.params.id,
         sender: t.$root.account._id,
+        name: t.$root.account.name,
         line: t.chat
       })
       t.chat = ''

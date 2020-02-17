@@ -15,11 +15,18 @@
             </div>
           </div>
           <div class="columns is-multiline">
-            <div class="column is-4" v-for="item in data">
+            <div class="column is-6" v-for="item in data">
               <router-link :to="'/projects/' + item._id">
-                <div class="box">
-                  <h2><span v-html="item.title"></span></h2>
-                </div>
+                <section class="card">
+                  <div class="card__title">
+                    <span v-html="item.title"></span>
+                  </div>
+                  <div class="card__meta">
+                    <div class="card__meta__date">
+                      <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
+                    </div>
+                  </div>
+                </section>
               </router-link>
             </div>
           </div>
@@ -50,6 +57,7 @@ export default {
       t.data = res.data
       t.data.empty = Object.keys(res.data).length?false:true
       t.$root.loading = false
+      setTimeout(() => t.$root.convertDates(),250) 
     }).catch(err => {
       t.$root.loading = false
       if(err){

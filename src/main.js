@@ -49,16 +49,14 @@ new Vue({
   },
   sockets: {
     chat_line: function(data){
-      console.log("chat:")
-      console.log(data)
       const chatbox = document.querySelector(".chatbox")
       if(chatbox){
         const owned = this.$root.account._id === data.sender
         const cls = owned ? 'is-pulled-right has-text-right has-background-info has-text-white' : 'is-pulled-left has-text-left'
-        const sender = data.sender === this.$root.account._id ? '' : data.sender
+        const sender = data.sender === this.$root.account._id ? '' : data.name
         const sender_color = data.sender === 'chatbot' ? 'primary' : 'info'
         const ts = moment().format('hh:mm a')
-        chatbox.innerHTML+= `<div class="line ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-light">${ts}</span></div>`
+        chatbox.innerHTML+= `<div class="line ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-grey">${ts}</span></div>`
         chatbox.scrollTop = chatbox.scrollHeight
         if(data.sender != this.$root.account._id){
           playSound('chat.ogg')
@@ -101,10 +99,11 @@ new Vue({
       },3000)
     },
     convertDates: function(){
-      document.querySelectorAll('.convert-date').forEach(function(el){
+      document.querySelectorAll('.convert__dates').forEach(function(el){
         const timestamp = el.innerText.toString().substring(0,8)
         const date = new Date( parseInt( timestamp, 16 ) * 1000 )
-        el.innerHTML = moment(date).format(el.getAttribute('date-format')||null)
+        el.innerHTML = moment(date).format(el.getAttribute('date-format')||'LLLL')
+        el.classList.add('fadeIn')
       })
     }
   },

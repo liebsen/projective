@@ -26,11 +26,19 @@
             </div>
           </div>
           <div v-if="!empty" class="columns is-multiline">
-            <div class="column is-4" v-for="item in data.tasks">
+            <div class="column is-6" v-for="item in data.tasks">
               <router-link :to="'/tasks/' + item.id">
-                <div class="box">
-                  <h2><span v-html="item.title"></span></h2>
-                </div>
+                <section class="card task">
+                  <div class="card__title">
+                    <span v-html="item.title"></span>
+                    <!--pre v-html="item"></pre-->
+                  </div>
+                  <div class="card__meta">
+                    <div class="card__meta__date">
+                      <span>Creado</span> <span class="convert__dates" v-html="item.id"></span>
+                    </div>
+                  </div>
+                </section>
               </router-link>
             </div>
           </div>
@@ -70,7 +78,7 @@ export default {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks == undefined
-      //setTimeout(function(){ t.$root.convertDates() },100)      
+      setTimeout(() => t.$root.convertDates(),250) 
     }).catch(err => {
       t.$root.loading = false
       if(err){

@@ -14,11 +14,54 @@ body > div {
   min-height: 100%;
 }
 
-.box {
-  border: 3px solid $menubg;
-  h2 {
-    margin-bottom: 0.111rem;
+.card {
+  background: linear-gradient(to right,#4A90E2 .5%,#fff .5%);
+  box-shadow: 0 2px 3px rgba(0,0,0,.2);
+  border-radius: 4px;
+  padding: 20px 20px 0;
+  display: block;
+  margin-bottom: 20px;
+  margin-top: 1rem;
+
+  &.task {
+    background: linear-gradient(to right,#8cba51 .5%,#fff .5%);
   }
+
+  &.issue {
+    background: linear-gradient(to right,#c81912 .5%,#fff .5%);
+  }
+
+  .card__title {
+    font-size: 16px;
+    line-height: 22px;
+    color:#424242;
+    margin-bottom: 5px;
+  }
+
+  .card__meta {
+    border-top: 1px solid rgba(0,0,0,.05);
+    margin-top: 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    min-height: 40px;
+    font-size: 13px;
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 35px;
+    color:#5E5E5E;
+
+    .card__meta__date {
+      font-size: 13px;
+      opacity: .7;
+      line-height: 35px;
+      color:#5E5E5E;
+    }
+  }
+}
+
+.convert__dates {
+  opacity:0;
 }
 
 .chatbox-container {

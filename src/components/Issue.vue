@@ -33,10 +33,17 @@
             </div>
           </div>
           <div class="columns is-multiline">
-            <div class="column is-4">
-              <div class="box">
-                <h2><span v-html="data.tasks.issues.title"></span></h2>
-              </div>
+            <div class="column is-6">
+              <section class="card issue">
+                <div class="card__title">
+                  <span v-html="item.title"></span>
+                </div>
+                <div class="card__meta">
+                  <div class="card__meta__date">
+                    <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
           <div class="columns">
@@ -70,8 +77,8 @@ export default {
     axios.get( t.$root.endpoint + '/issues/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
+      setTimeout(() => t.$root.convertDates(),250) 
       //t.empty = res.data.tasks.issues == undefined
-      //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
       t.$root.loading = false
       if(err){
