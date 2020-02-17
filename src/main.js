@@ -49,19 +49,7 @@ new Vue({
   },
   sockets: {
     chat_line: function(data){
-      const chatbox = document.querySelector(".chatbox")
-      if(chatbox){
-        const owned = this.$root.account._id === data.sender
-        const cls = owned ? 'is-pulled-right has-text-right has-background-info has-text-white' : 'is-pulled-left has-text-left'
-        const sender = data.sender === this.$root.account._id ? '' : data.name
-        const sender_color = data.sender === 'chatbot' ? 'primary' : 'info'
-        const ts = moment().format('hh:mm a')
-        chatbox.innerHTML+= `<div class="line ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-grey">${ts}</span></div>`
-        chatbox.scrollTop = chatbox.scrollHeight
-        if(data.sender != this.$root.account._id){
-          playSound('chat.ogg')
-        }
-      }
+      this.chatLine(data)
     },
     chat_users: function (data) {
       this.chat_users = JSON.parse(JSON.stringify(data))
@@ -97,6 +85,26 @@ new Vue({
       setTimeout(() => {
         document.querySelector('.tosprompt').parentNode.removeChild(document.querySelector('.tosprompt'))
       },3000)
+    },
+    chatLine: function(data, sound){
+      if(sound==undefined) sound = true
+      const chatbox = document.querySelector(".chatbox")
+      if(chatbox){
+        const owned = this.$root.account._id === data.sender
+        const cls = owned ? 'is-pulled-right has-text-right has-background-primary has-text-white' : 'is-pulled-left has-text-left'
+        const sender = data.sender === this.$root.account._id ? '' : data.name
+        const sender_color = data.sender === 'chatbot' ? 'primary' : 'info'
+        const ts = moment(data.created).fromNow(true)
+        chatbox.innerHTML+= `<div class="line ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-grey">${ts}</span></div>`
+        chatbox.scrollTop = chatbox.scrollHeight
+        if(sound && data.sender != this.$root.account._id){
+          playSound('chat.ogg')
+        }
+      }
+    },
+    chatHistory: function(data){
+      console.log(data)
+      data.forEach( line => this.chatLine(line, false))
     },
     convertDates: function(){
       document.querySelectorAll('.convert__dates').forEach(function(el){

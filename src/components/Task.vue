@@ -86,8 +86,6 @@
               </div>        
             </div>
           </div>
-
-
           <div class="columns">
             <div class="column has-text-centered slideIn">
               <router-link :to="'/tasks/' + $route.params.id + '/edit'" class="button is-success">
@@ -124,11 +122,15 @@ export default {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks.issues == undefined
+
       t.$socket.emit('chat_join', {
         id:t.$route.params.id, 
         code: t.$root.account._id
       })
-      setTimeout(() => t.$root.convertDates(),250) 
+      setTimeout(() => {
+        t.$root.convertDates()
+        t.$root.chatHistory(res.data.tasks.chat)
+      },250) 
     }).catch(err => {
       t.$root.loading = false
       if(err){
