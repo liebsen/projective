@@ -96,9 +96,9 @@
     
             <div class="has-text-centered" v-if="$root.isLoggedIn">
               <router-link class="button is-white is-medium is-outlined" to="/projects">
-                <span class="icon">
+                <!--span class="icon">
                   <span class="fas fa-chart-bar"></span>
-                </span> 
+                </span--> 
                 <span>Mis proyectos</span>            
               </router-link>
             </div>

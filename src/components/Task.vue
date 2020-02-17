@@ -2,7 +2,7 @@
   <section class="hero">
     <div v-show="!$root.loading" class="hero-body">
       <div class="container">
-        <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+        <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
           <ul>
             <li>
               <router-link to="/projects">
@@ -26,7 +26,7 @@
             <div class="column">            
               <div class="columns">
                 <div v-show="empty" class="column">
-                  <div class="notification">
+                  <div class="notification has-background-white">
                     <p>Todavía no hay cuestiones sobre <span v-html="data.tasks.title"></span></p>
                   </div>
                 </div>
@@ -51,21 +51,21 @@
               </div>
               <div class="columns">
                 <div v-show="data.tasks.extra" class="column">
-                  <div class="notification">
+                  <div class="notification has-background-white">
                     <pre v-html="data.tasks.extra"></pre>
                   </div>
                 </div>
               </div>
               <div class="columns">
                 <div v-show="!data.tasks.extra" class="column">
-                  <div class="notification">
+                  <div class="notification has-background-white">
                     <p>Todavía no hay detalles</p>
                   </div>
                 </div>
               </div>
             </div>
             <div class="column">
-              <div class="column has-text-left has-background-light chatbox-container">
+              <div class="column has-text-left has-background-white chatbox-container">
                 <div class="columns">
                   <div class="column chatbox"></div>
                 </div>

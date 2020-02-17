@@ -8,7 +8,7 @@
           </span> 
           <span>Contacto</span>
         </h2>
-        <h4>En <em>Projective</em> estamos siempre dispuestos a recibir feedback de nuestros usuarios.</h4>
+        <h4>En <strong>Projective</strong> estamos siempre dispuestos a recibir feedback de nuestros usuarios.</h4>
         <p>Por favor ingresa tus datos para contactarnos</p>
         <form class="form is-padless has-text-left fadeIn" @submit.prevent="submit">
           <div class="columns">
@@ -44,12 +44,12 @@
 
           <div class="field">
              <input class="is-checkradio has-background-color is-success" v-model="acceptTerms" id="exampleCheckboxSuccess" type="checkbox" name="exampleCheckboxSuccess" checked="checked">
-             <label for="exampleCheckboxSuccess"> Estoy de acuerdo con los <router-link to="/terminos">Términos y condiciones</router-link> de <em>Projective</em></label>
+             <label for="exampleCheckboxSuccess"> Estoy de acuerdo con los <router-link to="/terminos">Términos y condiciones</router-link> de <strong>Projective</strong></label>
           </div>
 
           <div class="field">
             <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.loading}">Contactar con&nbsp;<em>Projective</em></button>
+              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.loading}">Contactar con&nbsp;<strong>Projective</strong></button>
             </div>
           </div>    
           <!--div class="field">

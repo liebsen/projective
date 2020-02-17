@@ -2,7 +2,7 @@
   <section class="hero">
     <div v-show="!$root.loading" class="hero-body">
       <div class="container">
-        <nav class="breadcrumb has-arrow-separator" aria-label="breadcrumbs">
+        <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
           <ul>
             <li><a href="/projects">Proyectos</a></li>
           </ul>
