@@ -103,8 +103,9 @@ new Vue({
       }
     },
     chatHistory: function(data){
-      console.log(data)
-      data.forEach( line => this.chatLine(line, false))
+      if(data){
+        data.forEach( line => this.chatLine(line, false))
+      }
     },
     convertDates: function(){
       document.querySelectorAll('.convert__dates').forEach(function(el){
