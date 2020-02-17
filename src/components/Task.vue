@@ -49,16 +49,16 @@
                   </div>
                 </div>
               </div>
-              <div class="columns">
-                <div v-show="data.tasks.extra" class="column">
+              <div class="columns" v-if="data.tasks.extra">
+                <div class="column">
                   <progress class="progress is-success" :value="data.tasks.extra.progress" max="100"><span v-html="data.tasks.extra.progress"></span>%</progress>
                   <div class="notification has-background-white">
                     <pre v-html="data.tasks.extra"></pre>
                   </div>
                 </div>
               </div>
-              <div class="columns">
-                <div v-show="!data.tasks.extra" class="column">
+              <div class="columns" v-else>
+                <div class="column">
                   <div class="notification has-background-white">
                     <p>Todavía no hay detalles</p>
                   </div>
@@ -143,7 +143,6 @@ export default {
     sendChat: function() {
       let t = this
       if(t.chat.trim()==='') t.chat = '👋'
-      console.log("send:" + t.chat)
       t.$socket.emit('chat_send', { 
         room: t.$route.params.id,
         sender: t.$root.account._id,
