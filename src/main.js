@@ -8,7 +8,6 @@ import snackbar from './components/Snackbar'
 import VueSlider from 'vue-slider-component'
 import VueSocketIO from 'vue-socket.io'
 import Autocomplete from 'v-autocomplete'
-import playSound from './components/playSound'
 import 'vue-slider-component/theme/antd.css'
 import 'v-autocomplete/dist/v-autocomplete.css'
 require('../assets/css/main.scss')
@@ -52,14 +51,15 @@ new Vue({
   sockets: {
     users: function (data) {
       this.onlineUsers = JSON.parse(JSON.stringify(data))
-      //this.onlineUsers()
+      this.$emit("onlineUsers")
     },
     chat_line: function(data){
-      this.chatLine(data)
+      this.$emit("chatLine", data)
     },
     chat_users: function (data) {
       this.chatUsers = JSON.parse(JSON.stringify(data))
-      this.showChatUsers()
+      this.$emit("chatUsers")
+      //this.showChatUsers()
     }
   },
   methods: {
@@ -93,48 +93,6 @@ new Vue({
       setTimeout(() => {
         document.querySelector('.tosprompt').parentNode.removeChild(document.querySelector('.tosprompt'))
       },3000)
-    },
-    chatLine: function(data, sound){
-      if(sound==undefined) sound = true
-      const box = document.querySelector(".chatbox")
-      if(box){
-        const owned = this.auth.user._id === data.sender
-        const cls = owned ? 'is-pulled-right has-text-right has-background-primary has-text-white' : 'is-pulled-left has-text-left'
-        const sender = data.sender === this.auth.user._id ? '' : data.name
-        const sender_color = data.sender === 'chatbot' ? 'primary' : 'info'
-        const ts = moment(data.created).fromNow(true)
-        box.innerHTML+= `<div class="line ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-grey">${ts}</span></div>`
-        box.scrollTop = box.scrollHeight
-        if(sound && data.sender != this.auth.user._id){
-          playSound('chat.ogg')
-        }
-      }
-    },
-    showOnlineUsers: function(data){
-      let t = this
-      setTimeout(() => {
-        const box = document.querySelector(".userbox")
-        if(box && data){
-          data = data.filter(item => item.id)
-          data.forEach(item => {
-            const user = t.users[item.id]
-            const name = user.name ? user.name : item.id
-            const online = t.onlineUsers.includes(item.id)
-            const color = online ? 'success' : 'light'
-            box.innerHTML+= `<a href="/accounts/${item.id}" class="button is-small is-${color}"><span>${name}</span></a>`  
-          })
-        }
-      },1000)
-    },
-    showChatUsers: function(){
-      const box = document.querySelector(".roombox")
-      if(box){
-      }
-    },
-    chatHistory: function(data){
-      if(data){
-        data.forEach( line => this.chatLine(line, false))
-      }
     },
     convertDates: function(){
       document.querySelectorAll('.convert__dates').forEach(function(el){

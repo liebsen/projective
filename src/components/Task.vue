@@ -77,10 +77,22 @@
               </div>
             </div>
             <div class="column">
-              <div class="userbox"></div>
+              <div class="userbox">
+                <a v-for="user in onlineUsers" :href="'/accounts/' + user.id">
+                  <span class="button is-small" :class="{ 'is-success' : user.online, 'is-light' : !user.online }">
+                    <span v-html="user.name"></span>
+                  </span>
+                </a>
+              </div>
               <div class="column has-text-left has-background-white chatbox-container">
                 <div class="columns">
-                  <div class="column chatbox"></div>
+                  <div class="column chatbox">
+                    <div v-for="line in chatLines" class="line" :class="{ 'is-pulled-right has-text-right has-background-primary has-text-white' : line.owned, 'is-pulled-left has-text-left' : !line.owned }">
+                      <strong class="has-text-info" v-html="line.sender"></strong>
+                      <span :class="{ 'has-text-white' : line.owned, 'has-text-info' : !line.owned }" v-html="line.text"></span>
+                      <span v-html="line.ts" :class="{ 'has-text-white' : line.owned,  'has-text-info' : !line.owned }"></span>
+                    </div>
+                  </div>
                 </div>
                 <form @submit.prevent="sendChat">
                   <div class="field has-addons">
@@ -125,12 +137,16 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert'
+import moment from 'moment'
 import snackbar from './Snackbar'
+import playSound from './playSound'
 export default {
   name: 'task',
   mounted: function(){
     var t = this
     t.$root.loading = true
+    t.$root.$on("onlineUsers", t.showOnlineUsers)
+    t.$root.$on("chatLine", t.chatLine)
     if(!t.$route.params.id){
       t.$root.false = true
       return snackbar('error',"No preference param.")
@@ -145,8 +161,8 @@ export default {
       })
       setTimeout(() => {
         t.$root.convertDates()
-        t.$root.chatHistory(res.data.tasks.chat)
-        t.$root.showOnlineUsers(res.data.accounts)
+        t.chatHistory()
+        t.showOnlineUsers()
       },250) 
     }).catch(err => {
       t.$root.loading = false
@@ -166,6 +182,64 @@ export default {
         line: t.chat
       })
       t.chat = ''
+    },
+    chatLine: function(line){
+      const box = document.querySelector(".chatbox")
+      const owned = this.$root.auth.user._id === line.sender
+      this.chatLines.push({
+        text: line.line,
+        ts: moment(line.created).fromNow(true),
+        sender: owned ? '' : line.name,
+        owned: owned
+      })
+      setTimeout(() => {
+        box.scrollTop = box.scrollHeight  
+        if(!owned){
+          playSound('chat.ogg')
+        }
+      },200)
+    },
+    showOnlineUsers: function(){
+      let t = this
+      setTimeout(() => {
+        const box = document.querySelector(".userbox")
+        if(box){
+          var accounts = t.data.accounts.filter(item => item.id)
+          t.onlineUsers = []
+          accounts.forEach(item => {
+            const user = t.$root.users[item.id]
+            const name = user.name ? user.name : item.id
+            const online = t.$root.onlineUsers.includes(item.id)
+            t.onlineUsers.push({
+              id: item.id,
+              online: online,
+              name: name
+            })
+          })
+        }
+      },1000)
+    },
+    showChatUsers: function(){
+      const box = document.querySelector(".roombox")
+      if(box){
+      }
+    },
+    chatHistory: function(data){
+      if(this.data.tasks.chat){
+        const box = document.querySelector(".chatbox")
+        this.data.tasks.chat.forEach( line => {
+          const owned = this.$root.auth.user._id === line.sender
+          this.chatLines.push({
+            text: line.line,
+            ts: moment(line.created).fromNow(true),
+            sender: owned ? '' : line.name,
+            owned: owned
+          })
+        })
+        setTimeout(() => {
+          box.scrollTop = box.scrollHeight  
+        },200)
+      }
     },
     remove: function(){
       let t = this
@@ -198,6 +272,8 @@ export default {
     return {
       data:{ tasks: { extra: {}, issues: {}}},
       empty:false,
+      onlineUsers:[],
+      chatLines:[],
       chat:''
     }
   }
