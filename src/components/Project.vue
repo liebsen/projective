@@ -26,7 +26,7 @@
             </div>
           </div>
           <div v-if="!empty" class="columns is-multiline">
-            <div class="column is-6" v-for="item in data.tasks">
+            <div class="column is-full" v-for="item in data.tasks">
               <router-link :to="'/tasks/' + item.id">
                 <section class="card task">
                   <div class="card__title">
@@ -65,6 +65,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert'
+import snackbar from './Snackbar'
 export default {
   name: 'project',
   mounted: function(){
@@ -72,7 +73,7 @@ export default {
     t.$root.loading = true
     if(!t.$route.params.id){
       t.$root.false = true
-      return t.$root.snackbar('error',"No preference param.")
+      return snackbar('error',"No preference param.")
     }
     axios.get( t.$root.endpoint + '/project/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
@@ -82,7 +83,7 @@ export default {
     }).catch(err => {
       t.$root.loading = false
       if(err){
-       t.$root.snackbar('error',"Error " + err)
+       snackbar('error',"Error " + err)
       }
     })
   },
@@ -100,12 +101,12 @@ export default {
           t.$root.loading = true
           axios.delete( t.$root.endpoint + '/project/' + t.data._id, {}).then((res) => {
             t.$root.loading = false
-            t.$root.snackbar('success',"Se eliminó proyecto " + t.data.title)
+            snackbar('success',"Se eliminó proyecto " + t.data.title)
             t.$router.push('/projects')
           }).catch(err => {
             t.$root.loading = false
             if(err){
-             t.$root.snackbar('error',"Error " + err)
+             snackbar('error',"Error " + err)
             }
           })
         } else {

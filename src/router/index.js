@@ -16,13 +16,7 @@ import IssueCreate from '../components/IssueCreate'
 import PersonCreate from '../components/PersonCreate'
 import Issue from '../components/Issue'
 import Task from '../components/Task'
-import Cotizacion from '../components/Cotizacion'
 import Terminos from '../components/Terminos'
-import Dash from '../components/Dash'
-import Configuracion from '../components/Configuracion'
-import ConfiguracionDatos from '../components/ConfiguracionDatos'
-import ConfiguracionCostos from '../components/ConfiguracionCostos'
-import ConfiguracionUbicacion from '../components/ConfiguracionUbicacion'
 import Contacto from '../components/Contacto'
 import About from '../components/About'
 import NotFound from '../components/NotFound'
@@ -49,11 +43,6 @@ const router = new Router({
       name: 'landing',
       component: Landing
     },
-    {
-      path: '/dash',
-      name: 'dash',
-      component: Dash
-    },    
     {
       path: '/register/:code?',
       name: 'register',
@@ -142,14 +131,6 @@ const router = new Router({
       path: '/issues/:id',
       name: 'issue',
       component: Issue,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/configuracion',
-      name: 'configuracion',
-      component: Configuracion,
       meta: {
         requiresAuth: true
       }

@@ -33,7 +33,8 @@
 
 <script>
 import axios from 'axios'
-import Datepicker from 'vuejs-datepicker';
+import Datepicker from 'vuejs-datepicker'
+import snackbar from './Snackbar'
 export default {
   name: 'tasks_edit',
   components: {
@@ -44,7 +45,7 @@ export default {
     t.$root.loading = true
     if(!t.$route.params.id){
       t.$root.false = true
-      return t.$root.snackbar('error',"No preference param.")
+      return snackbar('error',"No preference param.")
     }
     axios.get( t.$root.endpoint + '/project/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
@@ -55,7 +56,7 @@ export default {
     }).catch(err => {
       t.$root.loading = false
       if(err){
-       t.$root.snackbar('error',"Error " + err)
+       snackbar('error',"Error " + err)
       }
     })
   },
@@ -66,12 +67,12 @@ export default {
       axios.post( t.$root.endpoint + '/project/' + t.$route.params.id, t.update).then((res) => {
         t.data = res.data
         t.$root.processing = false
-        t.$root.snackbar('success','Editaste tarea ' + t.data.title)
+        snackbar('success','Editaste tarea ' + t.data.title)
         t.$router.push('/tasks/' + t.$route.params.id)
       }).catch(err => {
         t.$root.processing = false
         if(err){
-         t.$root.snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
         }
       })
     }

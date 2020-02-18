@@ -65,6 +65,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert'
+import snackbar from './Snackbar'
 export default {
   name: 'issue',
   mounted: function(){
@@ -72,7 +73,7 @@ export default {
     t.$root.loading = true
     if(!t.$route.params.id){
       t.$root.false = true
-      return t.$root.snackbar('error',"No preference param.")
+      return snackbar('error',"No preference param.")
     }
     axios.get( t.$root.endpoint + '/issues/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
@@ -82,7 +83,7 @@ export default {
     }).catch(err => {
       t.$root.loading = false
       if(err){
-       t.$root.snackbar('error',"Error " + err)
+       snackbar('error',"Error " + err)
       }
     })
   },
@@ -99,12 +100,12 @@ export default {
           t.$root.loading = true
           axios.delete( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
             t.$root.loading = false
-            t.$root.snackbar('success',"Se eliminó objetivo "  )
+            snackbar('success',"Se eliminó objetivo "  )
             t.$router.push('/projects/' + t.data._id)
           }).catch(err => {
             t.$root.loading = false
             if(err){
-             t.$root.snackbar('error',"Error " + err)
+             snackbar('error',"Error " + err)
             }
           })
         } else {

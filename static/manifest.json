@@ -3,7 +3,7 @@
   "name": "ProjectiveApp - Planificación y seguimiento de proyectos digitales",
   "icons": [
     {
-      "src": "/assets/apple-touch-icon.png",
+      "src": "/static/apple-touch-icon.png",
       "sizes": "192x192",
       "type": "image/png"
     }

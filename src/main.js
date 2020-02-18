@@ -4,7 +4,7 @@ import router from './router'
 import moment from 'moment'
 import axios from 'axios'
 import store from './components/Store'
-import snackbar from './components/Snackbar';
+import snackbar from './components/Snackbar'
 import VueSlider from 'vue-slider-component'
 import VueSocketIO from 'vue-socket.io'
 import Autocomplete from 'v-autocomplete'
@@ -13,13 +13,12 @@ import 'vue-slider-component/theme/antd.css'
 import 'v-autocomplete/dist/v-autocomplete.css'
 require('../assets/css/main.scss')
 
-const token = localStorage.getItem('token')
-const account = localStorage.getItem('account')
+const auth = JSON.parse(localStorage.getItem('auth'))
 
 moment.locale('es')
 
-if (token) {
-  axios.defaults.headers.common['Authorization'] = token
+if (auth) {
+  axios.defaults.headers.common['Authorization'] = auth.token
 }
 
 Vue.prototype.$http = axios
@@ -27,7 +26,7 @@ Vue.use(Autocomplete)
 Vue.use(new VueSocketIO({
   debug: process.env.NODE_ENV=='development',
   connection: process.env.ENDPOINT,
-  options: {query: '&token=' + token}
+  options: {query: '&token=' + (auth?auth.token:'')}
 }))
 
 new Vue({
@@ -41,42 +40,47 @@ new Vue({
   },
   computed: {
     isLoggedIn: function() {
-      return this.$store.getters.isLoggedIn;
+      return this.$store.getters.isLoggedIn
+    },
+    auth: function() {  
+      return this.$store.state.auth
     }
   },
   created: function() {
-    this.loading = false
+    this.getProjectsUsers()
   },
   sockets: {
+    users: function (data) {
+      this.users = JSON.parse(JSON.stringify(data))
+      this.onlineUsers()
+    },
     chat_line: function(data){
       this.chatLine(data)
     },
     chat_users: function (data) {
       this.chat_users = JSON.parse(JSON.stringify(data))
+      this.roomUsers()
     }
   },
   methods: {
+    getProjectsUsers: function(){
+      let t = this
+      axios.get( t.$root.endpoint + '/users', {}).then((res) => {
+        t.users = res.data
+        t.onlineUsers()
+        t.$root.loading = false
+      }).catch(err => {
+        t.$root.loading = false
+        if(err){
+         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+        }
+      })
+    },
     logout: function() {
       this.$store.dispatch("logout").then(() => {
         localStorage.removeItem('account')
         this.$router.push("/login");
       });
-    },
-    snackbar : function(messageType,message,timeout){
-      if(timeout===undefined) timeout = 5000
-      this.messageType = messageType
-      this.message = message
-      document.querySelector('.ui-snackbar').classList.remove('ui-snackbar--is-inactive')
-      document.querySelector('.ui-snackbar').classList.remove('ui-snackbar--success')
-      document.querySelector('.ui-snackbar').classList.remove('ui-snackbar--error')
-      document.querySelector('.ui-snackbar').classList.remove('ui-snackbar--default')
-
-      document.querySelector('.ui-snackbar').classList.add('ui-snackbar--' + messageType)
-      document.querySelector('.ui-snackbar').classList.add('ui-snackbar--is-active')
-      setTimeout(() => {
-        document.querySelector('.ui-snackbar').classList.remove('ui-snackbar--is-active')
-        document.querySelector('.ui-snackbar').classList.add('ui-snackbar--is-inactive')
-      },timeout)
     },
     tosAgree: function(){
       localStorage.setItem("tosagree",true)
@@ -88,18 +92,30 @@ new Vue({
     },
     chatLine: function(data, sound){
       if(sound==undefined) sound = true
-      const chatbox = document.querySelector(".chatbox")
-      if(chatbox){
-        const owned = this.$root.account._id === data.sender
+      const box = document.querySelector(".chatbox")
+      if(box){
+        const owned = this.auth.user._id === data.sender
         const cls = owned ? 'is-pulled-right has-text-right has-background-primary has-text-white' : 'is-pulled-left has-text-left'
-        const sender = data.sender === this.$root.account._id ? '' : data.name
+        const sender = data.sender === this.auth.user._id ? '' : data.name
         const sender_color = data.sender === 'chatbot' ? 'primary' : 'info'
         const ts = moment(data.created).fromNow(true)
-        chatbox.innerHTML+= `<div class="line ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-grey">${ts}</span></div>`
-        chatbox.scrollTop = chatbox.scrollHeight
-        if(sound && data.sender != this.$root.account._id){
+        box.innerHTML+= `<div class="line ${cls}"><strong class="has-text-${sender_color}">${sender}</strong> ${data.line} <span class="is-size-7 has-text-grey">${ts}</span></div>`
+        box.scrollTop = box.scrollHeight
+        if(sound && data.sender != this.auth.user._id){
           playSound('chat.ogg')
         }
+      }
+    },
+    onlineUsers: function(data){
+      const box = document.querySelector(".userbox")
+      if(box){
+        console.log("users online")
+        console.log(data)
+      }
+    },
+    roomUsers: function(){
+      const box = document.querySelector(".roombox")
+      if(box){
       }
     },
     chatHistory: function(data){
@@ -118,13 +134,11 @@ new Vue({
   },
   data : {
     ver: '1.0.1',
-    port:0,
     endpoint:process.env.ENDPOINT,
-    account:JSON.parse(account),
-    token:token,
     loading:true,
     processing:false,
-    verification:false
+    chat_users: {},
+    users:{}
   },
   render: h => h(App)
 })

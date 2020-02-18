@@ -31,6 +31,7 @@
 <script>
 import axios from 'axios'
 import ItemTemplate from './ItemTemplate.vue'
+import snackbar from './Snackbar'
 export default {
   name: 'persons_create',
   mounted: function(){
@@ -38,7 +39,7 @@ export default {
     t.$root.loading = true
     if(!t.$route.params.project_id){
       t.$root.false = true
-      return t.$root.snackbar('error',"No preference param.")
+      return snackbar('error',"No preference param.")
     }
     axios.get( t.$root.endpoint + '/project/' + t.$route.params.project_id, {}).then((res) => {
       t.$root.loading = false
@@ -48,7 +49,7 @@ export default {
     }).catch(err => {
       t.$root.loading = false
       if(err){
-       t.$root.snackbar('error',"Error " + err)
+       snackbar('error',"Error " + err)
       }
     })
   },
@@ -78,12 +79,12 @@ export default {
       axios.post( t.$root.endpoint + '/person/' + action, data).then((res) => {
         t.data = res.data
         t.$root.processing = false
-        t.$root.snackbar('success','Agregaste un nuevo integrante a un proyecto')
+        snackbar('success','Agregaste un nuevo integrante a un proyecto')
         t.$router.push('/projects')
       }).catch(err => {
         t.$root.processing = false
         if(err){
-         t.$root.snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
         }
       })
     }

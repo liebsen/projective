@@ -138,7 +138,7 @@
     </div>
 
     <div class="ui-snackbar ui-snackbar--is-inactive">
-      <p class="ui-snackbar__message" v-html="$root.message"></p>
+      <p class="ui-snackbar__message"></p>
     </div>
 
   </div>

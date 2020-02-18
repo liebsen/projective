@@ -18,7 +18,7 @@
 </template>
 
 <script>
-
+import snackbar from './Snackbar'
 export default {
   name: 'validate',
   mounted: function(){
@@ -26,7 +26,7 @@ export default {
     if(!t.$route.params.code){
       return t.$router.params.push('/')
     }
-    t.$root.snackbar('success',"Validando cuenta. Por favor espere a ser redirigido...",30000)
+    snackbar('success',"Validando cuenta. Por favor espere a ser redirigido...",30000)
     t.$root.loading = true
     this.$store
       .dispatch("validate", t.$route.params.code)

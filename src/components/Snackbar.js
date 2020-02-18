@@ -1,27 +1,28 @@
-var snackbar = {};
-var snackBarElement = document.querySelector('.app__snackbar');
-var snackbarMsg = null;
 var snackbarClock = null;
 
 module.exports = function (type, message, options) {
 
-  clearInterval(snackbarClock)
+  var snackBarElement = document.querySelector('.ui-snackbar');
+  if(snackbarClock){
+    clearInterval(snackbarClock)
+  } 
 
-  if(options===undefined) options = 8000
+  if(options===undefined) {
+    options = 3000
+  }
+
   if (!message) return;
 
-  if (snackbarMsg) {
-  	snackbarMsg.remove();
-  }
-  
-  snackbarMsg = document.createElement('div');  
-  snackbarMsg.className = 'app__snackbar-msg';
-  snackbarMsg.classList.add('has-background-' + type);
-  snackbarMsg.textContent = message;
-  document.querySelector('.app__snackbar').appendChild(snackbarMsg);
+  snackBarElement.classList.remove('ui-snackbar--is-inactive')
+  snackBarElement.classList.remove('ui-snackbar--success')
+  snackBarElement.classList.remove('ui-snackbar--error')
+  snackBarElement.classList.remove('ui-snackbar--default')
+  snackBarElement.querySelector('.ui-snackbar__message').innerHTML = message
+  snackBarElement.classList.add('ui-snackbar--' + type)
+  snackBarElement.classList.add('ui-snackbar--is-active')
 
-  //Show toast for 3secs and hide it
   snackbarClock = setTimeout(() => {
-    snackbarMsg.remove();
-  }, options);
+    snackBarElement.classList.remove('ui-snackbar--is-active')
+    snackBarElement.classList.add('ui-snackbar--is-inactive')
+  },options)
 }

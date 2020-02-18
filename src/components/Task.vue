@@ -31,22 +31,20 @@
                   </div>
                 </div>
               </div>
-              <div class="columns">
-                <div class="columns is-multiline">
-                  <div class="column is-6" v-for="item in data.tasks.issues">
-                    <router-link :to="'/issues/' + item.id">
-                      <section class="card task">
-                        <div class="card__title">
-                          <span v-html="item.title"></span>
+              <div class="columns is-multiline">
+                <div class="column is-full" v-for="item in data.tasks.issues">
+                  <router-link :to="'/issues/' + item.id">
+                    <section class="card task">
+                      <div class="card__title">
+                        <span v-html="item.title"></span>
+                      </div>
+                      <div class="card__meta">
+                        <div class="card__meta__date">
+                          <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
                         </div>
-                        <div class="card__meta">
-                          <div class="card__meta__date">
-                            <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
-                          </div>
-                        </div>
-                      </section>
-                    </router-link>
-                  </div>
+                      </div>
+                    </section>
+                  </router-link>
                 </div>
               </div>
               <div class="columns" v-if="data.tasks.extra">
@@ -110,6 +108,7 @@
 <script>
 import axios from 'axios'
 import swal from 'sweetalert'
+import snackbar from './Snackbar'
 export default {
   name: 'task',
   mounted: function(){
@@ -117,7 +116,7 @@ export default {
     t.$root.loading = true
     if(!t.$route.params.id){
       t.$root.false = true
-      return t.$root.snackbar('error',"No preference param.")
+      return snackbar('error',"No preference param.")
     }
     axios.get( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
@@ -126,7 +125,7 @@ export default {
 
       t.$socket.emit('chat_join', {
         id:t.$route.params.id, 
-        code: t.$root.account._id
+        code: t.$root.auth.user._id
       })
       setTimeout(() => {
         t.$root.convertDates()
@@ -135,7 +134,7 @@ export default {
     }).catch(err => {
       t.$root.loading = false
       if(err){
-       t.$root.snackbar('error',"Error " + err)
+       snackbar('error',"Error " + err)
       }
     })
   },
@@ -145,8 +144,8 @@ export default {
       if(t.chat.trim()==='') t.chat = '👋'
       t.$socket.emit('chat_send', { 
         room: t.$route.params.id,
-        sender: t.$root.account._id,
-        name: t.$root.account.name,
+        sender: t.$root.auth.user._id,
+        name: t.$root.auth.user.name,
         line: t.chat
       })
       t.chat = ''
@@ -164,12 +163,12 @@ export default {
           t.$root.loading = true
           axios.delete( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
             t.$root.loading = false
-            t.$root.snackbar('success',"Se eliminó objetivo "  )
+            snackbar('success',"Se eliminó objetivo "  )
             t.$router.push('/projects/' + t.data._id)
           }).catch(err => {
             t.$root.loading = false
             if(err){
-             t.$root.snackbar('error',"Error " + err)
+             snackbar('error',"Error " + err)
             }
           })
         } else {

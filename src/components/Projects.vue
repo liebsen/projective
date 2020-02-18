@@ -7,15 +7,15 @@
             <li><a href="/projects">Proyectos</a></li>
           </ul>
         </nav>
-        <div class="content is-flex-column is-vertical">
-          <h1>Hola, <span v-html="$root.account.name"></span></h1>
+        <div class="content">
+          <h1>Hola, <span v-html="$root.auth.user.name"></span></h1>
           <div v-show="empty" class="column">
             <div class="notification">
               <p>Todavía no creaste ningún proyecto.</p>
             </div>
           </div>
           <div class="columns is-multiline">
-            <div class="column is-6" v-for="item in data">
+            <div class="column is-full" v-for="item in data">
               <router-link :to="'/projects/' + item._id">
                 <section class="card">
                   <div class="card__title">
@@ -30,6 +30,12 @@
                 </section>
               </router-link>
             </div>
+            <!--div class="column">
+              <pre v-html="data[0].accounts"></pre>
+              <div v-for="user in data.accounts">
+                <span v-html="user.id"></span>
+              </div>
+            </div-->
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
@@ -48,7 +54,7 @@
 <script>
 import axios from 'axios'
 import moment from 'moment'
-
+import snackbar from './Snackbar'
 export default {
   name: 'projects',
   mounted: function(){
@@ -70,7 +76,7 @@ export default {
     }).catch(err => {
       t.$root.loading = false
       if(err){
-       t.$root.snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+       snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
       }
     })
   },

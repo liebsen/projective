@@ -28,6 +28,7 @@
 
 <script>
 import axios from 'axios'
+import snackbar from './Snackbar'
 export default {
   name: 'issues_create',
   mounted: function(){
@@ -35,7 +36,7 @@ export default {
     t.$root.loading = true
     if(!t.$route.params.task_id){
       t.$root.false = true
-      return t.$root.snackbar('error',"No preference param.")
+      return snackbar('error',"No preference param.")
     }
     axios.get( t.$root.endpoint + '/task/' + t.$route.params.task_id, {}).then((res) => {
       t.$root.loading = false
@@ -45,7 +46,7 @@ export default {
     }).catch(err => {
       t.$root.loading = false
       if(err){
-       t.$root.snackbar('error',"Error " + err)
+       snackbar('error',"Error " + err)
       }
     })
   },
@@ -56,12 +57,12 @@ export default {
       axios.put( t.$root.endpoint + '/issue/' + t.$route.params.task_id, t.data).then((res) => {
         t.data = res.data
         t.$root.processing = false
-        t.$root.snackbar('success','Agregaste una cuestión para ' + t.data.title)
+        snackbar('success','Agregaste una cuestión para ' + t.data.title)
         t.$router.push('/tasks/' + t.$route.params.task_id)
       }).catch(err => {
         t.$root.processing = false
         if(err){
-         t.$root.snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
         }
       })
     }

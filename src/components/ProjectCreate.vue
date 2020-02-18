@@ -23,6 +23,7 @@
 
 <script>
 import axios from 'axios'
+import snackbar from './Snackbar'
 export default {
   name: 'projects_create',
   methods: {
@@ -32,12 +33,12 @@ export default {
       axios.put( t.$root.endpoint + '/project', t.data).then((res) => {
         t.data = res.data
         t.$root.processing = false
-        t.$root.snackbar('success','Creaste un nuevo proyecto')
+        snackbar('success','Creaste un nuevo proyecto')
         t.$router.push('/projects')
       }).catch(err => {
         t.$root.processing = false
         if(err){
-         t.$root.snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
         }
       })
     }

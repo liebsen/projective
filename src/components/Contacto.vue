@@ -52,12 +52,6 @@
               <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.loading}">Contactar con&nbsp;<strong>Projective</strong></button>
             </div>
           </div>    
-          <!--div class="field">
-            <div class="control" v-if="!token().token">
-              <a href="/sign-in" class="button is-text">Send as registered account</a>
-            </div>
-          </div-->
-
         </form>
       </div>
     </div>
@@ -67,19 +61,20 @@
 
 <script>
 import axios from 'axios'
+import snackbar from './Snackbar'
 export default {
   name: 'contacto',
   methods : {
     submit : function(){
       if(!this.acceptTerms){
-        this.$root.snackbar('error','Tenés que aceptar los términos y condiciones para contactarnos')
+        snackbar('error','Tenés que aceptar los términos y condiciones para contactarnos')
       } else {
         this.$root.loading = true
         axios.post( this.$root.endpoint + '/contact', this.data ).then((res) => {
           if(res.data.status==='success'){
-            this.$root.snackbar('success','El contacto fue recibido con éxito. Nos pondremos en contacto con vos a la brevedad.',10000)
+            snackbar('success','El contacto fue recibido con éxito. Nos pondremos en contacto con vos a la brevedad.',10000)
           } else {
-            this.$root.snackbar('danger','El contacto no pudo ser recibido. Por favor intente nuevamente en unos instantes.')
+            snackbar('danger','El contacto no pudo ser recibido. Por favor intente nuevamente en unos instantes.')
           }
           this.$root.loading = false
         })
@@ -89,8 +84,7 @@ export default {
   data () {
     return {
       acceptTerms: false,
-      data:{},
-      msg: 'Welcome to FletsApp'
+      data:{}
     }
   }
 }

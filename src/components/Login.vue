@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import snackbar from './Snackbar'
 export default {
   name: 'login',
   methods: {
@@ -37,21 +38,19 @@ export default {
       this.$store
         .dispatch("login", { email, password })
         .then(res => {
-          console.log(res.data)
-          this.$root.snackbar('success',"Sesión iniciada correctamente. Redirigiendo...")
+          snackbar('success',"Sesión iniciada correctamente. Redirigiendo...")
           this.$root.processing = false
-          localStorage.setItem('account', JSON.stringify(res.data.user))
           setTimeout(() => {
             this.$router.push("/projects")
-          },500)
+          },1500)
         })
         .catch(err => {
           this.$root.processing = false
           if(err.response){
             if(err.response.status === 404){
-              this.$root.snackbar('error',"Ese nombre de usuario no existe")
+              snackbar('error',"Ese nombre de usuario no existe")
             } else if(err.response.status === 401){
-              this.$root.snackbar('error',"La constraseña es incorrecta")
+              snackbar('error',"La constraseña es incorrecta")
             }
           }
         });

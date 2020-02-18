@@ -61,6 +61,7 @@
 
 <script>
 import axios from 'axios'
+import snackbar from './Snackbar'
 export default {
   name: 'register',
   methods: {
@@ -70,17 +71,17 @@ export default {
       axios.post( t.$root.endpoint + '/account/validate_code', t.data).then((res) => {
         t.$root.processing = false
         t.codeChecked = t.data
-        t.$root.snackbar('success',"Código verificado exitosamente. Ahora podés registrarte.",15000)
+        snackbar('success',"Código verificado exitosamente. Ahora podés registrarte.",5000)
       }).catch(err => {
         t.$root.processing = false
         if(err){
           t.codeChecked = false
           if(err.response.status === 403){
-            t.$root.snackbar('error',"Error. El email <em>" + t.data.email + "</em> ya se encuentra registrado. Probá con otro email.",30000)
+            snackbar('error',"Error. El email <em>" + t.data.email + "</em> ya se encuentra registrado. Probá con otro email.",30000)
           } else if(err.response.status === 404){
-            t.$root.snackbar('error',"Error. El Código <em>" + t.data.code + "</em> es inválido. Probá con otro código.",30000)
+            snackbar('error',"Error. El Código <em>" + t.data.code + "</em> es inválido. Probá con otro código.",30000)
           } else if(err.response.status === 500){
-            t.$root.snackbar('error',"Hubo un error al verificar código.")
+            snackbar('error',"Hubo un error al verificar código.")
           }
         }
       })
@@ -88,12 +89,11 @@ export default {
     submit: function() {
       var t = this
       if(t.data.email != t.data.email2)
-        return t.$root.snackbar('error',"El email y su confirmación deben coincidir.")
+        return snackbar('error',"El email y su confirmación deben coincidir.")
       if(!t.acceptTerms)
-        return t.$root.snackbar('error',"Debes aceptar nuestros términos y condiciones para crear una cuenta") 
+        return snackbar('error',"Tenés que aceptar nuestros términos y condiciones para crear una cuenta") 
       t.$root.processing = true
       delete t.data.email2 
-      console.log(t.data)
       this.$store
         .dispatch("register", t.data)
         .then(() => this.$router.push("/register-success"))
