@@ -78,7 +78,7 @@
             </div>
             <div class="column">
               <div class="userbox">
-                <a v-for="user in onlineUsers" :href="'/accounts/' + user.id">
+                <a v-for="user in onlineUsers" :href="'/accounts/' + user.id" class="fadeIn">
                   <span class="button is-small" :class="{ 'is-success' : user.online, 'is-light' : !user.online }">
                     <span v-html="user.name"></span>
                   </span>
