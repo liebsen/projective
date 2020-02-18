@@ -4,16 +4,16 @@
       <div class="content main-box has-background-white slideIn">
         <h1>Nuevo responsable para tarea <span v-html="data.title"></span></h1>
         <div v-show="showExisting" class="field">
-          <p>Elegí la persona de la lista o <a @click="showExisting = false">agregalo si no existe.</a></p>
-          <label class="label">Seleccioná el nuevo integrante</label>
+          <p>Elegí un miembro del projecto de la lista</p>
+          <label class="label">Seleccioná el nuevo responsable</label>
           <div class="control">
-            <v-autocomplete input-class="input" :items="items" v-model="item" :get-label="getLabel" :component-item='template' @update-items="updateItems"></v-autocomplete>
+            <v-autocomplete input-class="input" :items="items" v-model="item" :get-label="getLabel" :component-item="template" :auto-select-one-item="false" @update-items="updateItems"></v-autocomplete>
           </div>
         </div>
         <div v-show="!showExisting" class="field">
           <p>Ingresá el email de la persona o <a @click="showExisting = true">selecioná uno existente.</a></p>
 
-          <label class="label">Agregar email del nuevo integrante</label>
+          <label class="label">Agregar email del nuevo responsable</label>
           <div class="control">
             <input v-model="data.email" class="input" type="email" placeholder="mariano@projective.app" required>
           </div>
@@ -61,7 +61,10 @@ export default {
     updateItems (text) {
       let t = this
       t.$root.processing = true
-      axios.post( t.$root.endpoint + '/users/search', {text: text}).then( (res) => {
+      axios.post( t.$root.endpoint + '/users/search/project', {
+        project_id: t.$route.params.project_id,
+        text: text
+      }).then( (res) => {
         this.items = res.data
         t.$root.processing = false
       })

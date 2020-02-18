@@ -51,26 +51,30 @@ new Vue({
   },
   sockets: {
     users: function (data) {
-      this.users = JSON.parse(JSON.stringify(data))
-      this.onlineUsers()
+      this.onlineUsers = JSON.parse(JSON.stringify(data))
+      //this.onlineUsers()
     },
     chat_line: function(data){
       this.chatLine(data)
     },
     chat_users: function (data) {
-      this.chat_users = JSON.parse(JSON.stringify(data))
-      this.roomUsers()
+      this.chatUsers = JSON.parse(JSON.stringify(data))
+      this.showChatUsers()
     }
   },
   methods: {
     getProjectsUsers: function(){
       let t = this
       axios.get( t.$root.endpoint + '/users', {}).then((res) => {
-        t.users = res.data
-        t.onlineUsers()
-        t.$root.loading = false
+        res.data.forEach(item => {
+          t.users[item._id] = {
+            name: item.name,
+            email: item.email
+          }
+        })
+        t.loading = false
       }).catch(err => {
-        t.$root.loading = false
+        t.loading = false
         if(err){
          snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
         }
@@ -106,14 +110,19 @@ new Vue({
         }
       }
     },
-    onlineUsers: function(data){
+    showOnlineUsers: function(data){
       const box = document.querySelector(".userbox")
-      if(box){
-        console.log("users online")
-        console.log(data)
+      if(box && data){
+        data = data.filter(item => item.id)
+        data.forEach(item => {
+          const name = this.$root.users[item.id].name
+          const online = this.$root.onlineUsers.includes(item.id)
+          const color = online ? 'success' : 'light'
+          box.innerHTML+= `<div class="tag is-${color}"><span>${name}</span></div>`  
+        })
       }
     },
-    roomUsers: function(){
+    showChatUsers: function(){
       const box = document.querySelector(".roombox")
       if(box){
       }
@@ -137,7 +146,8 @@ new Vue({
     endpoint:process.env.ENDPOINT,
     loading:true,
     processing:false,
-    chat_users: {},
+    chatUsers: {},
+    onlineUsers: {},
     users:{}
   },
   render: h => h(App)

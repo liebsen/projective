@@ -7,7 +7,7 @@
           <p>Elegí la persona de la lista o <a @click="showExisting = false">agregalo si no existe.</a></p>
           <label class="label">Seleccioná el nuevo integrante</label>
           <div class="control">
-            <v-autocomplete input-class="input" :items="items" v-model="item" :get-label="getLabel" :component-item='template' @update-items="updateItems"></v-autocomplete>
+            <v-autocomplete input-class="input" :items="items" v-model="item" :get-label="getLabel" :component-item="template" :auto-select-one-item="false" @update-items="updateItems"></v-autocomplete>
           </div>
         </div>
         <div v-show="!showExisting" class="field">

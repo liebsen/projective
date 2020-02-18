@@ -77,6 +77,7 @@
               </div>
             </div>
             <div class="column">
+              <div class="userbox"></div>
               <div class="column has-text-left has-background-white chatbox-container">
                 <div class="columns">
                   <div class="column chatbox"></div>
@@ -138,7 +139,6 @@ export default {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks.issues == undefined
-      setTimeout(() => t.$root.convertDates(),250)
       t.$socket.emit('chat_join', {
         id:t.$route.params.id, 
         code: t.$root.auth.user._id
@@ -146,6 +146,7 @@ export default {
       setTimeout(() => {
         t.$root.convertDates()
         t.$root.chatHistory(res.data.tasks.chat)
+        t.$root.showOnlineUsers(res.data.accounts)
       },250) 
     }).catch(err => {
       t.$root.loading = false

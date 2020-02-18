@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b>#{{item._id}}</b>
-    <span>{{ item.name }}</span>
-    <abbr>{{item.registration_date}}</abbr>
+    <b>{{item.name}}</b>
+    <span>{{item.registration_date}}</span>
+    <abbr>{{item._id}}</abbr>
   </div>
 </template>
  
