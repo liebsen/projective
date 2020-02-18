@@ -16,6 +16,7 @@ import TaskEdit from '../components/TaskEdit'
 import TaskAssign from '../components/TaskAssign'
 import IssueCreate from '../components/IssueCreate'
 import Issue from '../components/Issue'
+import Account from '../components/Account'
 import Task from '../components/Task'
 import Terminos from '../components/Terminos'
 import Contacto from '../components/Contacto'
@@ -140,6 +141,14 @@ const router = new Router({
       path: '/issues/:id',
       name: 'issue',
       component: Issue,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/accounts/:id',
+      name: 'account',
+      component: Account,
       meta: {
         requiresAuth: true
       }

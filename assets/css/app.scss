@@ -113,7 +113,6 @@ body > div {
 }
 
 .userbox{
-  padding: 0.5rem;
 }
 
 .chatbox-container {
@@ -137,7 +136,7 @@ body > div {
   padding-top: calc(0.375em - 6px);
 }
 
-.button {
+.button:not(.is-small) {
   border-radius: 30px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;

@@ -111,16 +111,20 @@ new Vue({
       }
     },
     showOnlineUsers: function(data){
-      const box = document.querySelector(".userbox")
-      if(box && data){
-        data = data.filter(item => item.id)
-        data.forEach(item => {
-          const name = this.$root.users[item.id].name
-          const online = this.$root.onlineUsers.includes(item.id)
-          const color = online ? 'success' : 'light'
-          box.innerHTML+= `<div class="tag is-${color}"><span>${name}</span></div>`  
-        })
-      }
+      let t = this
+      setTimeout(() => {
+        const box = document.querySelector(".userbox")
+        if(box && data){
+          data = data.filter(item => item.id)
+          data.forEach(item => {
+            const user = t.users[item.id]
+            const name = user.name ? user.name : item.id
+            const online = t.onlineUsers.includes(item.id)
+            const color = online ? 'success' : 'light'
+            box.innerHTML+= `<a href="/accounts/${item.id}" class="button is-small is-${color}"><span>${name}</span></a>`  
+          })
+        }
+      },1000)
     },
     showChatUsers: function(){
       const box = document.querySelector(".roombox")
