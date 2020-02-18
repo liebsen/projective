@@ -2,7 +2,7 @@
   <div class="columns is-centered has-text-centered photo photo2">
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
-        <h1>Nuevo integrante para <span v-html="data.title"></span></h1>
+        <h1>Nuevo responsable para tarea <span v-html="data.title"></span></h1>
         <div v-show="showExisting" class="field">
           <p>Elegí la persona de la lista o <a @click="showExisting = false">agregalo si no existe.</a></p>
           <label class="label">Seleccioná el nuevo integrante</label>
@@ -20,7 +20,7 @@
         </div>
         <div class="field">
           <div class="control has-text-centered">
-            <button type="button" @click="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Agregar</button>
+            <button type="button" @click="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Asignar</button>
           </div>
         </div>  
       </div>
@@ -33,7 +33,7 @@ import axios from 'axios'
 import ItemTemplate from './ItemTemplate.vue'
 import snackbar from './Snackbar'
 export default {
-  name: 'persons_create',
+  name: 'tasks_assign',
   mounted: function(){
     var t = this
     t.$root.loading = true
@@ -41,7 +41,7 @@ export default {
       t.$root.false = true
       return snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/project/' + t.$route.params.project_id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/task/' + t.$route.params.project_id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks == undefined
@@ -61,7 +61,7 @@ export default {
     updateItems (text) {
       let t = this
       t.$root.processing = true
-      axios.post( t.$root.endpoint + '/person/search', {text: text}).then( (res) => {
+      axios.post( t.$root.endpoint + '/users/search', {text: text}).then( (res) => {
         this.items = res.data
         t.$root.processing = false
       })

@@ -50,8 +50,21 @@
               <div class="columns" v-if="data.tasks.extra">
                 <div class="column">
                   <progress class="progress is-success" :value="data.tasks.extra.progress" max="100"><span v-html="data.tasks.extra.progress"></span>%</progress>
-                  <div class="notification has-background-white">
-                    <pre v-html="data.tasks.extra"></pre>
+                  <div class="table-container">
+                    <table class="table is-fullwidth">
+                      <tr>
+                        <td class="has-background-light">Descripción</td>
+                        <td><span v-html="data.tasks.extra.text"></span></td>
+                      </tr>
+                      <tr>
+                        <td class="has-background-light">Entrega</td>
+                        <td><span v-html="data.tasks.extra.due_date"></span></td>
+                      </tr>
+                      <tr>
+                        <td class="has-background-light">Enlace</td>
+                        <td><a :href="data.tasks.extra.link" target="_blank"><span v-html="data.tasks.extra.link"></span></a></td>
+                      </tr>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -87,6 +100,9 @@
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
+              <router-link :to="'/tasks/' + $route.params.id + '/assign'" class="button is-info">
+                <span>Asignar</span>
+              </router-link>
               <router-link :to="'/tasks/' + $route.params.id + '/edit'" class="button is-success">
                 <span>Editar</span>
               </router-link>
@@ -122,7 +138,7 @@ export default {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks.issues == undefined
-
+      setTimeout(() => t.$root.convertDates(),250)
       t.$socket.emit('chat_join', {
         id:t.$route.params.id, 
         code: t.$root.auth.user._id

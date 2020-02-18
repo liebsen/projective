@@ -3,17 +3,18 @@ import moment from 'moment'
 import Router from 'vue-router'
 import store from '../components/Store'
 import Landing from '../components/Landing'
+import Login from '../components/Login'
 import Register from '../components/Register'
 import RegisterSuccess from '../components/RegisterSuccess'
-import Login from '../components/Login'
 import Validate from '../components/Validate'
 import Projects from '../components/Projects'
 import Project from '../components/Project'
 import ProjectCreate from '../components/ProjectCreate'
+import ProjectAssign from '../components/ProjectAssign'
 import TaskCreate from '../components/TaskCreate'
 import TaskEdit from '../components/TaskEdit'
+import TaskAssign from '../components/TaskAssign'
 import IssueCreate from '../components/IssueCreate'
-import PersonCreate from '../components/PersonCreate'
 import Issue from '../components/Issue'
 import Task from '../components/Task'
 import Terminos from '../components/Terminos'
@@ -80,6 +81,14 @@ const router = new Router({
       }
     },
     {
+      path: '/projects/:id/assign',
+      name: 'projects_assign',
+      component: ProjectAssign,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
       path: '/projects/:id',
       name: 'project',
       component: Project,
@@ -91,6 +100,14 @@ const router = new Router({
       path: '/tasks/:project_id/create',
       name: 'tasks_create',
       component: TaskCreate,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/tasks/:project_id/assign',
+      name: 'tasks_assign',
+      component: TaskAssign,
       meta: {
         requiresAuth: true
       }
@@ -115,14 +132,6 @@ const router = new Router({
       path: '/issues/:task_id/create',
       name: 'issues_create',
       component: IssueCreate,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/persons/:project_id/create',
-      name: 'persons_create',
-      component: PersonCreate,
       meta: {
         requiresAuth: true
       }

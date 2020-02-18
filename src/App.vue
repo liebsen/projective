@@ -7,7 +7,11 @@
     <div class="menu hidden-loading slideDown">
       <div class="menu-container columns is-vcentered is-mobile">
 
-        <router-link class="header-logo" to="/">
+        <router-link v-if="$root.isLoggedIn" class="header-logo" to="/projects">
+          <img src="/static/img/p.png" >
+        </router-link>
+
+        <router-link class="header-logo" to="/" v-else>
           <img src="/static/img/p.png" >
         </router-link>
 

@@ -44,8 +44,8 @@
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
-              <router-link :to="'/persons/' + $route.params.id + '/create'" class="button is-info">
-                <span>Personas</span>
+              <router-link :to="'/projects/' + $route.params.id + '/assign'" class="button is-info">
+                <span>Invitar</span>
               </router-link>
               <router-link :to="'/tasks/' + $route.params.id + '/create'" class="button is-success">
                 <span>Tareas</span>

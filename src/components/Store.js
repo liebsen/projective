@@ -16,9 +16,7 @@ export default new Vuex.Store({
     },
     auth_success(state, auth) {
       state.status = 'success'
-      console.log("1")
       state.auth = auth
-      console.log(state.auth)
     },
     auth_error(state) {
       state.status = 'error'
@@ -71,9 +69,7 @@ export default new Vuex.Store({
     }
   },
   getters : {
-    getAuthName: state => state.auth.name,
-    getAuthEmail: state => state.auth.email,
-    getAuthId: state => state.auth._id,
+    getAuth: state => state.auth,
     isLoggedIn: state => !!state.auth.token,
     authStatus: state => state.status,
   }
