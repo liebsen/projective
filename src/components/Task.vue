@@ -78,19 +78,19 @@
             </div>
             <div class="column">
               <div class="userbox">
-                <a v-for="user in onlineUsers" :href="'/accounts/' + user.id" class="fadeIn">
-                  <span class="button is-small" :class="{ 'is-success' : user.online, 'is-light' : !user.online }">
-                    <span v-html="user.name"></span>
+                <router-link v-for="user in onlineUsers" :to="'/accounts/' + user.id" class="fadeIn">
+                  <span class="button is-small is-rounded" :class="{ 'is-success' : user.online, 'is-light has-text-grey' : !user.online }">
+                    <strong v-html="user.name"></strong>
                   </span>
-                </a>
+                </router-link>
               </div>
               <div class="column has-text-left has-background-white chatbox-container">
                 <div class="columns">
-                  <div class="column chatbox">
-                    <div v-for="line in chatLines" class="line" :class="{ 'is-pulled-right has-text-right has-background-primary has-text-white' : line.owned, 'is-pulled-left has-text-left' : !line.owned }">
-                      <strong class="has-text-info" v-html="line.sender"></strong>
-                      <span :class="{ 'has-text-white' : line.owned, 'has-text-info' : !line.owned }" v-html="line.text"></span>
-                      <span v-html="line.ts" :class="{ 'has-text-white' : line.owned,  'has-text-info' : !line.owned }"></span>
+                  <div class="column chatbox fadeIn">
+                    <div v-for="line in chatLines" class="line" :class="{ 'is-pulled-right has-text-right has-background-warning has-text-white' : line.owned, 'is-pulled-left has-text-left has-background-info' : !line.owned }">
+                      <strong class="has-text-white" v-html="line.sender"></strong>
+                      <span class="has-text-white" v-html="line.text"></span>
+                      <span v-html="line.ts" class="is-size-7 has-text-light"></span>
                     </div>
                   </div>
                 </div>
@@ -100,7 +100,7 @@
                       <input class="input is-rounded" v-model="chat" type="text" placeholder="Ingresa tu mensaje" />
                     </div>
                     <div class="control">
-                      <button type="submit" class="button is-info is-rounded">
+                      <button type="submit" class="button is-success is-rounded">
                         <span class="icon">
                           <span class="fas fa-arrow-up"></span>
                         </span>
