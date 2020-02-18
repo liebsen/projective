@@ -68,6 +68,21 @@
                   </div>
                 </div>
               </div>
+              <div class="columns" v-if="data.tasks.managers">
+                <div class="column">
+                  <div class="table-container">
+                    <table class="table is-fullwidth">
+                      <tr>
+                        <td class="has-background-light">Responsable(s)</td>
+                        <td>
+                          <span v-for="manager in data.tasks.managers" v-html="$root.users[manager.id].name"></span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
               <div class="columns" v-else>
                 <div class="column">
                   <div class="notification has-background-white">
@@ -79,7 +94,8 @@
             <div class="column">
               <div class="userbox">
                 <router-link v-for="user in onlineUsers" :to="'/accounts/' + user.id" class="fadeIn">
-                  <span class="button is-small is-rounded" :class="{ 'is-success' : user.online, 'is-light has-text-grey' : !user.online }">
+                  <span class="button is-small is-light is-rounded" :class="{ 'has-text-success' : user.online, 'has-text-grey' : !user.online }">
+                    <span v-show="user.online" class="tag has-background-success fadeIn"></span>
                     <strong v-html="user.name"></strong>
                   </span>
                 </router-link>
@@ -151,24 +167,26 @@ export default {
       t.$root.false = true
       return snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
-      t.$root.loading = false
-      t.data = res.data
-      t.empty = res.data.tasks.issues == undefined
-      t.$socket.emit('chat_join', {
-        id:t.$route.params.id, 
-        code: t.$root.auth.user._id
+    t.$root.getProjectsUsers().then(() => {
+      axios.get( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
+        t.data = res.data
+        t.empty = res.data.tasks.issues == undefined
+        t.$socket.emit('chat_join', {
+          id:t.$route.params.id, 
+          code: t.$root.auth.user._id
+        })
+        setTimeout(() => {
+          t.$root.convertDates()
+          t.chatHistory()
+          t.showOnlineUsers()
+          t.$root.loading = false
+        },250) 
+      }).catch(err => {
+        t.$root.loading = false
+        if(err){
+         snackbar('error',"Error " + err)
+        }
       })
-      setTimeout(() => {
-        t.$root.convertDates()
-        t.chatHistory()
-        t.showOnlineUsers()
-      },250) 
-    }).catch(err => {
-      t.$root.loading = false
-      if(err){
-       snackbar('error',"Error " + err)
-      }
     })
   },
   methods: {
@@ -203,7 +221,7 @@ export default {
       let t = this
       setTimeout(() => {
         const box = document.querySelector(".userbox")
-        if(box){
+        if(t.data.accounts){
           var accounts = t.data.accounts.filter(item => item.id)
           t.onlineUsers = []
           accounts.forEach(item => {

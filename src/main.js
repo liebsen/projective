@@ -45,9 +45,6 @@ new Vue({
       return this.$store.state.auth
     }
   },
-  created: function() {
-    this.getProjectsUsers()
-  },
   sockets: {
     users: function (data) {
       this.onlineUsers = JSON.parse(JSON.stringify(data))
@@ -65,19 +62,20 @@ new Vue({
   methods: {
     getProjectsUsers: function(){
       let t = this
-      axios.get( t.$root.endpoint + '/users', {}).then((res) => {
-        res.data.forEach(item => {
-          t.users[item._id] = {
-            name: item.name,
-            email: item.email
+      return new Promise((resolve, reject) => {
+        axios.get( t.$root.endpoint + '/users', {}).then((res) => {
+          res.data.forEach(item => {
+            t.users[item._id] = {
+              name: item.name,
+              email: item.email
+            }
+          })
+          resolve()
+        }).catch(err => {
+          if(err){
+           snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
           }
         })
-        t.loading = false
-      }).catch(err => {
-        t.loading = false
-        if(err){
-         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
-        }
       })
     },
     logout: function() {

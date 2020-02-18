@@ -114,6 +114,17 @@ body > div {
 
 .userbox{
   min-height: 30px;
+  .tag {
+    padding:0;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-right: 0.25rem;
+    border-radius: 50%;
+  }
+  strong {
+    font-size: 1rem;
+    font-weight: 500;
+  }
 }
 
 .chatbox-container {

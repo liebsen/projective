@@ -106,7 +106,7 @@ const router = new Router({
       }
     },
     {
-      path: '/tasks/:project_id/assign',
+      path: '/tasks/:id/assign',
       name: 'tasks_assign',
       component: TaskAssign,
       meta: {

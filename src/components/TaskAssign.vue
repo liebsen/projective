@@ -37,11 +37,11 @@ export default {
   mounted: function(){
     var t = this
     t.$root.loading = true
-    if(!t.$route.params.project_id){
+    if(!t.$route.params.id){
       t.$root.false = true
       return snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/task/' + t.$route.params.project_id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks == undefined
@@ -62,7 +62,7 @@ export default {
       let t = this
       t.$root.processing = true
       axios.post( t.$root.endpoint + '/users/search/project', {
-        project_id: t.$route.params.project_id,
+        id: t.$route.params.id,
         text: text
       }).then( (res) => {
         this.items = res.data
@@ -71,19 +71,16 @@ export default {
     },
     submit : function(){
       let t = this
-      console.log("submm")
       t.$root.processing = true
-      t.item.title = t.data.title
-      let action = t.showExisting ? 'assign' : 'create'
-      let data = t.showExisting ? t.item : t.data
-
-      data.project_id = t.$route.params.project_id
-
-      axios.post( t.$root.endpoint + '/person/' + action, data).then((res) => {
+      axios.post( t.$root.endpoint + '/task/assign', {
+        id: t.$route.params.id,
+        user: t.item,
+        title: t.data.title
+      }).then((res) => {
         t.data = res.data
         t.$root.processing = false
-        snackbar('success','Agregaste un nuevo integrante a un proyecto')
-        t.$router.push('/projects')
+        snackbar('success','Agregaste un nuevo responsable a una tarea')
+        t.$router.push('/tasks/' + t.$route.params.id)
       }).catch(err => {
         t.$root.processing = false
         if(err){
