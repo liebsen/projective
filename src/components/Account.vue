@@ -26,11 +26,14 @@
             <div class="column is-6">
               <section class="card issue">
                 <div class="card__title">
-                  <span v-html="data.name"></span>
+                  <span v-show="data.name" v-html="data.name"></span>
+                  <span v-show="!data.name">Cuenta sin validar</span>
                 </div>
                 <div class="card__meta">
                   <div class="card__meta__date">
-                    <span>Creado</span> <span class="convert__dates" v-html="data._id"></span>
+                    <span v-show="data.name">Miembro desde</span> 
+                    <span v-show="!data.name">Invitado</span> 
+                    <span class="convert__dates" v-html="data._id"></span>
                   </div>
                 </div>
               </section>

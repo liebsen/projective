@@ -87,10 +87,10 @@
               <div class="column has-text-left has-background-white chatbox-container">
                 <div class="columns">
                   <div class="column chatbox fadeIn">
-                    <div v-for="line in chatLines" class="line" :class="{ 'is-pulled-right has-text-right has-background-warning has-text-white' : line.owned, 'is-pulled-left has-text-left has-background-info' : !line.owned }">
-                      <strong class="has-text-white" v-html="line.sender"></strong>
-                      <span class="has-text-white" v-html="line.text"></span>
-                      <span v-html="line.ts" class="is-size-7 has-text-light"></span>
+                    <div v-for="line in chatLines" class="tag" :class="{ 'is-pulled-right has-text-right' : line.owned, 'is-pulled-left has-text-left' : !line.owned }">
+                      <strong v-html="line.sender"></strong>
+                      <span v-html="line.text"></span>
+                      <span v-html="line.ts" class="is-size-7 has-text-grey"></span>
                     </div>
                   </div>
                 </div>

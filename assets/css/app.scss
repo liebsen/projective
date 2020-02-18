@@ -122,16 +122,15 @@ body > div {
     height: 270px;
     width: 100%;
     overflow-y: auto;
-    .line {
-      border-radius: 10px;
+    .tag {
       clear: both;
-      padding: 0.25rem 0.5rem;
-      padding-bottom: 0.5rem;
-      margin-bottom: 0.25rem;
+      margin-top: .25rem;
+      line-height: 1.75rem;
+      font-size: 1rem;
+      display: block;
     }
   }
 }
-
 
 .input {
   padding-top: calc(0.375em - 6px);
@@ -144,7 +143,7 @@ body > div {
   text-transform: uppercase;
 }
 
-a.button {
+a.button:not(.is-small) {
   padding-top: calc(0.375em - 6px);
 }
 
