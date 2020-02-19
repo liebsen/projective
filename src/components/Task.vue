@@ -240,6 +240,9 @@ export default {
         sender: owned ? '' : line.name,
         owned: owned
       })
+      if(!owned) {
+        playSound('chat.ogg')
+      }
       this.scrollToBottom()
     },
     showOnlineUsers: function(){
