@@ -68,6 +68,16 @@
                   </div>
                 </div>
               </div>
+              <div class="columns" v-else>
+                <div class="column">
+                  <div class="notification has-background-primary">
+                    <span class="icon">
+                      <span class="fas fa-bullhorn"></span>
+                    </span>
+                    <span>Sin detalles</span>
+                  </div>
+                </div>
+              </div>
               <div class="columns" v-if="data.tasks.managers">
                 <div class="column">
                   <div class="table-container">
@@ -84,8 +94,11 @@
               </div>
               <div class="columns" v-else>
                 <div class="column">
-                  <div class="notification has-background-white">
-                    <p>Todavía no hay detalles</p>
+                  <div class="notification has-background-primary">
+                    <span class="icon">
+                      <span class="fas fa-bullhorn"></span>
+                    </span>
+                    <span>Sin asignación</span>
                   </div>
                 </div>
               </div>
@@ -99,30 +112,30 @@
                   </span>
                 </router-link>
               </div>
-              <div class="column chatbox-container">
+              <div class="column chatbox-container is-borderless-radius-down has-background-grey">
                 <div class="chatbox fadeIn">
                   <div v-for="line in chatLines" class="chatline">
-                    <div class="chatbubble" :class="{ 'is-pulled-right has-text-right has-background-light' : line.owned, 'is-pulled-left has-text-left has-background-white' : !line.owned }">
-                      <strong v-html="line.sender"></strong>
-                      <span v-html="line.text"></span>
-                      <span v-html="line.ts" class="is-size-7 has-text-grey"></span>
+                    <div class="chatbubble" :class="{ 'is-pulled-right has-text-right has-background-light' : line.owned, 'is-pulled-left has-text-left has-background-white' : !line.owned, 'has-background-primary' : line.sender === 'bot' }">
+                      <strong v-if="line.sender != 'bot'" v-html="line.sender"></strong>
+                      <span v-html="line.text" :class="{ 'has-text-success' : line.sender === 'bot' }"></span>
+                      <span v-if="line.sender != 'bot'" v-html="line.ts" class="is-size-7 has-text-grey"></span>
                     </div>
                   </div>
                 </div>
               </div>        
-              <div class="column">
+              <div class="">
                 <form @submit.prevent="sendChat">
                   <div class="field has-addons">
-                    <div class="control">
-                      <input class="input is-rounded" v-model="chat" type="text" placeholder="Ingresa tu mensaje" />
-                    </div>
-                    <div class="control">
-                      <button type="submit" class="button is-success is-rounded">
+                    <p class="control is-expanded">
+                      <input class="input is-borderless-radius-up is-fullwidth" v-model="chat" type="text" placeholder="Ingresa tu mensaje" />
+                    </p>
+                    <p class="control">
+                      <button type="submit" class="button is-borderless-radius-up is-square is-success">
                         <span class="icon">
                           <span class="fas fa-arrow-up"></span>
                         </span>
                       </button>
-                    </div>
+                    </p>
                   </div>
                 </form>
               </div>
@@ -195,7 +208,7 @@ export default {
     user_joins: function(user){
       setTimeout(() => {
         this.chatLines.push({
-          text: `➡️${user}`,
+          text: `<span class="fas fa-arrow-right"></span> ${user}`,
           ts: moment().fromNow(true),
           sender: "bot",
           owned: false
@@ -205,7 +218,7 @@ export default {
     },
     user_leaves: function(user){
       this.chatLines.push({
-        text: `⬅️${user}`,
+        text: `<span class="fas fa-arrow-left"></span> ${user}`,
         ts: moment().fromNow(true),
         sender: "bot",
         owned: false

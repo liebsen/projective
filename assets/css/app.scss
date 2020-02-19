@@ -132,7 +132,7 @@ body > div {
 }
 
 .chatbox-container {
-  border-radius: 3px;
+  border-radius: 4px;
   height: 300px;
   position: relative;
   overflow-y: auto;
@@ -142,7 +142,6 @@ body > div {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 0.5rem;
     .chatline {
       clear: both;
 
@@ -163,7 +162,7 @@ body > div {
   padding-top: calc(0.375em - 6px);
 }
 
-.button:not(.is-small) {
+.button:not(.is-small):not(.is-square) {
   border-radius: 30px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -172,6 +171,16 @@ body > div {
 
 a.button:not(.is-small) {
   padding-top: calc(0.375em - 6px);
+}
+
+.is-borderless-radius-up {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.is-borderless-radius-down {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .hero {
