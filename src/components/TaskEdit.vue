@@ -81,7 +81,7 @@ export default {
       }).then((res) => {
         this.data = res.data
         this.$root.processing = false
-        snackbar('success','Editaste tarea ' + this.data.title)
+        snackbar('success','Editaste una tarea')
         this.$router.push('/tasks/' + this.$route.params.id)
       }).catch(err => {
         this.$root.processing = false

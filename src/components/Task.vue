@@ -99,16 +99,18 @@
                   </span>
                 </router-link>
               </div>
-              <div class="column has-text-left has-background-white chatbox-container">
-                <div class="columns">
-                  <div class="column chatbox fadeIn">
-                    <div v-for="line in chatLines" class="tag" :class="{ 'is-pulled-right has-text-right' : line.owned, 'is-pulled-left has-text-left' : !line.owned }">
+              <div class="column chatbox-container">
+                <div class="chatbox fadeIn">
+                  <div v-for="line in chatLines" class="chatline">
+                    <div class="chatbubble" :class="{ 'is-pulled-right has-text-right has-background-light' : line.owned, 'is-pulled-left has-text-left has-background-white' : !line.owned }">
                       <strong v-html="line.sender"></strong>
                       <span v-html="line.text"></span>
                       <span v-html="line.ts" class="is-size-7 has-text-grey"></span>
                     </div>
                   </div>
                 </div>
+              </div>        
+              <div class="column">
                 <form @submit.prevent="sendChat">
                   <div class="field has-addons">
                     <div class="control">
@@ -123,7 +125,7 @@
                     </div>
                   </div>
                 </form>
-              </div>        
+              </div>
             </div>
           </div>
           <div class="columns">
@@ -191,33 +193,33 @@ export default {
   },
   sockets: {
     user_joins: function(user){
-      console.log("user_joins")
-      this.chatLines.push({
-        text: `➡️${user}`,
-        ts: moment().fromNow(true),
-        sender: "bot",
-        owned: false
-      })
       setTimeout(() => {
-        const box = document.querySelector(".chatbox")
-        box.scrollTop = box.scrollHeight  
-      },100)
+        this.chatLines.push({
+          text: `➡️${user}`,
+          ts: moment().fromNow(true),
+          sender: "bot",
+          owned: false
+        })
+        this.scrollToBottom()
+      },1000)
     },
     user_leaves: function(user){
-      console.log("user_leaves")
       this.chatLines.push({
         text: `⬅️${user}`,
         ts: moment().fromNow(true),
         sender: "bot",
         owned: false
       })
-      setTimeout(() => {
-        const box = document.querySelector(".chatbox")
-        box.scrollTop = box.scrollHeight  
-      },100)
+      this.scrollToBottom()
     }
   },
   methods: {
+    scrollToBottom: function(){
+      setTimeout(() => {
+        const box = document.querySelector(".chatbox-container")
+        box.scrollTop = box.scrollHeight  
+      },50)
+    },
     sendChat: function() {
       let t = this
       if(t.chat.trim()==='') t.chat = '👋'
@@ -230,7 +232,6 @@ export default {
       t.chat = ''
     },
     chatLine: function(line){
-      console.log("chatLine: " + line)
       const box = document.querySelector(".chatbox")
       const owned = this.$root.auth.user._id === line.sender
       this.chatLines.push({
@@ -239,12 +240,7 @@ export default {
         sender: owned ? '' : line.name,
         owned: owned
       })
-      setTimeout(() => {
-        box.scrollTop = box.scrollHeight  
-        if(!owned){
-          playSound('chat.ogg')
-        }
-      },200)
+      this.scrollToBottom()
     },
     showOnlineUsers: function(){
       let t = this
@@ -269,9 +265,7 @@ export default {
             owned: owned
           })
         })
-        setTimeout(() => {
-          box.scrollTop = box.scrollHeight  
-        },200)
+        this.scrollToBottom()
       }
     },
     remove: function(){
