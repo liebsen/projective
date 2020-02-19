@@ -4,7 +4,7 @@
       <div class="container">
         <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
           <ul>
-            <li><a href="/projects">Proyectos</a></li>
+            <li><a href="#">Proyectos</a></li>
           </ul>
         </nav>
         <div class="content">

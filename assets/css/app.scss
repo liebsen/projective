@@ -144,14 +144,11 @@ body > div {
     right: 0;
     .chatline {
       clear: both;
-      line-height: 1.75rem;
-      font-size: 1rem;
-      display: block;
       .chatbubble {
         border-radius: 5px;
         margin-bottom: 0.5rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
+        line-height: 1.25rem;
+        padding: 0.25rem 0.5rem;
       }
     }
   }
