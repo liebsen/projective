@@ -12,7 +12,7 @@
           </div>
           <div class="field">
             <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Crear proyecto</button>
+              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Crear</button>
             </div>
           </div>  
         </form>

@@ -4,25 +4,15 @@
       <div class="content main-box has-background-white slideIn">
         <form class="form" @submit.prevent="submit">
           <h1>Editar proyecto <span v-html="data.title"></span></h1>
-          <p>Ingresá los datos de este proyecto</p>
+          <p>Ingresá el nombre de tu proyecto</p>
           <div class="field">
             <div class="control">
-              <datepicker input-class="input" v-model="update.due_date" name="due_date"></datepicker>
-            </div>
-          </div>
-          <div class="field">
-            <div class="control">
-              <input class="input" v-model="update.link" type="text" placeholder="Link de la tarea">
-            </div>
-          </div>
-          <div class="field">
-            <div class="control">
-              <textarea v-model="update.text" class="textarea" placeholder="" required></textarea>
+              <input v-model="data.title" class="input" type="text" placeholder="Nombre del proyecto" required>
             </div>
           </div>
           <div class="field">
             <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Actualizar proyecto</button>
+              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Actualizar</button>
             </div>
           </div>  
         </form>
@@ -33,13 +23,9 @@
 
 <script>
 import axios from 'axios'
-import Datepicker from 'vuejs-datepicker'
 import snackbar from './Snackbar'
 export default {
-  name: 'tasks_edit',
-  components: {
-    Datepicker
-  },
+  name: 'projects_edit',
   mounted: function(){
     var t = this
     t.$root.loading = true
@@ -50,9 +36,8 @@ export default {
     axios.get( t.$root.endpoint + '/project/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.update = res.data.tasks.extra
       t.empty = res.data.tasks == undefined
-      //setTimeout(function(){ t.$root.convertDates() },100)      
+      setTimeout(() => t.$root.convertDates(),250) 
     }).catch(err => {
       t.$root.loading = false
       if(err){
@@ -64,11 +49,14 @@ export default {
     submit : function(){
       let t = this
       t.$root.processing = true
-      axios.post( t.$root.endpoint + '/project/' + t.$route.params.id, t.update).then((res) => {
+      axios.post( t.$root.endpoint + '/project', {
+        _id: t.data._id,
+        title: t.data.title
+      }).then((res) => {
         t.data = res.data
         t.$root.processing = false
-        snackbar('success','Editaste tarea ' + t.data.title)
-        t.$router.push('/tasks/' + t.$route.params.id)
+        snackbar('success','Renombraste un proyecto')
+        t.$router.push('/projects')
       }).catch(err => {
         t.$root.processing = false
         if(err){
@@ -79,8 +67,7 @@ export default {
   },
   data () {
     return {
-      data:{},
-      update:{}
+      data:{}
     }
   }
 }

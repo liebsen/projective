@@ -7,27 +7,32 @@
           <p>Ingresá los datos de esta tarea</p>
           <div class="field">
             <div class="control">
-              <datepicker input-class="input" v-model="update.due_date" name="due_date"></datepicker>
+              <input class="input" v-model="data.tasks.title" type="text" placeholder="Título de la tarea">
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <vue-slider v-model="update.progress" /></vue-slider>
+              <datepicker input-class="input" v-model="extra.due_date" name="due_date"></datepicker>
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <input class="input" v-model="update.link" type="text" placeholder="Link de la tarea">
+              <vue-slider v-model="extra.progress" /></vue-slider>
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <textarea v-model="update.text" class="textarea" placeholder="" required></textarea>
+              <input class="input" v-model="extra.link" type="text" placeholder="Link de la tarea">
+            </div>
+          </div>
+          <div class="field">
+            <div class="control">
+              <textarea v-model="extra.text" class="textarea" placeholder="" required></textarea>
             </div>
           </div>
           <div class="field">
             <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Actualizar tarea</button>
+              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Actualizar</button>
             </div>
           </div>  
         </form>
@@ -49,20 +54,19 @@ export default {
     VueSlider
   },
   mounted: function(){
-    var t = this
-    t.$root.loading = true
-    if(!t.$route.params.id){
-      t.$root.false = true
+    this.$root.loading = true
+    if(!this.$route.params.id){
+      this.$root.false = true
       return snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
-      t.$root.loading = false
-      t.data = res.data
-      t.update = res.data.tasks.extra||{}
-      t.empty = res.data.tasks == undefined
+    axios.get( this.$root.endpoint + '/task/' + this.$route.params.id, {}).then((res) => {
+      this.$root.loading = false
+      this.data = res.data
+      this.extra = res.data.tasks.extra||{}
+      this.empty = res.data.tasks == undefined
       //setTimeout(function(){ t.$root.convertDates() },100)      
     }).catch(err => {
-      t.$root.loading = false
+      this.$root.loading = false
       if(err){
        snackbar('error',"Error " + err)
       }
@@ -70,15 +74,17 @@ export default {
   },
   methods: {
     submit : function(){
-      let t = this
-      t.$root.processing = true
-      axios.post( t.$root.endpoint + '/task/' + t.$route.params.id, t.update).then((res) => {
-        t.data = res.data
-        t.$root.processing = false
-        snackbar('success','Editaste tarea ' + t.data.title)
-        t.$router.push('/tasks/' + t.$route.params.id)
+      this.$root.processing = true
+      axios.post( this.$root.endpoint + '/task/' + this.$route.params.id, {
+        title: this.data.tasks.title,
+        extra: this.extra
+      }).then((res) => {
+        this.data = res.data
+        this.$root.processing = false
+        snackbar('success','Editaste tarea ' + this.data.title)
+        this.$router.push('/tasks/' + this.$route.params.id)
       }).catch(err => {
-        t.$root.processing = false
+        this.$root.processing = false
         if(err){
          snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
         }
@@ -88,7 +94,7 @@ export default {
   data () {
     return {
       data:{ tasks: {}},
-      update:{}
+      extra:{}
     }
   }
 }

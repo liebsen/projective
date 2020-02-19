@@ -128,17 +128,11 @@
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
-              <router-link :to="'/tasks/' + $route.params.id + '/assign'" class="button is-info">
-                <span>Asignar</span>
-              </router-link>
-              <router-link :to="'/tasks/' + $route.params.id + '/edit'" class="button is-success">
-                <span>Editar</span>
-              </router-link>
               <router-link :to="'/issues/' + $route.params.id + '/create'" class="button is-success">
-                <span>Agregar cuestión</span>
+                <span>Cuestionar</span>
               </router-link>
               <a @click="remove" class="button is-danger">
-                <span>Eliminar tarea <span v-html="data.tasks.title"></span></span>
+                <span>Eliminar <!--span v-html="data.tasks.title"></span--></span>
               </a>
             </div>
           </div>

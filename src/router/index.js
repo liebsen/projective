@@ -10,10 +10,11 @@ import Validate from '../components/Validate'
 import Projects from '../components/Projects'
 import Project from '../components/Project'
 import ProjectCreate from '../components/ProjectCreate'
-import ProjectAssign from '../components/ProjectAssign'
+import ProjectEdit from '../components/ProjectEdit'
+import ProjectShare from '../components/ProjectShare'
 import TaskCreate from '../components/TaskCreate'
 import TaskEdit from '../components/TaskEdit'
-import TaskAssign from '../components/TaskAssign'
+import TaskShare from '../components/TaskShare'
 import IssueCreate from '../components/IssueCreate'
 import Issue from '../components/Issue'
 import Account from '../components/Account'
@@ -82,9 +83,17 @@ const router = new Router({
       }
     },
     {
-      path: '/projects/:id/assign',
-      name: 'projects_assign',
-      component: ProjectAssign,
+      path: '/projects/:id/edit',
+      name: 'projects_edit',
+      component: ProjectEdit,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/projects/:id/share',
+      name: 'projects_share',
+      component: ProjectShare,
       meta: {
         requiresAuth: true
       }
@@ -106,9 +115,9 @@ const router = new Router({
       }
     },
     {
-      path: '/tasks/:id/assign',
-      name: 'tasks_assign',
-      component: TaskAssign,
+      path: '/tasks/:id/share',
+      name: 'tasks_share',
+      component: TaskShare,
       meta: {
         requiresAuth: true
       }

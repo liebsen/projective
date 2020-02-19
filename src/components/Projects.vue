@@ -16,26 +16,28 @@
           </div>
           <div class="columns is-multiline">
             <div class="column is-full" v-for="item in data">
-              <router-link :to="'/projects/' + item._id">
-                <section class="card">
+              <section class="card">
+                <router-link :to="'/projects/' + item._id">
                   <div class="card__title">
                     <span v-html="item.title"></span>
                     <!--pre v-html="item"></pre-->
                   </div>
-                  <div class="card__meta" :style="'background: linear-gradient(to right,#6decb9 ' + item.progress + '%,#fff ' + item.progress + '%);'">
-                    <div class="card__meta__date">
-                      <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
-                    </div>
+                </router-link>
+                <div class="card__meta" :style="'background: linear-gradient(to right,#6decb9 ' + item.progress + '%,#fff ' + item.progress + '%);'">
+                  <div class="card__meta__date">
+                    <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
                   </div>
-                </section>
-              </router-link>
+                </div>
+                <footer class="card-footer">
+                  <router-link :to="'/projects/' + item._id + '/share'" class="card-footer-item">
+                    <span>Compartir</span>
+                  </router-link>
+                  <router-link :to="'/projects/' + item._id + '/edit'" class="card-footer-item">
+                    <span>Editar</span>
+                  </router-link>
+                </footer>
+              </section>
             </div>
-            <!--div class="column">
-              <pre v-html="data[0].accounts"></pre>
-              <div v-for="user in data.accounts">
-                <span v-html="user.id"></span>
-              </div>
-            </div-->
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">

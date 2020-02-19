@@ -7,10 +7,10 @@
           <p>Ingresá las tareas separadas por salto de línea</p>
           <div class="field">
             <div class="control">
-              <textarea v-model="data.tasks" class="textarea" placeholder="Análisis de base de datos
-Diseño
-Desarrollo web
-etc..." required></textarea>
+              <textarea v-model="data.tasks" class="textarea" placeholder="1. Análisis
+2. Diseño
+3. Desarrollo 
+4. etc..." required></textarea>
             </div>
           </div>
           <div class="field">
@@ -39,8 +39,7 @@ export default {
     axios.get( t.$root.endpoint + '/project/' + t.$route.params.project_id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      t.empty = res.data.tasks == undefined
-      //setTimeout(function(){ t.$root.convertDates() },100)      
+      t.data.tasks = ''
     }).catch(err => {
       t.$root.loading = false
       if(err){

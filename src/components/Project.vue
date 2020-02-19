@@ -27,31 +27,42 @@
           </div>
           <div v-if="!empty" class="columns is-multiline">
             <div class="column is-full" v-for="item in data.tasks">
-              <router-link :to="'/tasks/' + item.id">
-                <section class="card task">
+              <section class="card task">
+                <router-link :to="'/tasks/' + item.id">
                   <div class="card__title">
                     <span v-html="item.title"></span>
                     <!--pre v-html="item"></pre-->
                   </div>
-                  <div class="card__meta" :style="'background: linear-gradient(to right,#6decb9 ' + (item.extra ? item.extra.progress : 0 ) + '%,#fff ' + (item.extra ? item.extra.progress : 0 ) + '%);'">
-                    <div class="card__meta__date">
-                      <span>Creado</span> <span class="convert__dates" v-html="item.id"></span>
-                    </div>
+                </router-link>
+                <div class="card__meta" :style="'background: linear-gradient(to right,#6decb9 ' + (item.extra ? item.extra.progress : 0 ) + '%,#fff ' + (item.extra ? item.extra.progress : 0 ) + '%);'">
+                  <div class="card__meta__date">
+                    <span>Creado</span> <span class="convert__dates" v-html="item.id"></span>
                   </div>
-                </section>
-              </router-link>
+                </div>
+                <footer class="card-footer">
+                  <router-link :to="'/tasks/' + item.id + '/share'" class="card-footer-item">
+                    <span>Asignar</span>
+                  </router-link>
+                  <router-link :to="'/tasks/' + item.id + '/edit'" class="card-footer-item">
+                    <span>Editar</span>
+                  </router-link>
+                </footer>
+              </section>
             </div>
           </div>
           <div class="columns">
             <div class="column has-text-centered slideIn">
-              <router-link :to="'/projects/' + $route.params.id + '/assign'" class="button is-info">
-                <span>Invitar</span>
+              <!--router-link :to="'/projects/' + $route.params.id + '/share'" class="button is-success">
+                <span>Compartir</span>
               </router-link>
-              <router-link :to="'/tasks/' + $route.params.id + '/create'" class="button is-success">
+              <router-link :to="'/projects/' + $route.params.id + '/name'" class="button is-info">
+                <span>Renombrar</span>
+              </router-link-->
+              <router-link :to="'/tasks/' + $route.params.id + '/create'" class="button is-info">
                 <span>Tareas</span>
               </router-link>
               <a @click="remove(data._id)" class="button is-danger">
-                <span>Eliminar proyecto <span v-html="data.title"></span></span>
+                <span>Eliminar</span>
               </a>
             </div>
           </div>
