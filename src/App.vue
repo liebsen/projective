@@ -151,13 +151,16 @@
 <script>
 
 import moment from 'moment'
-
+import snackbar from './components/Snackbar'
 export default {
   name: 'app',
   methods: {
     logout: function() {
-      this.$store.dispatch("logout").then(() => {
-        this.$router.push("/login");
+      this.$store.dispatch("logout").then((user) => {
+        localStorage.removeItem('auth')
+        snackbar('success',`Hasta luego ${user.name}, esperamos verte pronto de nuevo.`)
+        this.$socket.emit('logout',user._id)
+        this.$router.push("/login")
       });
     }
   }

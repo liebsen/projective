@@ -25,7 +25,7 @@ Vue.use(Autocomplete)
 Vue.use(new VueSocketIO({
   debug: process.env.NODE_ENV=='development',
   connection: process.env.ENDPOINT,
-  options: {query: '&token=' + (auth?auth.token:'')}
+  options: {query: '&token=' + (auth?auth.user._id:'')}
 }))
 
 new Vue({
@@ -47,43 +47,15 @@ new Vue({
   },
   sockets: {
     users: function (data) {
-      this.onlineUsers = JSON.parse(JSON.stringify(data))
-      this.$emit("onlineUsers")
+      this.users = data
+      this.$emit("onlineUsers", data)
     },
     chat_line: function(data){
+      console.log("chatline: " + data)
       this.$emit("chatLine", data)
-    },
-    chat_users: function (data) {
-      this.chatUsers = JSON.parse(JSON.stringify(data))
-      this.$emit("chatUsers")
-      //this.showChatUsers()
     }
   },
   methods: {
-    getProjectsUsers: function(){
-      let t = this
-      return new Promise((resolve, reject) => {
-        axios.get( t.$root.endpoint + '/users', {}).then((res) => {
-          res.data.forEach(item => {
-            t.users[item._id] = {
-              name: item.name,
-              email: item.email
-            }
-          })
-          resolve()
-        }).catch(err => {
-          if(err){
-           snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
-          }
-        })
-      })
-    },
-    logout: function() {
-      this.$store.dispatch("logout").then(() => {
-        localStorage.removeItem('account')
-        this.$router.push("/login");
-      });
-    },
     tosAgree: function(){
       localStorage.setItem("tosagree",true)
       document.querySelector('.tosprompt').classList.remove('fadeIn')
@@ -106,9 +78,7 @@ new Vue({
     endpoint:process.env.ENDPOINT,
     loading:false,
     processing:false,
-    chatUsers: {},
-    onlineUsers: {},
-    users:{}
+    users: {}
   },
   render: h => h(App)
 })

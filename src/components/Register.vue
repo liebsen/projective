@@ -27,16 +27,6 @@
           </div>
           <div class="field">
             <div class="control">
-              <input v-model="data.email" class="input is-success" type="email" placeholder="Email" required>
-            </div>
-          </div>
-          <div class="field">
-            <div class="control">
-              <input v-model="data.email2" class="input is-success" type="email" placeholder="Confirmar Email" required>
-            </div>
-          </div>
-          <div class="field">
-            <div class="control">
               <input v-model="data.password" class="input is-danger" type="password" placeholder="Contraseña" required>
             </div>
           </div>
@@ -76,9 +66,7 @@ export default {
         t.$root.processing = false
         if(err){
           t.codeChecked = false
-          if(err.response.status === 403){
-            snackbar('error',"Error. El email <em>" + t.data.email + "</em> ya se encuentra registrado. Probá con otro email.",30000)
-          } else if(err.response.status === 404){
+          if(err.response.status === 404){
             snackbar('error',"Error. El Código <em>" + t.data.code + "</em> es inválido. Probá con otro código.",30000)
           } else if(err.response.status === 500){
             snackbar('error',"Hubo un error al verificar código.")
@@ -88,12 +76,9 @@ export default {
     },
     submit: function() {
       var t = this
-      if(t.data.email != t.data.email2)
-        return snackbar('error',"El email y su confirmación deben coincidir.")
       if(!t.acceptTerms)
         return snackbar('error',"Tenés que aceptar nuestros términos y condiciones para crear una cuenta") 
       t.$root.processing = true
-      delete t.data.email2 
       this.$store
         .dispatch("register", t.data)
         .then(() => this.$router.push("/register-success"))

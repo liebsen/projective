@@ -92,10 +92,10 @@
             </div>
             <div class="column">
               <div class="userbox">
-                <router-link v-for="user in onlineUsers" :to="'/accounts/' + user.id" class="fadeIn">
-                  <span class="button is-small is-light is-rounded" :class="{ 'has-text-success' : user.online, 'has-text-grey' : !user.online }">
-                    <span v-show="user.online" class="tag has-background-success fadeIn"></span>
-                    <strong v-html="user.name"></strong>
+                <router-link v-if="$root.users[user.id]" v-for="user in data.accounts" :to="'/accounts/' + user.id" class="fadeIn">
+                  <span class="button is-small is-light is-rounded has-text-success">
+                    <span class="tag has-background-success fadeIn"></span>
+                    <strong v-html="$root.users[user.id].name"></strong>
                   </span>
                 </router-link>
               </div>
@@ -158,41 +158,73 @@ import playSound from './playSound'
 export default {
   name: 'task',
   mounted: function(){
-    var t = this
-    t.$root.loading = true
-    t.$root.$on("onlineUsers", t.showOnlineUsers)
-    t.$root.$on("chatLine", t.chatLine)
-    if(!t.$route.params.id){
-      t.$root.false = true
+    this.$root.loading = true
+    //this.$root.$on("onlineUsers", this.showOnlineUsers)
+    this.$root.$on("chatLine", this.chatLine)
+    if(!this.$route.params.id){
+      this.$root.false = true
       return snackbar('error',"No preference param.")
     }
-    t.$root.getProjectsUsers().then(() => {
-      axios.get( t.$root.endpoint + '/task/' + t.$route.params.id, {}).then((res) => {
-        t.data = res.data
-        t.empty = res.data.tasks.issues == undefined
-        t.$socket.emit('chat_join', {
-          id:t.$route.params.id, 
-          code: t.$root.auth.user._id
-        })
-        setTimeout(() => {
-          t.$root.convertDates()
-          t.chatHistory()
-          t.showOnlineUsers()
-          t.$root.loading = false
-        },250) 
-      }).catch(err => {
-        t.$root.loading = false
-        if(err){
-         snackbar('error',"Error " + err)
-        }
+    axios.get( this.$root.endpoint + '/task/' + this.$route.params.id, {}).then((res) => {
+      this.data = res.data
+      this.empty = res.data.tasks.issues == undefined
+      this.$socket.emit('join', {
+        id:this.$route.params.id, 
+        code: this.$root.auth.user._id,
+        name:this.$root.auth.user.name
       })
+      setTimeout(() => {
+        this.$root.convertDates()
+        this.chatHistory()
+        this.$root.loading = false
+      },250) 
+    }).catch(err => {
+      this.$root.loading = false
+      if(err){
+       snackbar('error',"Error " + err)
+      }
     })
+  },
+  beforeDestroy () {
+    this.$socket.emit('leave', {
+      id:this.$route.params.id, 
+      code: this.$root.auth.user._id,
+      name:this.$root.auth.user.name
+    })
+  },
+  sockets: {
+    user_joins: function(user){
+      console.log("user_joins")
+      this.chatLines.push({
+        text: `➡️${user}`,
+        ts: moment().fromNow(true),
+        sender: "bot",
+        owned: false
+      })
+      setTimeout(() => {
+        const box = document.querySelector(".chatbox")
+        box.scrollTop = box.scrollHeight  
+      },100)
+    },
+    user_leaves: function(user){
+      console.log("user_leaves")
+      this.chatLines.push({
+        text: `⬅️${user}`,
+        ts: moment().fromNow(true),
+        sender: "bot",
+        owned: false
+      })
+      setTimeout(() => {
+        const box = document.querySelector(".chatbox")
+        box.scrollTop = box.scrollHeight  
+      },100)
+    }
   },
   methods: {
     sendChat: function() {
       let t = this
       if(t.chat.trim()==='') t.chat = '👋'
-      t.$socket.emit('chat_send', { 
+      t.$socket.emit('send', { 
         room: t.$route.params.id,
         sender: t.$root.auth.user._id,
         name: t.$root.auth.user.name,
@@ -201,6 +233,7 @@ export default {
       t.chat = ''
     },
     chatLine: function(line){
+      console.log("chatLine: " + line)
       const box = document.querySelector(".chatbox")
       const owned = this.$root.auth.user._id === line.sender
       this.chatLines.push({
@@ -218,18 +251,8 @@ export default {
     },
     showOnlineUsers: function(){
       let t = this
-      if(t.data.accounts){
+      if(t.data.accounts.length){
         var accounts = t.data.accounts.filter(account => account.id)
-        t.onlineUsers = []
-        accounts.forEach(account => {
-          if(t.$root.users[account.id]){
-            t.onlineUsers.push({
-              id: account.id,
-              online: !!t.$root.onlineUsers.includes(account.id),
-              name: t.$root.users[account.id].name
-            })
-          }
-        })
       }
     },
     showChatUsers: function(){

@@ -81,8 +81,12 @@ export default {
         t.$router.push('/projects')
       }).catch(err => {
         t.$root.processing = false
-        if(err){
-         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+        if(err.response.status === 402){
+          snackbar('error',`Tenés que ingresar una cuenta existente. Para agregar a ${t.data.email} presioná  en <strong>agregalo si no existe</strong>`,30000)
+        } else if(err.response.status === 403){
+          snackbar('error',`Ya existe una cuenta registrada con el email ${t.data.email}. Probá con otro.`,30000)
+        } else {
+          snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
         }
       })
     }

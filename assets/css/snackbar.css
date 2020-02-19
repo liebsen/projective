@@ -80,8 +80,12 @@
  left:50%;
  -webkit-transform:translateX(-50%);
  -ms-transform:translateX(-50%);
- transform:translateX(-50%)
+ transform:translateX(-50%);
 }
+.ui-snackbar__message strong {
+  color: white;
+}
+
 .ui-snackbar,
 .ui-snackbar--default {
  background-color:#333

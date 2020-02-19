@@ -8,7 +8,7 @@
           </ul>
         </nav>
         <div class="content">
-          <h1>Hola, <span v-html="$root.auth.user.name"></span></h1>
+          <h1 v-if="$root.auth.user">Hola, <span v-html="$root.auth.user.name"></span></h1>
           <div v-show="empty" class="column">
             <div class="notification">
               <p>Todavía no creaste ningún proyecto.</p>
