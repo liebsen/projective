@@ -40,7 +40,7 @@
                       </div>
                       <div class="card__meta">
                         <div class="card__meta__date">
-                          <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
+                          <span>Creado</span> <span class="convert__dates" v-html="item.id"></span>
                         </div>
                       </div>
                     </section>
@@ -131,6 +131,9 @@
               <router-link :to="'/issues/' + $route.params.id + '/create'" class="button is-success">
                 <span>Cuestionar</span>
               </router-link>
+              <router-link :to="'/tasks/' + $route.params.id + '/edit'" class="button is-info">
+                <span>Editar</span>
+              </router-link>
               <a @click="remove" class="button is-danger">
                 <span>Eliminar <!--span v-html="data.tasks.title"></span--></span>
               </a>
@@ -171,7 +174,7 @@ export default {
         this.$root.convertDates()
         this.chatHistory()
         this.$root.loading = false
-      },250) 
+      },500) 
     }).catch(err => {
       this.$root.loading = false
       if(err){
