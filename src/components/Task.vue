@@ -82,7 +82,6 @@
                   </div>
                 </div>
               </div>
-
               <div class="columns" v-else>
                 <div class="column">
                   <div class="notification has-background-white">
@@ -219,23 +218,19 @@ export default {
     },
     showOnlineUsers: function(){
       let t = this
-      setTimeout(() => {
-        const box = document.querySelector(".userbox")
-        if(t.data.accounts){
-          var accounts = t.data.accounts.filter(item => item.id)
-          t.onlineUsers = []
-          accounts.forEach(item => {
-            const user = t.$root.users[item.id]
-            const name = user.name ? user.name : item.id
-            const online = t.$root.onlineUsers.includes(item.id)
+      if(t.data.accounts){
+        var accounts = t.data.accounts.filter(account => account.id)
+        t.onlineUsers = []
+        accounts.forEach(account => {
+          if(t.$root.users[account.id]){
             t.onlineUsers.push({
-              id: item.id,
-              online: online,
-              name: name
+              id: account.id,
+              online: !!t.$root.onlineUsers.includes(account.id),
+              name: t.$root.users[account.id].name
             })
-          })
-        }
-      },1000)
+          }
+        })
+      }
     },
     showChatUsers: function(){
       const box = document.querySelector(".roombox")
@@ -288,7 +283,7 @@ export default {
   },
   data () {
     return {
-      data:{ tasks: { extra: {}, issues: {}}},
+      data:{ accounts: {}, tasks: { extra: {}, issues: {}}},
       empty:false,
       onlineUsers:[],
       chatLines:[],

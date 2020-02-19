@@ -104,7 +104,7 @@ new Vue({
   data : {
     ver: '1.0.1',
     endpoint:process.env.ENDPOINT,
-    loading:true,
+    loading:false,
     processing:false,
     chatUsers: {},
     onlineUsers: {},
