@@ -120,7 +120,7 @@
         <div class="is-pulled-right">
           <a href="#" @click="$root.tosAgree(this)">
             <span class="icon">
-              <span class="fa fa-times"></span>
+              <span class="fa fa-times has-text-dark"></span>
             </span>
           </a>
         </div>
