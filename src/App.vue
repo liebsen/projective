@@ -30,12 +30,12 @@
 
         <div class="column menu-primary">
           <div class="menu-bg"></div>
-          <div v-show="$root.ncount" class="menu-notifications fadeIn">
-            <router-link to="/notifications">
-              <span class="icon has-text-warning is-size-3">
-                <span class="fab fa-rocketchat"></span>
-                <span class="tag is-info" v-html="$root.ncount"></span>
+          <div v-show="$root.ncount">
+            <router-link to="/notifications" class="menu-notifications fadeIn">
+              <span class="icon has-text-white is-size-2">
+                <span class="fas fa-comment"></span> 
               </span>
+              <span class="count is-size-6" v-html="$root.ncount"></span>              
             </router-link>
           </div>
           <div class="menu-burger">
