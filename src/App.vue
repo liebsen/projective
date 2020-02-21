@@ -30,6 +30,14 @@
 
         <div class="column menu-primary">
           <div class="menu-bg"></div>
+          <div v-show="$root.ncount" class="menu-notifications fadeIn">
+            <router-link to="/notifications">
+              <span class="icon has-text-warning is-size-3">
+                <span class="fab fa-rocketchat"></span>
+                <span class="tag is-info" v-html="$root.ncount"></span>
+              </span>
+            </router-link>
+          </div>
           <div class="menu-burger">
             <svg viewBox="0 0 800 600">
               <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>

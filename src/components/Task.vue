@@ -230,7 +230,9 @@ export default {
     scrollToBottom: function(){
       setTimeout(() => {
         const box = document.querySelector(".chatbox-container")
-        box.scrollTop = box.scrollHeight  
+        if(box){
+          box.scrollTop = box.scrollHeight  
+        }
       },50)
     },
     sendChat: function() {

@@ -32,6 +32,7 @@ export default {
       t.$root.processing = true
       axios.put( t.$root.endpoint + '/project', t.data).then((res) => {
         t.data = res.data
+        t.$root.projects.push(res.data._id)
         t.$root.processing = false
         snackbar('success','Creaste un nuevo proyecto')
         t.$router.push('/projects')

@@ -37,6 +37,12 @@ new Vue({
       this.processing = false
     }
   },
+  mounted: function() {
+    setTimeout(() => {
+      this.loadProjects()
+      this.loadNotifications()
+    },500)
+  },
   computed: {
     isLoggedIn: function() {
       return this.$store.getters.isLoggedIn
@@ -50,12 +56,39 @@ new Vue({
       this.users = data
       this.$emit("onlineUsers", data)
     },
+    notification: function(data){
+      console.log("1")
+      console.log(data)
+      if(this.projects.includes(data.id) && this.$route.fullPath.indexOf('/tasks/' + data.room) == -1 && data.sender != this.auth.user._id){
+        console.log("2")
+        this.ncount++
+      }
+    },
     chat_line: function(data){
-      console.log("chatline: " + data)
       this.$emit("chatLine", data)
     }
   },
   methods: {
+    loadProjects: function(){
+      axios.get( this.endpoint + '/projects_ids', {}).then((res) => {
+        console.log(res.data)
+        this.projects = res.data
+      }).catch(err => {
+        if(err){
+         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+        }
+      })
+    },
+    loadNotifications: function(){
+      axios.get( this.endpoint + '/account/notifications/count', {}).then((res) => {
+        console.log(res)
+        this.ncount = res.data.count
+      }).catch(err => {
+        if(err){
+         snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+        }
+      })
+    },
     tosAgree: function(){
       localStorage.setItem("tosagree",true)
       document.querySelector('.tosprompt').classList.remove('fadeIn')
@@ -71,6 +104,11 @@ new Vue({
         el.innerHTML = moment(date).format(el.getAttribute('date-format')||'LLLL')
         el.classList.add('fadeIn')
       })
+      document.querySelectorAll('.fromnow__dates').forEach(function(el){
+        const date = el.innerText.toString()
+        el.innerHTML = moment(date).fromNow(true)
+        el.classList.add('fadeIn')
+      })
     }
   },
   data : {
@@ -78,6 +116,8 @@ new Vue({
     endpoint:process.env.ENDPOINT,
     loading:false,
     processing:false,
+    projects:[],
+    ncount: 0,
     users: {}
   },
   render: h => h(App)

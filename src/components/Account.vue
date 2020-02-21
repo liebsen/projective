@@ -68,7 +68,7 @@ export default {
       t.$root.false = true
       return snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/accounts/' + t.$route.params.id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/account/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
       setTimeout(() => t.$root.convertDates(),250) 
