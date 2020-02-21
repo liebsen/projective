@@ -16,7 +16,7 @@
           </div>
           <div class="columns is-multiline">
             <div class="column is-full" v-for="item in data">
-              <section class="card">
+              <section class="card" :class=" { 'has-background-light' : item.read }">
                 <router-link :to="'/tasks/' + item.room">
                   <div class="card__title">
                     <span v-html="item.extra.project"></span>

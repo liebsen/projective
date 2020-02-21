@@ -57,10 +57,7 @@ new Vue({
       this.$emit("onlineUsers", data)
     },
     notification: function(data){
-      console.log("1")
-      console.log(data)
       if(this.projects.includes(data.id) && this.$route.fullPath.indexOf('/tasks/' + data.room) == -1 && data.sender != this.auth.user._id){
-        console.log("2")
         this.ncount++
       }
     },
@@ -71,7 +68,6 @@ new Vue({
   methods: {
     loadProjects: function(){
       axios.get( this.endpoint + '/projects_ids', {}).then((res) => {
-        console.log(res.data)
         this.projects = res.data
       }).catch(err => {
         if(err){
@@ -81,7 +77,6 @@ new Vue({
     },
     loadNotifications: function(){
       axios.get( this.endpoint + '/account/notifications/count', {}).then((res) => {
-        console.log(res)
         this.ncount = res.data.count
       }).catch(err => {
         if(err){

@@ -60,23 +60,25 @@ import snackbar from './Snackbar'
 export default {
   name: 'projects',
   mounted: function(){
-    let t = this
-    t.$root.loading = true
-    axios.get( t.$root.endpoint + '/projects', {}).then((res) => {
-      t.data = res.data
-      t.data.forEach(item => {
+    this.$root.loading = true
+    axios.get( this.$root.endpoint + '/projects', {}).then((res) => {
+      this.data = res.data
+      let ids = []
+      this.data.forEach(item => {
         let progress = 0
         let tasks = item.tasks||[]
+        ids.push(item._id)
         tasks.forEach(task => {
           progress+= task.extra && task.extra.progress ? task.extra.progress: 0
         })
+        this.$root.projects = ids
         item.progress = progress / tasks.length
       })
-      t.data.empty = Object.keys(res.data).length?false:true
-      t.$root.loading = false
-      setTimeout(() => t.$root.convertDates(),250) 
+      this.data.empty = Object.keys(res.data).length?false:true
+      this.$root.loading = false
+      setTimeout(() => this.$root.convertDates(),250) 
     }).catch(err => {
-      t.$root.loading = false
+      this.$root.loading = false
       if(err){
        snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
       }
