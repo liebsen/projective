@@ -22,12 +22,12 @@
           <p>Te enviaremos un correo para que valides tu cuenta.</p>
           <div class="field">
             <div class="control">
-              <input v-model="data.name" class="input is-success" type="text" placeholder="¿Cómo te llamas?" required autofocus>
+              <input v-model="data.name" class="input" type="text" placeholder="¿Cómo te llamas?" required autofocus>
             </div>
           </div>
           <div class="field">
             <div class="control">
-              <input v-model="data.password" class="input is-danger" type="password" placeholder="Contraseña" required>
+              <input v-model="data.password" class="input" type="password" placeholder="Contraseña" required>
             </div>
           </div>
           <div class="field">

@@ -5,6 +5,7 @@ import moment from 'moment'
 import axios from 'axios'
 import store from './components/Store'
 import snackbar from './components/Snackbar'
+import playSound from './playSound'
 import VueSlider from 'vue-slider-component'
 import VueSocketIO from 'vue-socket.io'
 import Autocomplete from 'v-autocomplete'
@@ -59,6 +60,8 @@ new Vue({
     notification: function(data){
       if(this.projects.includes(data.id) && this.$route.fullPath.indexOf('/tasks/' + data.room) == -1 && data.sender != this.auth.user._id){
         this.ncount++
+        document.title = '(' + this.ncount + ') Projective'
+        playSound('pop.mp3')
       }
     },
     chat_line: function(data){

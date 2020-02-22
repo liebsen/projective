@@ -71,6 +71,7 @@ export default {
     let t = this
     t.$root.loading = true
     t.$root.ncount = 0
+    document.title = 'Projective'
     axios.get( t.$root.endpoint + '/account/notifications', {}).then((res) => {
       t.data = res.data
       t.$root.loading = false
