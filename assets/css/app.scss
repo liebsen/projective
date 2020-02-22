@@ -75,6 +75,7 @@ body > div {
   padding: 20px 20px 0;
   display: block;
   margin-top: 1rem;
+  min-height: 102px;
 
   &.task {
     background: linear-gradient(to right,#8cba51 .5%,#fff .5%);
@@ -174,6 +175,13 @@ body > div {
 
 .hero {
   min-height: 100%;
+  .has-background-light {
+    min-height: 80px;
+    h6 {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+  }
 }
 
 .hero-body {
