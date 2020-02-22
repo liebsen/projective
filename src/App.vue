@@ -76,6 +76,13 @@
               <span>Configuración</span>
             </router-link>
 
+            <router-link to="/notifications" v-if="$root.isLoggedIn" class="has-text-info">
+              <span class="icon">
+                <span class="fas fa-comment"></span>
+              </span> 
+              <span>Notificaciones</span>
+            </router-link>
+
             <router-link to="/login" v-else class="has-text-info">
               <span class="icon">
                 <span class="fas fa-sign-in-alt"></span>

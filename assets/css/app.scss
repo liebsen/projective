@@ -67,10 +67,11 @@ body > div {
       }
     }
   }
-} 
+}
+
 .card {
-  background-color: linear-gradient(to right,#4A90E2 .5%,#fff .5%);
-  box-shadow: 0 2px 3px rgba(0,0,0,.2);
+  background: linear-gradient(to right,#4A90E2 .5%,#fff .5%);
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
   border-radius: 4px;
   padding: 20px 20px 0;
   display: block;
@@ -173,9 +174,13 @@ body > div {
   border-bottom-left-radius: 0;
 }
 
+.has-background-light {
+  background: whitesmoke !important;
+}
+
 .hero {
   min-height: 100%;
-  .has-background-light {
+  > .has-background-light {
     min-height: 80px;
     h6 {
       margin-top: 0.25rem;
@@ -185,7 +190,7 @@ body > div {
 }
 
 .hero-body {
-  padding: 2rem 1.5rem;
+  padding: 2rem 1rem;
 }
 
 .is-rounded {
