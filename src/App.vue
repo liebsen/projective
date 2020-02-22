@@ -32,10 +32,10 @@
           <div class="menu-bg"></div>
           <div v-show="$root.ncount">
             <router-link to="/notifications" class="menu-notifications fadeIn">
-              <span class="icon has-text-success is-size-2">
+              <span class="icon has-text-primary is-size-2">
                 <span class="fas fa-comment"></span> 
               </span>
-              <span class="count is-size-6" v-html="$root.ncount"></span>              
+              <span class="count has-text-white is-size-6" v-html="$root.ncount"></span>
             </router-link>
           </div>
           <div class="menu-burger">
@@ -62,42 +62,42 @@
               <span>Términos y condiciones</span>
             </router-link-->
 
-            <router-link to="/about">
+            <router-link to="/about" class="has-text-info">
               <span class="icon">
                 <span class="fas fa-info-circle"></span>
               </span> 
               <span>Acerca de <strong>Projective</strong></span>
             </router-link>
 
-            <router-link to="/settings" v-if="$root.isLoggedIn">
+            <router-link to="/settings" v-if="$root.isLoggedIn" class="has-text-info">
               <span class="icon">
                 <span class="fas fa-cog"></span>
               </span> 
               <span>Configuración</span>
             </router-link>
 
-            <router-link to="/login" v-else>
+            <router-link to="/login" v-else class="has-text-info">
               <span class="icon">
                 <span class="fas fa-sign-in-alt"></span>
               </span> 
               <span>Iniciar sesión</span>
             </router-link>
 
-            <router-link to="/register" v-if="!$root.isLoggedIn">
+            <router-link to="/register" v-if="!$root.isLoggedIn" class="has-text-info">
               <span class="icon">
                 <span class="fas fa-ticket-alt"></span>
               </span> 
               <span>Cupón de invitación</span>
             </router-link>
 
-            <router-link to="/contacto">
+            <router-link to="/contacto" class="has-text-info">
               <span class="icon">
                 <span class="fas fa-envelope"></span>
               </span> 
               <span>Contacto</span>
             </router-link>
 
-            <a href="#" @click="logout" v-if="$root.isLoggedIn">
+            <a href="#" @click="logout" v-if="$root.isLoggedIn" class="has-text-info">
               <span class="icon">
                 <span class="fas fa-sign-out-alt"></span>
               </span> 
@@ -107,7 +107,7 @@
             <hr v-if="$root.isLoggedIn">
     
             <div class="has-text-centered" v-if="$root.isLoggedIn">
-              <router-link class="button is-info is-medium is-outlined" to="/projects">
+              <router-link class="button is-info is-outlined" to="/projects">
                 <!--span class="icon">
                   <span class="fas fa-chart-bar"></span>
                 </span--> 

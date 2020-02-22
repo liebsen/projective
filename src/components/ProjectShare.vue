@@ -20,7 +20,7 @@
         </div>
         <div class="field">
           <div class="control has-text-centered">
-            <button type="button" @click="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Compartir</button>
+            <button type="button" @click="submit" class="button is-link" :class="{'is-loading' : $root.processing}">Compartir</button>
           </div>
         </div>  
       </div>

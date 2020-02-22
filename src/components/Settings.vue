@@ -14,7 +14,7 @@
     </div>
     <div class="columns actions navbar is-fixed-bottom is-vbaseline has-text-centered">
       <div class="column has-text-centered">
-         <button type="button" @click="submit" class="button is-link is-medium" :class="{'is-loading' : $root.loading}">Guardar</button>
+         <button type="button" @click="submit" class="button is-link" :class="{'is-loading' : $root.loading}">Guardar</button>
       </div>
     </div>
   </div>

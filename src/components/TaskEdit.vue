@@ -32,7 +32,7 @@
           </div>
           <div class="field">
             <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.processing}">Actualizar</button>
+              <button type="submit" class="button is-link" :class="{'is-loading' : $root.processing}">Actualizar</button>
             </div>
           </div>  
         </form>
