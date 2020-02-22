@@ -2,11 +2,6 @@
   <section class="hero">
     <div v-show="!$root.loading" class="hero-body">
       <div class="container">
-        <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-          <ul>
-            <li><a href="#">Proyectos</a></li>
-          </ul>
-        </nav>
         <div class="content">
           <h1 v-if="$root.auth.user">Hola, <span v-html="$root.auth.user.name"></span></h1>
           <div v-show="empty" class="column">

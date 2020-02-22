@@ -1,12 +1,19 @@
 <template>
   <section class="hero">
-    <div v-show="!$root.loading" class="hero-body">
+    <div class="has-background-light">
       <div class="container">
-        <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-          <ul>
-            <li><a href="#">Notificaciones</a></li>
-          </ul>
-        </nav>
+        <div class="column">
+          <h6>
+            <span class="icon">              
+              <span class="fa fa-comment"></span>
+            </span>
+            <span>Notificaciones</span>
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div class="hero-body">
+      <div class="container">
         <div class="content">
           <h1 v-if="$root.auth.user">Hola, <span v-html="$root.auth.user.name"></span></h1>
           <div v-show="empty" class="column">

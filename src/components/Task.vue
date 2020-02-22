@@ -1,26 +1,24 @@
 <template>
   <section class="hero">
-    <div v-show="!$root.loading" class="hero-body">
+    <div class="has-background-light">
       <div class="container">
-        <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-          <ul>
-            <li>
-              <router-link to="/projects">
-                <span>Proyectos</span>
-              </router-link>
-            </li>
-            <li>
-              <router-link :to="'/projects/' + data._id">
-                <span v-html="data.title"></span>
-              </router-link>
-            </li>
-            <li class="is-active">
-              <a href="#" aria-current="page">
-                <span v-html="data.tasks.title"></span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <div class="column">
+          <h6>
+            <router-link :to="'/projects/' + data._id">
+              <span class="icon">              
+                <span class="fa fa-project-diagram"></span>
+              </span>
+              <span v-html="data.title"></span>
+            </router-link>
+          </h6>
+          <h6>
+            <span v-html="data.tasks.title"></span>
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div class="hero-body">
+      <div class="container">
         <div class="content">
           <div class="columns">
             <div class="column">            
@@ -105,14 +103,14 @@
             </div>
             <div class="column">
               <div class="userbox">
-                <router-link v-if="$root.users[user.id]" v-for="user in data.accounts" :to="'/accounts/' + user.id" class="fadeIn">
+                <router-link v-if="$root.users[user.id]" v-for="(user, index) in data.accounts" :to="'/accounts/' + user.id" class="fadeIn" :key="index">
                   <span class="button is-small is-light is-rounded has-text-success">
                     <span class="tag has-background-success fadeIn"></span>
                     <strong v-html="$root.users[user.id].name"></strong>
                   </span>
                 </router-link>
               </div>
-              <div class="column chatbox-container is-borderless-radius-down has-background-grey">
+              <div class="column chatbox-container is-borderless-radius-down has-background-light">
                 <div class="chatbox fadeIn">
                   <div v-for="line in chatLines" class="chatline">
                     <div class="chatbubble" :class="{ 'is-pulled-right has-text-right has-background-light' : line.owned, 'is-pulled-left has-text-left has-background-white' : !line.owned, 'has-background-primary' : line.sender === 'bot' }">

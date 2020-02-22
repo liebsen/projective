@@ -1,9 +1,10 @@
-$menubg: #161b3a;
+$menubg: #ffffff;
+$themecolor: #633a82;
 
 html, body {
   min-height: 100%;
   overflow-x: hidden;
-  background-color: #f5f7fa;
+  background-color: #ffffff;
 }
 
 body > div {
@@ -154,19 +155,11 @@ body > div {
   }
 }
 
-.input {
-  padding-top: calc(0.375em - 6px);
-}
-
 .button:not(.is-small):not(.is-square) {
   border-radius: 30px;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   text-transform: uppercase;
-}
-
-a.button:not(.is-small) {
-  padding-top: calc(0.375em - 6px);
 }
 
 .is-borderless-radius-up {
@@ -316,6 +309,7 @@ a.button:not(.is-small) {
   z-index: 90;
   height: 60px;
   background-color: $menubg;
+  border-bottom: 5px solid $themecolor;
   transition: background-color 0.25 linear;
 }
 
@@ -378,6 +372,7 @@ a.button:not(.is-small) {
   left:0;
   right:0;
   z-index: 1021;
+  padding: 0.25rem;
   span {
     color: black;
     font-size: 12px;
@@ -459,7 +454,7 @@ a.button:not(.is-small) {
   transition: stroke-dashoffset 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25), stroke-dasharray 0.5s cubic-bezier(0.25, -0.25, 0.75, 1.25);
   stroke-width: 40px;
   stroke-linecap: round;
-  stroke: #fff;
+  stroke: $themecolor;
   stroke-dashoffset: 0px;
 }
 .menu-burger path#top,
@@ -543,7 +538,7 @@ a.button:not(.is-small) {
 
 .menu-items a:not(.button) {
   font-size: 1.25rem;
-  color: white;
+  color: $themecolor;
   display: block;
 }
 
@@ -562,7 +557,7 @@ a.button:not(.is-small) {
 }
 
 .menu-items a:not(.button):hover {
-  color: yellow;
+  opacity: 0.9;
 }
 
 .menu-items img{
@@ -759,6 +754,10 @@ table {
   bottom: 1rem;
   right: 1rem;
   display: none;
+}
+
+.is-custom-breadcrumb {
+  min-height: 68px;
 }
 
 .is-illustrated {

@@ -32,7 +32,7 @@
           <div class="menu-bg"></div>
           <div v-show="$root.ncount">
             <router-link to="/notifications" class="menu-notifications fadeIn">
-              <span class="icon has-text-white is-size-2">
+              <span class="icon has-text-success is-size-2">
                 <span class="fas fa-comment"></span> 
               </span>
               <span class="count is-size-6" v-html="$root.ncount"></span>              
@@ -107,7 +107,7 @@
             <hr v-if="$root.isLoggedIn">
     
             <div class="has-text-centered" v-if="$root.isLoggedIn">
-              <router-link class="button is-white is-medium is-outlined" to="/projects">
+              <router-link class="button is-info is-medium is-outlined" to="/projects">
                 <!--span class="icon">
                   <span class="fas fa-chart-bar"></span>
                 </span--> 

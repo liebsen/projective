@@ -1,6 +1,26 @@
 <template>
   <section class="hero">
-    <div v-show="!$root.loading" class="hero-body">
+    <div class="has-background-light">
+      <div class="container">
+        <div class="column">
+          <h6>
+            <router-link :to="'/projects/' + data._id">
+              <span class="icon">              
+                <span class="fa fa-project-diagram"></span>
+              </span>
+              <span v-html="data.title"></span>
+            </router-link>
+          </h6>
+          <h6>
+            <router-link :to="'/tasks/' + data.tasks._id">
+              <span>Tareas</span>
+            </router-link> 
+            <span v-html="data.tasks.issues.title"></span>
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div class="hero-body">
       <div class="container">
         <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
           <ul>
@@ -75,7 +95,7 @@ export default {
       t.$root.false = true
       return snackbar('error',"No preference param.")
     }
-    axios.get( t.$root.endpoint + '/issues/' + t.$route.params.id, {}).then((res) => {
+    axios.get( t.$root.endpoint + '/issue/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
       setTimeout(() => t.$root.convertDates(),250) 

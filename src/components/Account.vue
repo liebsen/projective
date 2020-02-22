@@ -1,21 +1,24 @@
 <template>
   <section class="hero">
-    <div v-show="!$root.loading" class="hero-body">
+    <div class="has-background-light is-custom-breadcrumb">
       <div class="container">
-        <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-          <ul>
-            <li>
-              <router-link to="/#">
-                <span>Cuentas</span>
-              </router-link>
-            </li>
-            <li>
-              <router-link :to="'/accounts/' + data._id">
-                <span v-html="data._id"></span>
-              </router-link>
-            </li>
-          </ul>
-        </nav>
+        <div class="column">
+          <h6>
+            <router-link :to="'/accounts'">
+              <span class="icon">              
+                <span class="fa fa-user-circle"></span>
+              </span>
+              <span>Cuentas</span>
+            </router-link>
+          </h6>
+          <h6>
+            <span v-html="data._id"></span>
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div class="hero-body">
+      <div class="container">
         <div class="content">
           <div v-show="empty" class="column">
             <div class="notification">

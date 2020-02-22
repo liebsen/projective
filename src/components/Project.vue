@@ -1,24 +1,24 @@
 <template>
   <section class="hero">
-    <div v-show="!$root.loading" class="hero-body">
+    <div class="has-background-light">
       <div class="container">
-        <nav class="breadcrumb has-bullet-separator" aria-label="breadcrumbs">
-          <ul>
-            <li>
-              <router-link to="/projects">
-                <span>Proyectos</span>
-              </router-link>
-            </li>
-            <li>
-              <router-link :to="'/projects/' + data._id">
-                <span v-html="data.title"></span>
-              </router-link>
-            </li>
-            <li class="is-active">
-              <a href="#" aria-current="page">Tareas</a>
-            </li>
-          </ul>
-        </nav>
+        <div class="column">
+          <h6>
+            <router-link :to="'/projects/' + data._id">
+              <span class="icon">              
+                <span class="fa fa-project-diagram"></span>
+              </span>
+              <span v-html="data.title"></span>
+            </router-link>
+          </h6>
+          <h6>
+            <span>Tareas</span>
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div class="hero-body">
+      <div class="container">
         <div class="content">
           <div v-show="empty" class="column">
             <div class="notification">
