@@ -62,49 +62,49 @@
               <span>Términos y condiciones</span>
             </router-link-->
 
-            <router-link to="/about" class="has-text-info">
+            <router-link to="/about">
               <span class="icon">
                 <span class="fas fa-info-circle"></span>
               </span> 
               <span>Acerca de <strong>Projective</strong></span>
             </router-link>
 
-            <router-link to="/settings" v-if="$root.isLoggedIn" class="has-text-info">
+            <router-link to="/settings" v-if="$root.isLoggedIn">
               <span class="icon">
                 <span class="fas fa-cog"></span>
               </span> 
               <span>Configuración</span>
             </router-link>
 
-            <router-link to="/notifications" v-if="$root.isLoggedIn" class="has-text-info">
+            <router-link to="/notifications" v-if="$root.isLoggedIn">
               <span class="icon">
                 <span class="fas fa-comment"></span>
               </span> 
               <span>Notificaciones</span>
             </router-link>
 
-            <router-link to="/login" v-else class="has-text-info">
+            <router-link to="/login" v-else>
               <span class="icon">
                 <span class="fas fa-sign-in-alt"></span>
               </span> 
               <span>Iniciar sesión</span>
             </router-link>
 
-            <router-link to="/register" v-if="!$root.isLoggedIn" class="has-text-info">
+            <router-link to="/register" v-if="!$root.isLoggedIn">
               <span class="icon">
                 <span class="fas fa-ticket-alt"></span>
               </span> 
               <span>Cupón de invitación</span>
             </router-link>
 
-            <router-link to="/contacto" class="has-text-info">
+            <router-link to="/contacto">
               <span class="icon">
                 <span class="fas fa-envelope"></span>
               </span> 
               <span>Contacto</span>
             </router-link>
 
-            <a href="#" @click="logout" v-if="$root.isLoggedIn" class="has-text-info">
+            <a href="#" @click="logout" v-if="$root.isLoggedIn">
               <span class="icon">
                 <span class="fas fa-sign-out-alt"></span>
               </span> 

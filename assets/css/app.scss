@@ -1,5 +1,5 @@
 $menubg: #ffffff;
-$themecolor: #33bbf7;
+$themecolor: #9264dd;
 
 html, body {
   min-height: 100%;
@@ -324,6 +324,7 @@ body > div {
   background-color: $menubg;
   border-bottom: 5px solid $themecolor;
   transition: background-color 0.25 linear;
+  box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.15);
 }
 
 .menu-container {
@@ -547,6 +548,7 @@ body > div {
 
 .menu-links {
   padding: 2.25rem;
+  color: $themecolor;
 }
 
 .menu-items a:not(.button) {
