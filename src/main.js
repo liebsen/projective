@@ -127,7 +127,11 @@ new Vue({
       document.querySelectorAll('.convert__dates').forEach(function(el){
         const timestamp = el.innerText.toString().substring(0,8)
         const date = new Date( parseInt( timestamp, 16 ) * 1000 )
-        el.innerHTML = moment(date).format(el.getAttribute('date-format')||'LLLL')
+        if (el.getAttribute('date-format')) {
+          el.innerHTML = moment(date).format(el.getAttribute('date-format')||'LLLL')
+        } else {
+          el.innerHTML = moment(date).fromNow()
+        }
         el.classList.add('fadeIn')
       })
       document.querySelectorAll('.fromnow__dates').forEach(function(el){
