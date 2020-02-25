@@ -49,7 +49,7 @@
 
           <div class="field">
             <div class="control has-text-centered">
-              <button type="submit" class="button is-link is-medium" :class="{'is-loading' : $root.loading}">Contactar con&nbsp;<strong>Projective</strong></button>
+              <button type="submit" class="button is-link" :class="{'is-loading' : $root.loading}">Contactar con&nbsp;<strong>Projective</strong></button>
             </div>
           </div>    
         </form>
