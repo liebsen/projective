@@ -34,7 +34,7 @@
                 </router-link>
                 <div class="card__meta">
                   <div class="card__meta__date">
-                    <span>Creado</span> <span class="fromnow__dates" v-html="item.created"></span>
+                    <span>Recibido</span> <span class="fromnow__dates" v-html="item.created"></span>
                   </div>
                 </div>
                 <!--footer class="card-footer">
