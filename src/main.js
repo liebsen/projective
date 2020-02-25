@@ -39,17 +39,21 @@ new Vue({
     }
   },
   mounted: function() {
+    let auth = JSON.parse(localStorage.getItem('auth'))||null
     let layout = JSON.parse(localStorage.getItem('layout'))||null
+    
     if (layout) {
       this.layout = layout
     } else {
       localStorage.setItem('layout', JSON.stringify(this.layout))
     }
 
-    setTimeout(() => {
-      this.loadProjects()
-      this.loadNotifications()
-    },500)
+    if (auth) {
+      setTimeout(() => {
+        this.loadProjects()
+        this.loadNotifications()
+      },500)
+    }
   },
   computed: {
     isLoggedIn: function() {
