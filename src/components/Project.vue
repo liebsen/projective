@@ -4,15 +4,15 @@
       <div class="container">
         <div class="column">
           <h6>
-            <router-link :to="'/projects/' + data._id">
+            <router-link to="/projects">
               <span class="icon">              
                 <span class="fa fa-project-diagram"></span>
               </span>
-              <span v-html="data.title"></span>
+              <span>Proyectos</span>
             </router-link>
           </h6>
           <h6>
-            <span>Tareas</span>
+           <span v-html="data.title"></span>
           </h6>
         </div>
       </div>
@@ -26,7 +26,7 @@
             </div>
           </div>
           <div v-if="!empty" class="columns is-multiline">
-            <div class="column is-full" v-for="item in data.tasks">
+            <div class="column" :class="'is-' + $root.layout.cols" v-for="item in data.tasks">
               <section class="card task">
                 <router-link :to="'/tasks/' + item.id">
                   <div class="card__title">

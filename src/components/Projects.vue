@@ -1,6 +1,20 @@
 <template>
   <section class="hero">
-    <div v-show="!$root.loading" class="hero-body">
+    <div class="has-background-light">
+      <div class="container">
+        <div class="column">
+          <h6>
+            <a to="#" @click="$root.setCols">
+              <span class="icon">              
+                <span class="fa fa-project-diagram"></span>
+              </span>
+              <span>Proyectos</span>
+            </a>
+          </h6>
+        </div>
+      </div>
+    </div>
+    <div class="hero-body">
       <div class="container">
         <div class="content">
           <h1 v-if="$root.auth.user">Hola, <span v-html="$root.auth.user.name"></span></h1>
@@ -10,7 +24,7 @@
             </div>
           </div>
           <div class="columns is-multiline">
-            <div class="column is-full" v-for="item in data">
+            <div class="column" :class="'is-' + $root.layout.cols" v-for="item in data">
               <section class="card">
                 <router-link :to="'/projects/' + item._id">
                   <div class="card__title">

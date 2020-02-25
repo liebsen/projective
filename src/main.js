@@ -39,6 +39,13 @@ new Vue({
     }
   },
   mounted: function() {
+    let layout = JSON.parse(localStorage.getItem('layout'))||null
+    if (layout) {
+      this.layout = layout
+    } else {
+      localStorage.setItem('layout', JSON.strngify(this.layout))
+    }
+
     setTimeout(() => {
       this.loadProjects()
       this.loadNotifications()
@@ -69,6 +76,27 @@ new Vue({
     }
   },
   methods: {
+    setCols: function () {
+      let columns = document.querySelector('.is-multiline')
+      let layout = JSON.parse(localStorage.getItem('layout'))||this.layout 
+      let sizes = [12,6,4,3]
+      let cols = layout.cols
+      let cols_ = sizes.map((a,i) => a === cols ? (sizes[i+1] ? sizes[i+1] : sizes[0]) : false )
+      cols_ = cols_.filter(e => e)
+      let _cols = cols_[0]
+
+      if (columns) {
+        document.querySelectorAll('.is-multiline > .column').forEach(item => {
+          item.classList.remove('is-12')
+          item.classList.remove('is-3')
+          item.classList.remove('is-4')
+          item.classList.remove('is-6')
+          item.classList.add('is-' + _cols)
+        })
+        this.layout.cols = _cols
+        localStorage.setItem('layout', JSON.stringify(this.layout))
+      }
+    },
     loadProjects: function(){
       axios.get( this.endpoint + '/projects_ids', {}).then((res) => {
         this.projects = res.data
@@ -116,6 +144,7 @@ new Vue({
     processing:false,
     projects:[],
     ncount: 0,
+    layout: { cols: 12 },
     users: {}
   },
   render: h => h(App)

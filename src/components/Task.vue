@@ -30,7 +30,7 @@
                 </div>
               </div>
               <div class="columns is-multiline">
-                <div class="column is-full" v-for="item in data.tasks.issues">
+                <div class="column" :class="'is-' + $root.layout.cols" v-for="item in data.tasks.issues">
                   <router-link :to="'/issues/' + item.id">
                     <section class="card task">
                       <div class="card__title">

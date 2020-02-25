@@ -29,7 +29,7 @@
             </div>
           </div>
           <div class="columns is-multiline">
-            <div class="column is-6">
+            <div class="column" :class="'is-' + $root.layout.cols">
               <section class="card issue">
                 <div class="card__title">
                   <span v-html="data.tasks.issues.title"></span>
