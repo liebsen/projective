@@ -1,5 +1,5 @@
 <template>
-  <div class="columns is-centered has-text-centered photo photo2">
+  <div class="columns is-centered has-text-centered photo photo4">
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
         <h1>Nuevo responsable para tarea <span v-html="data.title"></span></h1>
@@ -12,7 +12,6 @@
         </div>
         <div v-show="!showExisting" class="field">
           <p>Ingresá el email de la persona o <a @click="showExisting = true">selecioná uno existente.</a></p>
-
           <label class="label">Agregar email del nuevo responsable</label>
           <div class="control">
             <input v-model="data.email" class="input" type="email" placeholder="mariano@projective.app" required>

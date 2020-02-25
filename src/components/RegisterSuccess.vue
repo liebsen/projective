@@ -1,14 +1,12 @@
 <template>
-
-  <div class="columns has-text-centered photo photo4">
+  <div class="columns has-text-centered photo photo6">
     <div class="column">
       <div class="main-box content slideIn">
-        <h1>Solo un paso más</h1>
-        <h4>Revisá tu correo para completar el registro.</h4>
-
-        <p>Te enviamos un email con un link para actives tu cuenta. Esperamos que tengas una excelente experiencia y resultados.</p>
+        <h1>Revisá tu correo</h1>
+        <h4>Te enviamos un email con un link para actives tu cuenta.</h4>
+        <p>Esperamos que tengas una excelente experiencia y resultados.</p>
         <p>
-          <span>Bienvenido a Projective.</span>
+          <strong>Bienvenido a Projective.</strong>
         </p>
         <router-link class="button is-info is-large is-success" to="/login" v-if="!$root.isLoggedIn">
           <span>Iniciar sesión</span>  

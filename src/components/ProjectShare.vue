@@ -1,5 +1,5 @@
 <template>
-  <div class="columns is-centered has-text-centered photo photo2">
+  <div class="columns is-centered has-text-centered photo photo3">
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
         <h1>Compartir <span v-html="data.title"></span></h1>
