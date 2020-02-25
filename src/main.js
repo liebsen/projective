@@ -49,10 +49,7 @@ new Vue({
     }
 
     if (auth) {
-      setTimeout(() => {
-        this.loadProjects()
-        this.loadNotifications()
-      },500)
+      this.requestAccountData()
     }
   },
   computed: {
@@ -80,6 +77,12 @@ new Vue({
     }
   },
   methods: {
+    requestAccountData: function () {
+      setTimeout(() => {
+        this.loadProjects()
+        this.loadNotifications()
+      },500)
+    },
     setCols: function () {
       let columns = document.querySelector('.is-multiline')
       let layout = JSON.parse(localStorage.getItem('layout'))||this.layout 

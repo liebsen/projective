@@ -48,6 +48,10 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('auth_request')
         axios.post( this.state.endpoint + '/account/create', user ).then((res) => {
+          const auth = res.data
+          localStorage.setItem('auth', JSON.stringify(auth))
+          axios.defaults.headers.common['Authorization'] = auth.token
+          commit('auth_success', auth)
           resolve(res)
         })
         .catch(err => {

@@ -1,28 +1,27 @@
 <template>
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container content is-flex-column is-vertical">
-        <h2>
-          <span class="icon has-text-success">
-            <span class="fas fa-check"></span>
-          </span> 
-          <span>Cuenta creada</span>
-        </h2>
-        <h4>Revisá tu correo para poder trabajar con <em>Projective</em>.</h4>
 
-        <p>Te enviamos un email con un link para actives tu cuenta y puedas empezar a crear con  <em>Projective</em>. Esperamos que tengas una excelente experiencia y resultados</p>
-        
-        <p>¡Bienvenido a <em>Projective</em>!</p>        
+  <div class="columns has-text-centered photo photo4">
+    <div class="column">
+      <div class="main-box content slideIn">
+        <h1>Solo un paso más</h1>
+        <h4>Revisá tu correo para completar el registro.</h4>
 
-        <p></p>
-        <p>Algunas acciones que puedes tomar a partir de aquí:</p>
-        <ul>
-        <li>Andá a <router-link to="/">inicio</router-link>.</li>
-        <li>Iniciá sesión en <router-link to="/login">Projective</router-link>.</li>
-        </ul>
+        <p>Te enviamos un email con un link para actives tu cuenta. Esperamos que tengas una excelente experiencia y resultados.</p>
+        <p>
+          <span>Bienvenido a Projective.</span>
+        </p>
+        <router-link class="button is-info is-large is-success" to="/login" v-if="!$root.isLoggedIn">
+          <span>Iniciar sesión</span>  
+        </router-link>
+        <!--router-link class="button is-info is-large is-info" to="/register" v-if="!$root.isLoggedIn">
+          <span>Crear cuenta</span>  
+        </router-link-->
+        <router-link class="button is-success is-large" to="/projects" v-if="$root.isLoggedIn">
+          <span>Mis proyectos</span>  
+        </router-link>
       </div>
     </div>
-  </section>
+  </div>    
 </template>
 
 <script>

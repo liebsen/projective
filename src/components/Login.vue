@@ -41,6 +41,7 @@ export default {
         .then(res => {
           snackbar('success',`${res.data.user.name}, qué bueno tenerte de nuevo por acá!`)
           t.$socket.emit('login', res.data.user._id)
+          t.$root.requestAccountData()
           t.$root.processing = false
           setTimeout(() => {
             t.$router.push("/projects")

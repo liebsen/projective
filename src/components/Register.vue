@@ -81,7 +81,9 @@ export default {
       t.$root.processing = true
       this.$store
         .dispatch("register", t.data)
-        .then(() => this.$router.push("/register-success"))
+        .then(res => {
+          this.$router.push("/register-success")
+        })
         .catch(err => console.log(err));
     }
   },
