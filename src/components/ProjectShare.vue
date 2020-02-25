@@ -2,10 +2,10 @@
   <div class="columns is-centered has-text-centered photo photo2">
     <div class="column is-4-desktop is-3-widescreen">
       <div class="content main-box has-background-white slideIn">
-        <h1>Compartir proyecto <span v-html="data.title"></span></h1>
+        <h1>Compartir <span v-html="data.title"></span></h1>
         <div v-show="showExisting" class="field">
-          <p>Elegí la persona de la lista con la que querés compartir el proyecto o <a @click="showExisting = false">agregalo si no existe.</a></p>
-          <label class="label">Seleccioná el nuevo integrante</label>
+          <p>Elegí la persona de la lista con la que querés compartir el proyecto.<p>
+          <label class="label">Seleccioná o ingresá email</label>
           <div class="control">
             <v-autocomplete input-class="input" :items="items" v-model="item" :get-label="getLabel" :component-item="template" :auto-select-one-item="false" @update-items="updateItems"></v-autocomplete>
           </div>
@@ -67,24 +67,37 @@ export default {
       })
     },
     submit : function(){
-      let t = this
-      t.$root.processing = true
-      axios.post( t.$root.endpoint + '/project/share', {
-        id: t.$route.params.id,
-        exists: t.showExisting,
-        user: t.item,
-        data: t.data
+      let input = document.querySelector('.v-autocomplete-input-group > input').value
+      var email = /\S+@\S+\.\S+/;
+      let exists = true
+      let ready = false
+
+      if (!this.item) {
+        if (email.test(input)) {
+          exists = false
+          this.data.email = input
+        } else {
+          return snackbar('error', 'Para compartir elegí de la lista o ingresá email')
+        }
+      }
+
+      this.$root.processing = true
+      axios.post( this.$root.endpoint + '/project/share', {
+        id: this.$route.params.id,
+        exists: exists,
+        user: this.item,
+        data: this.data
       }).then((res) => {
-        t.data = res.data
-        t.$root.processing = false
+        this.data = res.data
+        this.$root.processing = false
         snackbar('success','Invitaste un nuevo integrante a un proyecto')
-        t.$router.push('/projects')
+        this.$router.push('/projects')
       }).catch(err => {
-        t.$root.processing = false
+        this.$root.processing = false
         if(err.response.status === 402){
-          snackbar('error',`Tenés que ingresar una cuenta existente. Para agregar a ${t.data.email} presioná  en <strong>agregalo si no existe</strong>`,30000)
+          snackbar('error',`Tenés que ingresar una cuenta existente. Para agregar a ${this.data.email} presioná  en <strong>agregalo si no existe</strong>`,30000)
         } else if(err.response.status === 403){
-          snackbar('error',`Ya existe una cuenta registrada con el email ${t.data.email}. Probá con otro.`,30000)
+          snackbar('error',`Ya existe una cuenta registrada con el email ${this.data.email}. Probá con otro.`,30000)
         } else {
           snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
         }

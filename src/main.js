@@ -43,7 +43,7 @@ new Vue({
     if (layout) {
       this.layout = layout
     } else {
-      localStorage.setItem('layout', JSON.strngify(this.layout))
+      localStorage.setItem('layout', JSON.stringify(this.layout))
     }
 
     setTimeout(() => {
