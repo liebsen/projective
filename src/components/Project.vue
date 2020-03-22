@@ -34,7 +34,7 @@
                     <!--pre v-html="item"></pre-->
                   </div>
                 </router-link>
-                <div class="card__meta" :style="'background: linear-gradient(to right,#6decb9 ' + (item.extra ? item.extra.progress : 0 ) + '%,#fff ' + (item.extra ? item.extra.progress : 0 ) + '%);'">
+                <div class="card__meta" :style="'background: linear-gradient(to right, ' + getProgressColour(item.extra.progress) + ' ' + (item.extra ? item.extra.progress : 0 ) + '%,#fff ' + (item.extra ? item.extra.progress : 0 ) + '%);'">
                   <div class="card__meta__date">
                     <span>Creado</span> <span class="convert__dates" v-html="item.id"></span>
                   </div>
@@ -90,7 +90,7 @@ export default {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks == undefined
-      setTimeout(() => t.$root.convertDates(),250) 
+      setTimeout(() => t.$root.convertDates(), 1000) 
     }).catch(err => {
       t.$root.loading = false
       if(err){
@@ -126,8 +126,18 @@ export default {
       })
     }
   },
+  methods: {
+    getProgressColour (progress) {
+      let colour = this.progressColour
+      if (progress === 100) {
+        colour = '#46b3e6'
+      }
+      return colour        
+    }
+  },
   data () {
     return {
+      progressColour: '#6decb9',
       data:{},
       empty:false
     }

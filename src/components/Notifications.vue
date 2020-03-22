@@ -75,7 +75,7 @@ export default {
     axios.get( t.$root.endpoint + '/account/notifications', {}).then((res) => {
       t.data = res.data
       t.$root.loading = false
-      setTimeout(() => t.$root.convertDates(),250) 
+      setTimeout(() => t.$root.convertDates(), 1000) 
     }).catch(err => {
       t.$root.loading = false
       if(err){

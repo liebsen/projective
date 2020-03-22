@@ -74,7 +74,7 @@ export default {
     axios.get( t.$root.endpoint + '/issue/' + t.$route.params.id, {}).then((res) => {
       t.$root.loading = false
       t.data = res.data
-      setTimeout(() => t.$root.convertDates(),250) 
+      setTimeout(() => t.$root.convertDates(), 1000) 
       //t.empty = res.data.tasks.issues == undefined
     }).catch(err => {
       t.$root.loading = false

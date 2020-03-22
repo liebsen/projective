@@ -32,7 +32,7 @@
                     <!--pre v-html="item"></pre-->
                   </div>
                 </router-link>
-                <div class="card__meta" :style="'background: linear-gradient(to right,#beebe9 ' + item.progress + '%,#fff ' + item.progress + '%);'">
+                <div class="card__meta" :style="'background: linear-gradient(to right,' + getProgressColour(item.progress) + ' ' + item.progress + '%,#fff ' + item.progress + '%);'">
                   <div class="card__meta__date">
                     <span>Creado</span> <span class="convert__dates" v-html="item._id"></span>
                   </div>
@@ -93,8 +93,18 @@ export default {
       }
     })
   },
+  methods: {
+    getProgressColour (progress) {
+      let colour = this.progressColour
+      if (progress === 100) {
+        colour = '#cccccc'
+      }
+      return colour        
+    }
+  },
   data () {
     return {
+      progressColour: '#6decb9',
       data:{},
       empty:false
     }

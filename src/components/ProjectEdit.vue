@@ -37,7 +37,7 @@ export default {
       t.$root.loading = false
       t.data = res.data
       t.empty = res.data.tasks == undefined
-      setTimeout(() => t.$root.convertDates(),250) 
+      setTimeout(() => t.$root.convertDates(), 1000) 
     }).catch(err => {
       t.$root.loading = false
       if(err){
