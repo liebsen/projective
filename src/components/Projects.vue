@@ -97,7 +97,7 @@ export default {
     getProgressColour (progress) {
       let colour = this.progressColour
       if (progress === 100) {
-        colour = '#cccccc'
+        colour = '#eef'
       }
       return colour        
     }

@@ -130,7 +130,7 @@ export default {
     getProgressColour (progress) {
       let colour = this.progressColour
       if (progress === 100) {
-        colour = '#46b3e6'
+        colour = '#eef'
       }
       return colour        
     }
