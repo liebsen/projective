@@ -27,7 +27,7 @@
           </div>
           <div v-if="!empty" class="columns is-multiline">
             <div class="column" :class="'is-' + $root.layout.cols" v-for="item in data.tasks">
-              <section class="card task" :class="{ 'is-complete': item.progress === 100 }">
+              <section class="card task" :class="{ 'is-complete': item.extra.progress === 100 }">
                 <router-link :to="'/tasks/' + item.id">
                   <div class="card__title">
                     <span v-html="item.title"></span>
