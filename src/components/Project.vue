@@ -27,14 +27,14 @@
           </div>
           <div v-if="!empty" class="columns is-multiline">
             <div class="column" :class="'is-' + $root.layout.cols" v-for="item in data.tasks">
-              <section class="card task" :class="{ 'is-complete': item.extra.progress === 100 }">
+              <section class="card task" :class="{ 'is-complete': getProgress(item) === 100 }">
                 <router-link :to="'/tasks/' + item.id">
                   <div class="card__title">
                     <span v-html="item.title"></span>
                     <!--pre v-html="item"></pre-->
                   </div>
                 </router-link>
-                <div class="card__meta" :style="'background: linear-gradient(to right, ' + getProgressColour(item.extra.progress) + ' ' + (item.extra ? item.extra.progress : 0 ) + '%,#fff ' + (item.extra ? item.extra.progress : 0 ) + '%);'">
+                <div class="card__meta" :style="'background: linear-gradient(to right, ' + getProgressColour(item) + ' ' + getProgress(item) + '%,#fff ' + getProgress(item) + '%);'">
                   <div class="card__meta__date">
                     <span>Creado</span> <span class="convert__dates" v-html="item.id"></span>
                   </div>
@@ -127,17 +127,18 @@ export default {
     }
   },
   methods: {
-    getProgressColour (progress) {
+    getProgressColour (item) {
       let colour = this.progressColour
-      if (progress === 100) {
-        colour = '#eef'
-      }
-      return colour        
+      return item.extra && item.extra.progress && item.extra.progress === 100 ? this.progressColourComplete : this.progressColour
+    },
+    getProgress (item) {
+      return item.extra && item.extra.progress ? item.extra.progress : 0
     }
   },
   data () {
     return {
       progressColour: '#6decb9',
+      progressColourComplete: '#eef',
       data:{},
       empty:false
     }
