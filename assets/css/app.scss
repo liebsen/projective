@@ -81,6 +81,10 @@ body > div {
   &.task {
     background: linear-gradient(to right,#8cba51 .5%,#fff .5%);
   }
+  
+  &.is-complete {
+    opacity: 0.5;
+  }
 
   &.issue {
     background: linear-gradient(to right,#c81912 .5%,#fff .5%);
