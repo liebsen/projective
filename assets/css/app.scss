@@ -81,7 +81,7 @@ body > div {
   &.task {
     background: linear-gradient(to right,#8cba51 .5%,#fff .5%);
   }
-  
+
   &.is-complete {
     opacity: 0.5;
   }
@@ -93,6 +93,8 @@ body > div {
   &:hover {
     .card-footer {
       display: flex;
+      opacity:0;
+      animation:0.25s cubic-bezier(.17,.67,.83,.67) 0.25s normal forwards 1 fadeInDown;
     }
   }
 
@@ -406,6 +408,7 @@ body > div {
 .box{
   transition: box-shadow ease 0.25s;
 }
+
 .box:hover {
   box-shadow: 0 0 1rem rgba(0,0,0,0.25);
   color: black;
@@ -874,6 +877,25 @@ table {
   -webkit-animation-name:fadeInUp;
   animation-name:fadeInUp
 }
+
+@keyframes fadeInDown{
+  from{
+    opacity:0;
+    -webkit-transform:translate3d(0,-100%,0);
+    transform:translate3d(0,-100%,0)
+  }
+  to{
+    opacity:1;
+    -webkit-transform:none;
+    transform:none
+  }
+}
+
+.fadeInUp{
+  -webkit-animation-name:fadeInUp;
+  animation-name:fadeInUp
+}
+
 
 .fadeMoveDown{
   -webkit-animation-name:fadeMoveDown;

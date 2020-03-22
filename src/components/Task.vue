@@ -96,7 +96,7 @@
                     <span class="icon">
                       <span class="fas fa-bullhorn"></span>
                     </span>
-                    <span>Sin asignación</span>
+                    <span>No asignado</span>
                   </div>
                 </div>
               </div>
