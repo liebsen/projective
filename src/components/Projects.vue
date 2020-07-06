@@ -75,7 +75,7 @@ export default {
       let ids = []
       this.data.forEach(item => {
         let progress = 0
-        let tasks = item.tasks||[]
+        let tasks = item.tasks || []
         ids.push(item._id)
         tasks.forEach(task => {
           progress+= task.extra && task.extra.progress ? task.extra.progress: 0
@@ -83,13 +83,22 @@ export default {
         this.$root.projects = ids
         item.progress = progress / tasks.length
       })
-      this.data.empty = Object.keys(res.data).length?false:true
+      this.data.sort((a, b) => {
+        if ( a.progress < b.progress ){
+          return -1
+        }
+        if ( a.progress > b.progress ){
+          return 1
+        }
+        return 0
+      })
+      this.data.empty = Object.keys(res.data).length ? false : true
       this.$root.loading = false
-      setTimeout(() => this.$root.convertDates(),250) 
+      setTimeout(() => this.$root.convertDates(), 250)
     }).catch(err => {
       this.$root.loading = false
       if(err){
-       snackbar('error',"Hubo un Error al solicitar datos: " + err,30000)
+       snackbar('error',"Hubo un Error al solicitar datos: " + err, 30000)
       }
     })
   },
@@ -104,7 +113,7 @@ export default {
   },
   data () {
     return {
-      progressColour: '#6decb9',
+      progressColour: 'rgb(179, 214, 255)',
       data:{},
       empty:false
     }
